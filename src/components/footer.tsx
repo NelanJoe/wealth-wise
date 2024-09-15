@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+import { footerLinks } from "@/lib/consts";
 
 export default function Footer() {
   return (
@@ -10,10 +12,18 @@ export default function Footer() {
             <p>Calculate, Connect, Thrive!</p>
           </div>
           <div className="flex flex-col gap-2 text-sm">
-            <Link to="/kalkulator">Kalkulator</Link>
-            <Link to="/forum">Forum</Link>
-            <Link to="/artikel">Artikel</Link>
-            <Link to="/tentang">Tentang</Link>
+            {footerLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="hover:underline transition-all duration-100 ease-in-out"
+              >
+                <div className="flex items-center gap-1">
+                  <span>{link.name}</span>
+                  <ArrowUpRight className="w-3 h-3 transition-all duration-150 ease-in-out" />
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
         <div className="border-b my-8"></div>

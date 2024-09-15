@@ -4,28 +4,43 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import BaseLayout from "@/layouts/base.layout";
-import NotFound from "@/pages/error/error.page";
-import Home from "@/pages/home/home.page";
-import CalculatorPage from "@/pages/calculator/calculator.page";
-import ArticlePage from "@/pages/article/article.page";
-import AboutPage from "@/pages/about/about.page";
+import ErrorPage from "@/pages/error";
+import HomePage from "@/pages/home";
+import CalculatorPage from "@/pages/calculators";
+import ArticlePage from "@/pages/article";
+import AboutPage from "@/pages/about";
+import Threads from "@/pages/threads";
+import ThreadShow from "@/pages/threads/show";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <BaseLayout />,
-    errorElement: <NotFound />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        errorElement: <NotFound />,
+        errorElement: <ErrorPage />,
         children: [
           {
             index: true,
-            element: <Home />,
+            element: <HomePage />,
           },
           {
             path: "/kalkulator",
             element: <CalculatorPage />,
+          },
+          {
+            path: "/forum",
+            children: [
+              {
+                index: true,
+                element: <Threads />,
+              },
+              {
+                path: ":id",
+                element: <ThreadShow />,
+              },
+            ],
           },
           {
             path: "/artikel",
@@ -44,7 +59,9 @@ const router = createBrowserRouter([
 export default function App() {
   const [queryClient] = useState(() => {
     return new QueryClient({
-      defaultOptions: {},
+      defaultOptions: {
+        queries: {},
+      },
     });
   });
 

@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { links } from "@/lib/consts";
 
 export default function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -86,26 +87,3 @@ const MobileView = () => {
     </Sheet>
   );
 };
-
-const links: { name: string; href: string }[] = [
-  {
-    name: "Beranda",
-    href: "/",
-  },
-  {
-    name: "Kalkulator",
-    href: "/kalkulator",
-  },
-  {
-    name: "Forum",
-    href: "/forum",
-  },
-  {
-    name: "Artikel",
-    href: "/artikel",
-  },
-  {
-    name: "Tentang",
-    href: "/tentang",
-  },
-];

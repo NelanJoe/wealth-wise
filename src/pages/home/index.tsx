@@ -148,7 +148,7 @@ export default function Home() {
               <div className="p-2 border rounded-lg shadow-sm w-fit">
                 <CalculatorIcon className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-medium">Perencanaan Keuangan</h3>
+              <h3 className="md:text-lg font-medium">Perencanaan Keuangan</h3>
               <p className="text-sm text-gray-600">
                 WealthWise menawarkan kalkulator investasi, hitung dana
                 pensiun,dan hitung dana darurat yang sangat berguna untuk
@@ -169,7 +169,7 @@ export default function Home() {
               <div className="p-2 border rounded-lg shadow-sm w-fit">
                 <MessageSquareCodeIcon className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-medium">Forum Diskusi</h3>
+              <h3 className="md:text-lg font-medium">Forum Diskusi</h3>
               <p className="text-sm text-gray-600">
                 WealthWise menyediakan forum diskusi di mana pengguna dapat
                 berinteraksi, bertukar informasi, dan belajar dari pengalaman
@@ -190,7 +190,7 @@ export default function Home() {
               <div className="p-2 border rounded-lg shadow-sm w-fit">
                 <NewspaperIcon className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-medium">
+              <h3 className="md:text-lg font-medium">
                 Artikel Panduan dan Edukasi
               </h3>
               <p className="text-sm text-gray-600">
@@ -214,7 +214,7 @@ export default function Home() {
               <div className="p-2 border rounded-lg shadow-sm w-fit">
                 <PersonStandingIcon className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-medium">Kemudahan Akses</h3>
+              <h3 className="md:text-lg font-medium">Kemudahan Akses</h3>
               <p className="text-sm text-gray-600">
                 WealthWise dapat diakses kapan pun dan dimana pun dengan mudah
                 melalui halaman aplikasi Web WealthWise di berbagai perangkat
@@ -261,7 +261,7 @@ export default function Home() {
                   }}
                   className="px-4 py-1 border rounded-md"
                 >
-                  <AccordionTrigger className="font-medium md:font-semibold text-left no-underline hover:no-underline">
+                  <AccordionTrigger className="font-medium md:font-medium md:text-lg text-left no-underline hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent>{faq.answer}</AccordionContent>

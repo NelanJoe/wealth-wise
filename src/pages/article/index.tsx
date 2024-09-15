@@ -37,7 +37,7 @@ export default function ArticlePage() {
           >
             <img
               src="/assets/article.svg"
-              alt="disscussion"
+              alt="aricle"
               loading="lazy"
               className="object-cover w-[160px] md:w-[380px]"
             />
@@ -53,7 +53,7 @@ export default function ArticlePage() {
             }}
             className="space-y-2"
           >
-            <h2 className="text-2xl md:text-4xl font-semibold leading-snug text-white ">
+            <h2 className="text-2xl md:text-4xl font-semibold leading-snug text-white">
               Artikel
             </h2>
             <p className="text-sm md:text-lg text-white">
