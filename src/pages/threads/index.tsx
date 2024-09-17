@@ -1,9 +1,80 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { SquarePlusIcon } from "lucide-react";
+import { motion } from "framer-motion";
+
+import { useSharedThreadsCategories } from "@/hooks";
+
 import { Button } from "@/components/ui/button";
+import ThreadList from "@/components/thread-list";
+import SearchThread from "@/components/search-thread";
+import Categories from "@/components/categories";
 
 export default function Threads() {
+  const [searchParams] = useSearchParams();
+
+  const [
+    {
+      data: threads,
+      isLoading: isLoadingThreads,
+      isSuccess: isSuccessThreads,
+      isError: isErrorThreads,
+      error: errorThreads,
+    },
+    {
+      data: categories,
+      isLoading: isLoadingCategories,
+      isSuccess: isSuccessCategories,
+      isError: isErrorCategories,
+      error: errorCatergories,
+    },
+  ] = useSharedThreadsCategories();
+
+  let contentThreads;
+  let contentCategories;
+
+  if (isLoadingThreads || isLoadingCategories) {
+    contentCategories = <div>Loading...</div>;
+    contentThreads = <div>Loading...</div>;
+  }
+
+  const filteredThreads = useMemo(() => {
+    if (!threads || threads.length === 0) return [];
+
+    const search = searchParams.get("search")?.toLowerCase() || "";
+    const categories =
+      searchParams
+        .get("categories")
+        ?.toLowerCase()
+        .split(",")
+        .filter(Boolean) || [];
+
+    return threads.filter((thread) => {
+      // If a search term exists, check if it matches the title
+      const matchesSearch = search
+        ? thread.title?.toLowerCase().includes(search)
+        : true;
+
+      // If categories exist, check if the thread's category matches any
+      const matchesCategory = categories.length
+        ? categories.includes(thread.category?.toLowerCase())
+        : true;
+
+      // Return the thread if it matches both search and category filters
+      return matchesSearch && matchesCategory;
+    });
+  }, [threads, searchParams]);
+
+  if (isSuccessThreads || isSuccessCategories) {
+    contentThreads = threads && <ThreadList threads={filteredThreads} />;
+    contentCategories = categories && <Categories categories={categories} />;
+  }
+
+  if (isErrorThreads || isErrorCategories) {
+    contentCategories = <div>{errorCatergories?.message}</div>;
+    contentThreads = <div>{errorThreads?.message}</div>;
+  }
+
   return (
     <div>
       <div className="py-20 bg-blue-500">
@@ -45,7 +116,7 @@ export default function Threads() {
           </motion.div>
         </div>
       </div>
-      <div className="max-w-4xl px-4 py-20 mx-auto">
+      <div className="max-w-4xl px-4 pt-20 mx-auto">
         <div className="flex flex-row justify-between mb-2">
           <div className="flex flex-col gap-2 mb-4">
             <h2 className="text-xl font-semibold md:text-2xl">
@@ -67,9 +138,25 @@ export default function Threads() {
             </Button>
           </div>
         </div>
+        <div>
+          <SearchThread />
+        </div>
       </div>
-      <div className="max-w-4xl px-4 py-20 mx-auto">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6"></div>
+      <div className="max-w-4xl px-4 mx-auto py-10">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
+          <div className="order-1 md:order-0 md:col-span-2">
+            {contentThreads}
+          </div>
+          <div className="order-0 md:order-1 md:col-span-1">
+            <div className="p-4 bg-white border rounded-md shadow-sm">
+              <div className="flex flex-col gap-2 mb-4">
+                <h2 className="text-lg font-semibold">Kategori Popular</h2>
+                <div className="bg-blue-500 w-36 h-[2px]"></div>
+              </div>
+              {contentCategories}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
