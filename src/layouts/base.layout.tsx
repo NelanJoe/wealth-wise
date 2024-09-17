@@ -9,7 +9,7 @@ export default function BaseLayout() {
       <Outlet />
       <ScrollRestoration
         getKey={(location) => {
-          const paths = ["/home", "/login", "/register"];
+          const paths = ["/forum"];
           return paths.includes(location.pathname)
             ? location.pathname
             : location.key;
