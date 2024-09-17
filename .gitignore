@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 .env
+
+# TS Build info
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
+*.tsbuildinfo
