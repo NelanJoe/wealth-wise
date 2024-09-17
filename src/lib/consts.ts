@@ -49,3 +49,4 @@ export const footerLinks: FooterLinks = [
     href: "/tentang",
   },
 ];
+
