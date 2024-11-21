@@ -8,7 +8,7 @@ import {
   PersonStandingIcon,
 } from "lucide-react";
 
-import Hero from "@/components/hero";
+import Hero from "@/components/shared/hero";
 import {
   Accordion,
   AccordionContent,

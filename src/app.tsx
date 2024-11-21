@@ -60,7 +60,9 @@ export default function App() {
   const [queryClient] = useState(() => {
     return new QueryClient({
       defaultOptions: {
-        queries: {},
+        queries: {
+          // staleTime: Infinity,
+        },
       },
     });
   });

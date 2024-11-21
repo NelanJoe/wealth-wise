@@ -3,10 +3,12 @@ import { createRoot } from "react-dom/client";
 import App from "./app.tsx";
 import "@/styles/global.css";
 
-// Supports weights 100-900
+// Fonts Inter
 import "@fontsource-variable/inter";
 
-createRoot(document.getElementById("root")!).render(
+const rootElement = document.querySelector("#root") as HTMLElement;
+const root = createRoot(rootElement);
+root.render(
   <StrictMode>
     <App />
   </StrictMode>
