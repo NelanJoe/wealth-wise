@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import ThreadList from "@/components/shared/thread-list";
 import SearchThread from "@/components/shared/search-thread";
 import Categories from "@/components/shared/categories";
+import ThreadSkeleton from "@/components/shared/thread-skeleton";
+import CategorySkeleton from "@/components/shared/category-skeleton";
 
 export default function Threads() {
   const [searchParams] = useSearchParams();
@@ -114,7 +116,7 @@ export default function Threads() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
           <div className="order-1 md:order-0 md:col-span-2">
             {pending ? (
-              <span>Loading...</span>
+              <ThreadSkeleton threadLength={3} />
             ) : isError ? (
               <span>Not Found Threads</span>
             ) : (
@@ -128,7 +130,7 @@ export default function Threads() {
                 <div className="bg-blue-500 w-36 h-[2px]"></div>
               </div>
               {pending ? (
-                <span>Loading...</span>
+                <CategorySkeleton categoryLength={3} />
               ) : isError ? (
                 <span>Not Found Categories</span>
               ) : (

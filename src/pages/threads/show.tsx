@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 
 import CommentList from "@/components/shared/comment-list";
 import CommentForm from "@/components/shared/comment-form";
+import CommentSkeleton from "@/components/shared/comment-skeleton";
 
 export default function ThreadShow() {
   const navigate = useNavigate();
@@ -113,7 +114,7 @@ export default function ThreadShow() {
             </div>
           )}
           {pending ? (
-            <div>Loading...</div>
+            <CommentSkeleton commentLength={1} />
           ) : isError ? (
             <i>Not Found Comments</i>
           ) : (
