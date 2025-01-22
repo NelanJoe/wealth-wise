@@ -1,6 +1,6 @@
 import { collection, getDocs, query } from "firebase/firestore";
 import db from "@/lib/firebase/db";
-import { Category } from "@/types/category";
+import { Category } from "@/schemas/category.schema";
 
 export const getCategories = async () => {
   try {
@@ -20,5 +20,7 @@ export const getCategories = async () => {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
+
+    throw new Error("An error occurred while fetching categories.");
   }
 };

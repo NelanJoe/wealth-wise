@@ -13,30 +13,8 @@ import Categories from "@/components/shared/categories";
 export default function Threads() {
   const [searchParams] = useSearchParams();
 
-  const [
-    {
-      data: threads,
-      isLoading: isLoadingThreads,
-      isSuccess: isSuccessThreads,
-      isError: isErrorThreads,
-      error: errorThreads,
-    },
-    {
-      data: categories,
-      isLoading: isLoadingCategories,
-      isSuccess: isSuccessCategories,
-      isError: isErrorCategories,
-      error: errorCatergories,
-    },
-  ] = useSharedThreadsCategories();
-
-  let contentThreads;
-  let contentCategories;
-
-  if (isLoadingThreads || isLoadingCategories) {
-    contentCategories = <div>Loading...</div>;
-    contentThreads = <div>Loading...</div>;
-  }
+  const { threads, categories, pending, isError } =
+    useSharedThreadsCategories();
 
   const filteredThreads = useMemo(() => {
     if (!threads || threads.length === 0) return [];
@@ -64,16 +42,6 @@ export default function Threads() {
       return matchesSearch && matchesCategory;
     });
   }, [threads, searchParams]);
-
-  if (isSuccessThreads || isSuccessCategories) {
-    contentThreads = threads && <ThreadList threads={filteredThreads} />;
-    contentCategories = categories && <Categories categories={categories} />;
-  }
-
-  if (isErrorThreads || isErrorCategories) {
-    contentCategories = <div>{errorCatergories?.message}</div>;
-    contentThreads = <div>{errorThreads?.message}</div>;
-  }
 
   return (
     <div>
@@ -145,7 +113,13 @@ export default function Threads() {
       <div className="max-w-4xl px-4 mx-auto py-10">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
           <div className="order-1 md:order-0 md:col-span-2">
-            {contentThreads}
+            {pending ? (
+              <span>Loading...</span>
+            ) : isError ? (
+              <span>Not Found Threads</span>
+            ) : (
+              threads && <ThreadList threads={filteredThreads} />
+            )}
           </div>
           <div className="order-0 md:order-1 md:col-span-1">
             <div className="p-4 bg-white border rounded-md shadow-sm">
@@ -153,7 +127,13 @@ export default function Threads() {
                 <h2 className="text-lg font-semibold">Kategori Popular</h2>
                 <div className="bg-blue-500 w-36 h-[2px]"></div>
               </div>
-              {contentCategories}
+              {pending ? (
+                <span>Loading...</span>
+              ) : isError ? (
+                <span>Not Found Categories</span>
+              ) : (
+                categories && <Categories categories={categories} />
+              )}
             </div>
           </div>
         </div>

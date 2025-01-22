@@ -1,25 +1,30 @@
 import { useState } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import BaseLayout from "@/layouts/base.layout";
-import ErrorPage from "@/pages/error";
+import AuthLayout from "@/layouts/auth.layout";
+
+import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
 import CalculatorPage from "@/pages/calculators";
 import ArticlePage from "@/pages/article";
 import AboutPage from "@/pages/about";
 import Threads from "@/pages/threads";
 import ThreadShow from "@/pages/threads/show";
+import LoginPage from "@/pages/auth/login";
+import RegisterPage from "@/pages/auth/register";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <BaseLayout />,
-    errorElement: <ErrorPage />,
+    errorElement: <NotFound />,
     children: [
       {
-        errorElement: <ErrorPage />,
+        errorElement: <NotFound />,
         children: [
           {
             index: true,
@@ -36,11 +41,11 @@ const router = createBrowserRouter([
                 index: true,
                 element: <Threads />,
               },
-              {
-                path: ":id",
-                element: <ThreadShow />,
-              },
             ],
+          },
+          {
+            path: "threads/:threadId",
+            element: <ThreadShow />,
           },
           {
             path: "/artikel",
@@ -51,6 +56,19 @@ const router = createBrowserRouter([
             element: <AboutPage />,
           },
         ],
+      },
+    ],
+  },
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
       },
     ],
   },
@@ -70,7 +88,8 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-      <ReactQueryDevtools />
+      <Toaster position="top-right" />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

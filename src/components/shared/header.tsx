@@ -1,8 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
-import { AlignJustifyIcon } from "lucide-react";
+import { AlignJustifyIcon, LogOutIcon } from "lucide-react";
 
-import { useMediaQuery } from "@/hooks";
+import { useCurrentUser, useLogout, useMediaQuery } from "@/hooks";
+import { links } from "@/lib/consts";
 
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   Sheet,
   SheetContent,
@@ -11,7 +13,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { links } from "@/lib/consts";
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
+import { Button } from "../ui/button";
 
 export default function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -35,6 +38,11 @@ export default function Header() {
 }
 
 const DesktopView = () => {
+  const { data: currentUser } = useCurrentUser();
+
+  const { logout } = useLogout();
+  const onLogout = () => logout();
+
   return (
     <div className="flex gap-2 items-center">
       {links.map((link) => (
@@ -50,12 +58,44 @@ const DesktopView = () => {
           {link.name}
         </NavLink>
       ))}
-      <div>user info</div>
+      <div>
+        {currentUser ? (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Avatar>
+                <AvatarImage
+                  src={currentUser.photoURL}
+                  alt={currentUser.displayName}
+                />
+                <AvatarFallback>
+                  {currentUser.displayName.slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+            </PopoverTrigger>
+            <PopoverContent className="w-fit p-2">
+              <Button variant="ghost" size="sm" onClick={onLogout}>
+                <div className="flex gap-2 items-center">
+                  <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
+                </div>
+              </Button>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Button asChild>
+            <Link to="/login">Login</Link>
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
 
 const MobileView = () => {
+  const { data: currentUser } = useCurrentUser();
+
+  const { logout } = useLogout();
+  const onLogout = () => logout();
+
   return (
     <Sheet>
       <SheetTrigger>
@@ -79,7 +119,19 @@ const MobileView = () => {
                   <SheetTrigger>{link.name}</SheetTrigger>
                 </NavLink>
               ))}
-              <div>User info</div>
+              <div>
+                {currentUser ? (
+                  <Button variant="ghost" size="sm" onClick={onLogout}>
+                    <div className="flex gap-2 items-center">
+                      <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
+                    </div>
+                  </Button>
+                ) : (
+                  <Button asChild>
+                    <Link to="/login">Login</Link>
+                  </Button>
+                )}
+              </div>
             </div>
           </SheetDescription>
         </SheetHeader>

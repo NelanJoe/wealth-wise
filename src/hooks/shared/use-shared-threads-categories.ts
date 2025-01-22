@@ -10,9 +10,20 @@ export const useSharedThreadsCategories = () => {
         queryFn: async () => await getThreads(),
       },
       {
-        queryKey: ["categories"],
+        queryKey: ["threads", "categories"],
         queryFn: async () => await getCategories(),
       },
     ],
+    combine: (results) => {
+      const [{ data: threads }, { data: categories }] = results;
+
+      return {
+        threads,
+        categories,
+        pending: results.some((result) => result.isPending),
+        isError: results.some((result) => result.isError),
+        error: results.some((result) => result.error?.message),
+      };
+    },
   });
 };
