@@ -11,7 +11,9 @@ export default function ThreadItem({ thread }: { thread: Thread }) {
     <div className="w-full p-4 space-y-5 bg-white rounded-md shadow">
       <div className="flex flex-row gap-3 ">
         <Avatar>
-          <AvatarFallback>{thread.author.displayName}</AvatarFallback>
+          <AvatarFallback>
+            {thread.author.displayName.slice(0, 2)}
+          </AvatarFallback>
           <AvatarImage
             src={`${thread.author.photoURL}`}
             alt={`${thread.author.displayName}`}

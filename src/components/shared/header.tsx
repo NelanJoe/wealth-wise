@@ -81,7 +81,10 @@ const DesktopView = () => {
             </PopoverContent>
           </Popover>
         ) : (
-          <Button asChild>
+          <Button
+            asChild
+            className="bg-blue-500 hover:bg-blue-500/80 rounded-lg"
+          >
             <Link to="/login">Login</Link>
           </Button>
         )}
@@ -127,7 +130,10 @@ const MobileView = () => {
                     </div>
                   </Button>
                 ) : (
-                  <Button asChild>
+                  <Button
+                    asChild
+                    className="bg-blue-500 hover:bg-blue-500/80 rounded-lg"
+                  >
                     <Link to="/login">Login</Link>
                   </Button>
                 )}

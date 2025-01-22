@@ -14,6 +14,7 @@ import ArticlePage from "@/pages/article";
 import AboutPage from "@/pages/about";
 import Threads from "@/pages/threads";
 import ThreadShow from "@/pages/threads/show";
+import ThreadsCreate from "@/pages/threads/create";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
 
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
                 element: <Threads />,
               },
             ],
+          },
+          {
+            path: "threads/create",
+            element: <ThreadsCreate />,
           },
           {
             path: "threads/:threadId",

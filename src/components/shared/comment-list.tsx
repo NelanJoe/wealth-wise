@@ -7,7 +7,7 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
       {comments?.length > 0 ? (
         comments.map((comment) => <CommentItem comment={comment} />)
       ) : (
-        <div>Belum ada komentar</div>
+        <i>Belum ada komentar</i>
       )}
     </div>
   );

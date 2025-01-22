@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "../ui/button";
-import type { Category } from "@/types/category";
+import type { Category } from "@/schemas/category.schema";
 
 type CategoriesProps = {
   categories: Category[];

@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftIcon, Loader2Icon } from "lucide-react";
-import { useSharedThreadComments } from "@/hooks/shared/use-shared-thread-comments";
+import { useSharedThreadComments, useCurrentUser } from "@/hooks";
 
 import { formatTimeAgo } from "@/lib/format-time-ago";
 
@@ -9,10 +9,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import CommentList from "@/components/shared/comment-list";
+import CommentForm from "@/components/shared/comment-form";
 
 export default function ThreadShow() {
   const navigate = useNavigate();
   const { threadId } = useParams<"threadId">();
+
+  const { data: currentUser } = useCurrentUser();
 
   const { thread, comments, pending, isError } = useSharedThreadComments(
     String(threadId)
@@ -81,25 +84,38 @@ export default function ThreadShow() {
             </div>
           </h3>
         </div>
-        <div className="border p-4 space-y-5 rounded-sm">
-          <div className="flex flex-row gap-3">
-            <div>
-              <Avatar>
-                <AvatarFallback>{thread?.author.displayName}</AvatarFallback>
-                <AvatarImage
-                  src={`${thread?.author.photoURL}`}
-                  alt={`${thread?.author.displayName}`}
-                />
-              </Avatar>
+        <div className="border p-4 space-y-5 rounded-md">
+          {currentUser ? (
+            <div className="flex flex-row gap-3">
+              <div>
+                <Avatar>
+                  <AvatarFallback>
+                    {currentUser.displayName.slice(0, 2)}
+                  </AvatarFallback>
+                  <AvatarImage
+                    src={`${currentUser.photoURL}`}
+                    alt={`${currentUser.displayName}`}
+                  />
+                </Avatar>
+              </div>
+              <div className="w-full">
+                <CommentForm />
+              </div>
             </div>
-            <div className="w-full">
-              <p>Form</p>
+          ) : (
+            <div className="border p-4 rounded-lg">
+              <div className="flex flex-col items-center justify-center">
+                <h2>Silahkan masuk untuk mengirim komentar.</h2>
+                <Link to="/login" className="underline text-primary">
+                  <i>Masuk</i>
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
           {pending ? (
             <div>Loading...</div>
           ) : isError ? (
-            <span>Not Found Comments</span>
+            <i>Not Found Comments</i>
           ) : (
             comments && <CommentList comments={comments} />
           )}
