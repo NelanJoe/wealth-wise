@@ -14,7 +14,10 @@ export default function Hero() {
           Kami membantu anda menemukan solusi finansial yang sesuai dengan
           kebutuhan anda
         </p>
-        <Button className="rounded-full" asChild>
+        <Button
+          className="rounded-full bg-blue-500 hover:bg-blue-500/80"
+          asChild
+        >
           <Link to="/kalkulator">
             <div className="flex flex-row items-center gap-1">
               <p>Coba Sekarang</p>
