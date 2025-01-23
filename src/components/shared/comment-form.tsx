@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon } from "lucide-react";
 
-import { useCreateComment } from "@/hooks/comment";
+import { useCreateComment } from "@/hooks";
 
 import { Button } from "../ui/button";
 import {
@@ -17,12 +17,16 @@ import {
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
 
+const MIN_LENGTH: number = 3;
 const MAX_LENGTH: number = 300;
 
 const formSchema = z.object({
-  text: z.string().max(MAX_LENGTH, {
-    message: `Maksimal ${MAX_LENGTH} karakter`,
-  }),
+  text: z
+    .string()
+    .min(MIN_LENGTH, { message: `Minimal ${MIN_LENGTH} karakter` })
+    .max(MAX_LENGTH, {
+      message: `Maksimal ${MAX_LENGTH} karakter`,
+    }),
 });
 
 export default function CommentForm() {
@@ -62,6 +66,7 @@ export default function CommentForm() {
                   id="komentar"
                   placeholder="Tulis komentar..."
                   className="resize-none h-fit"
+                  minLength={MIN_LENGTH}
                   maxLength={MAX_LENGTH}
                   rows={4}
                   {...field}

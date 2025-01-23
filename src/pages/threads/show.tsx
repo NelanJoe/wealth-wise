@@ -44,7 +44,9 @@ export default function ThreadShow() {
             <div className="p-4 mb-10 space-y-4 border rounded-md">
               <div className="flex flex-row gap-3">
                 <Avatar>
-                  <AvatarFallback>{thread?.author.displayName}</AvatarFallback>
+                  <AvatarFallback>
+                    {thread?.author.displayName.slice(0, 2)}
+                  </AvatarFallback>
                   <AvatarImage
                     src={`${thread?.author.photoURL}`}
                     alt={`${thread?.author.displayName}`}

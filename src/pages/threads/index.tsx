@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { SquarePlusIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
-import { useSharedThreadsCategories } from "@/hooks";
+import { useCurrentUser, useSharedThreadsCategories } from "@/hooks";
 
 import { Button } from "@/components/ui/button";
 import ThreadList from "@/components/shared/thread-list";
@@ -17,6 +17,8 @@ export default function Threads() {
 
   const { threads, categories, pending, isError } =
     useSharedThreadsCategories();
+
+  const { data: currentUser } = useCurrentUser();
 
   const filteredThreads = useMemo(() => {
     if (!threads || threads.length === 0) return [];
@@ -95,17 +97,19 @@ export default function Threads() {
             <div className="h-[2px] w-36 bg-blue-500"></div>
           </div>
           <div>
-            <Button
-              asChild
-              className="w-full bg-blue-500 rounded-full hover:bg-blue-500/80"
-            >
-              <Link to="/threads/create">
-                <div className="flex flex-row items-center gap-1">
-                  <SquarePlusIcon className="w-5 h-5" />
-                  <span>Buat Diskusi Baru</span>
-                </div>
-              </Link>
-            </Button>
+            {currentUser && (
+              <Button
+                asChild
+                className="w-full bg-blue-500 rounded-full hover:bg-blue-500/80"
+              >
+                <Link to="/threads/create">
+                  <div className="flex flex-row items-center gap-1">
+                    <SquarePlusIcon className="w-5 h-5" />
+                    <span>Buat Diskusi Baru</span>
+                  </div>
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
         <div>

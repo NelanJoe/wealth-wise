@@ -52,7 +52,7 @@ export const createComment = async ({
       text,
       createdAt,
       author: {
-        uid,
+        id: uid,
         displayName,
         email,
         photoURL,

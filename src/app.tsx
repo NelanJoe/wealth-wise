@@ -25,42 +25,32 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        errorElement: <NotFound />,
-        children: [
-          {
-            index: true,
-            element: <HomePage />,
-          },
-          {
-            path: "/kalkulator",
-            element: <CalculatorPage />,
-          },
-          {
-            path: "/forum",
-            children: [
-              {
-                index: true,
-                element: <Threads />,
-              },
-            ],
-          },
-          {
-            path: "threads/create",
-            element: <ThreadsCreate />,
-          },
-          {
-            path: "threads/:threadId",
-            element: <ThreadShow />,
-          },
-          {
-            path: "/artikel",
-            element: <ArticlePage />,
-          },
-          {
-            path: "/tentang",
-            element: <AboutPage />,
-          },
-        ],
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "/kalkulator",
+        element: <CalculatorPage />,
+      },
+      {
+        path: "/forum",
+        element: <Threads />,
+      },
+      {
+        path: "threads/create",
+        element: <ThreadsCreate />,
+      },
+      {
+        path: "threads/:threadId",
+        element: <ThreadShow />,
+      },
+      {
+        path: "/artikel",
+        element: <ArticlePage />,
+      },
+      {
+        path: "/tentang",
+        element: <AboutPage />,
       },
     ],
   },

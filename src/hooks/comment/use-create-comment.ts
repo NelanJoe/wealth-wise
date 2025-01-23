@@ -7,13 +7,16 @@ export const useCreateComment = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
+    mutationKey: ["createComment"],
     mutationFn: async ({
       threadId,
       text,
     }: {
       threadId: string;
       text: string;
-    }) => await createCommentApi({ threadId, text }),
+    }) => {
+      return await createCommentApi({ threadId, text });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["threads", "comments"] });
       toast.success("Komentar berhasil ditambahkan.");
