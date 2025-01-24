@@ -133,8 +133,6 @@ export const loginWithGoogle = async () => {
 
 export const updateProfileUser = async ({ userName }: { userName: string }) => {
   try {
-    console.log(userName);
-
     const currentUser = auth.currentUser as UserFirebaseType;
     if (currentUser) {
       await updateProfile(currentUser, {
