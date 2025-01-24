@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, Loader2Icon } from "lucide-react";
+
+import { useLoginWithGoogle } from "@/hooks";
 
 import { Button } from "@/components/ui/button";
 import LoginForm from "@/components/shared/login-form";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { loginWithGoogle, isPending } = useLoginWithGoogle();
 
   return (
     <>
@@ -31,15 +34,24 @@ export default function LoginPage() {
           </p>
         </div>
         <div className="flex flex-col">
-          <Button variant="outline" className="w-full">
-            <div className="flex flex-row items-center justify-center gap-1">
-              <img
-                src="/assets/google.svg"
-                alt="google-icon"
-                className="w-8 h-8"
-              />
-              <span>Google</span>
-            </div>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => loginWithGoogle()}
+            disabled={isPending}
+          >
+            {isPending ? (
+              <Loader2Icon className="animate-spin" />
+            ) : (
+              <div className="flex flex-row items-center justify-center gap-1">
+                <img
+                  src="/assets/google.svg"
+                  alt="google-icon"
+                  className="w-8 h-8"
+                />
+                <span>Google</span>
+              </div>
+            )}
           </Button>
         </div>
         <div className="flex flex-row items-center gap-3">

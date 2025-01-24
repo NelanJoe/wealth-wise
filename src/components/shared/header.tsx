@@ -68,7 +68,7 @@ const DesktopView = () => {
                   alt={currentUser.displayName}
                 />
                 <AvatarFallback>
-                  {currentUser.displayName.slice(0, 2)}
+                  {currentUser.displayName?.slice(0, 2)}
                 </AvatarFallback>
               </Avatar>
             </PopoverTrigger>

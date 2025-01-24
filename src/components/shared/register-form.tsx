@@ -1,7 +1,11 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
+
+import { useRegister } from "@/hooks";
 
 import { registerSchema, type Register } from "@/schemas/auth.schema";
+import { updateProfileUser } from "@/services/auth.service";
 
 import {
   Form,
@@ -25,8 +29,15 @@ export default function RegisterForm() {
     },
   });
 
+  const { register, isPending } = useRegister();
+
   const onSubmit: SubmitHandler<Register> = (values) => {
-    console.log(values);
+    register(values, {
+      onSettled: async () => {
+        await updateProfileUser({ userName: values.username });
+        form.reset();
+      },
+    });
   };
 
   return (
@@ -91,8 +102,13 @@ export default function RegisterForm() {
         <Button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-500/80 disabled:bg-blue-500/100"
+          disabled={isPending}
         >
-          Login
+          {isPending ? (
+            <Loader2Icon className="w-4 h-4 animate-spin" />
+          ) : (
+            "Daftar"
+          )}
         </Button>
       </form>
     </Form>
