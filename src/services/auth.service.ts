@@ -5,6 +5,8 @@ import {
   onAuthStateChanged,
   signOut,
   signInWithPopup,
+  updateProfile,
+  type User as UserFirebaseType,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -122,6 +124,25 @@ export const loginWithGoogle = async () => {
     }
 
     throw new Error("An error occurred while logging in with Google.");
+  }
+};
+
+export const updateProfileUser = async ({ userName }: { userName: string }) => {
+  try {
+    console.log(userName);
+
+    const currentUser = auth.currentUser as UserFirebaseType;
+    if (currentUser) {
+      await updateProfile(currentUser, {
+        displayName: userName,
+      });
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("An error occurred while updating user.");
   }
 };
 
