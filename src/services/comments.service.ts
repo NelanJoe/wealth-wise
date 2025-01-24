@@ -21,7 +21,7 @@ export const getComments = async (threadId: string) => {
     const threadComments = threadCommentsSnapshot.docs.map((doc) => {
       return {
         ...doc.data(),
-        id: doc.id,
+        uid: doc.id,
       } as Comment;
     }) as Comment[];
 

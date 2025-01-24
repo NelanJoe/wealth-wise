@@ -1,6 +1,6 @@
 import { collection, getDocs, query } from "firebase/firestore";
 import db from "@/lib/firebase/db";
-import { Category } from "@/schemas/category.schema";
+import type { Category } from "@/schemas/category.schema";
 
 export const getCategories = async () => {
   try {
