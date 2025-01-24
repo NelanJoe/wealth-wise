@@ -21,13 +21,17 @@ googleAuthProvider.setCustomParameters({
   prompt: "select_account",
 });
 
+type AdditionalInformation = {
+  [key: string]: string | null;
+};
+
 export const createUserFromAuth = async ({
   userAuth,
   additionalInformation,
 }: {
   userAuth: User;
-  additionalInformation?: Record<string, string>;
-}) => {
+  additionalInformation?: AdditionalInformation;
+}): Promise<void> => {
   if (!userAuth) return;
 
   const userRef = doc(db, "users", userAuth.uid);
