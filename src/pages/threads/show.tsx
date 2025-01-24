@@ -1,6 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeftIcon, Loader2Icon } from "lucide-react";
-import { useSharedThreadComments, useCurrentUser } from "@/hooks";
+import { ArrowLeftIcon, DeleteIcon, Loader2Icon } from "lucide-react";
+import {
+  useSharedThreadComments,
+  useCurrentUser,
+  useDeleteThread,
+} from "@/hooks";
 
 import { formatTimeAgo } from "@/lib/format-time-ago";
 
@@ -22,17 +26,47 @@ export default function ThreadShow() {
     String(threadId)
   );
 
+  const { deleteThread, isPending } = useDeleteThread();
+  const onDeleteThread = () => deleteThread(String(threadId));
+
+  const isAuthor = currentUser?.uid === thread?.author.uid;
+
   return (
     <section className="pt-10 pb-24">
       <div className="max-w-4xl px-4 mx-auto mb-6">
-        <Button
-          onClick={() => navigate(-1)}
-          variant="outline"
-          className="rounded-full"
-        >
-          <ArrowLeftIcon className="w-4 h-4" />
-          <span className="ml-2">Kembali</span>
-        </Button>
+        <div className="flex items-center justify-between">
+          <Button
+            onClick={() => navigate(-1)}
+            variant="outline"
+            className="rounded-full"
+          >
+            <ArrowLeftIcon className="w-4 h-4" />
+            <span className="ml-2">Kembali</span>
+          </Button>
+          <div className="flex gap-3">
+            {isAuthor && (
+              <Button
+                size="sm"
+                variant="destructive"
+                className="rounded-full"
+                disabled={isPending}
+                onClick={onDeleteThread}
+              >
+                {isPending ? (
+                  <div className="flex gap-2">
+                    <span>Hapus diskusi</span>
+                    <Loader2Icon className="w-4 h-4 animate-spin" />
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <span>Hapus diskusi</span>
+                    <DeleteIcon className="w-4 h-4" />
+                  </div>
+                )}
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
       <div className="max-w-4xl px-4 mx-auto space-y-4 min-h-max">
         <div>
@@ -45,7 +79,7 @@ export default function ThreadShow() {
               <div className="flex flex-row gap-3">
                 <Avatar>
                   <AvatarFallback>
-                    {thread?.author.displayName.slice(0, 2)}
+                    {thread?.author.displayName?.slice(0, 2)}
                   </AvatarFallback>
                   <AvatarImage
                     src={`${thread?.author.photoURL}`}
@@ -93,7 +127,7 @@ export default function ThreadShow() {
               <div>
                 <Avatar>
                   <AvatarFallback>
-                    {currentUser.displayName.slice(0, 2)}
+                    {currentUser.displayName?.slice(0, 2)}
                   </AvatarFallback>
                   <AvatarImage
                     src={`${currentUser.photoURL}`}

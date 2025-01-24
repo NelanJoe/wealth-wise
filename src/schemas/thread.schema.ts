@@ -2,7 +2,7 @@ import { z } from "zod";
 import { userSchema } from "./user.schema";
 
 export const threadSchema = z.object({
-  id: z.string(),
+  uid: z.string(),
   title: z.string(),
   category: z.string(),
   body: z.string(),

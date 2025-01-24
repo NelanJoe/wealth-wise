@@ -11,13 +11,13 @@ export default function ThreadItem({ thread }: { thread: Thread }) {
     <div className="w-full p-4 space-y-5 bg-white rounded-md shadow">
       <div className="flex flex-row gap-3 ">
         <Avatar>
-          <AvatarFallback>
-            {thread.author.displayName.slice(0, 2)}
-          </AvatarFallback>
           <AvatarImage
             src={`${thread.author.photoURL}`}
             alt={`${thread.author.displayName}`}
           />
+          <AvatarFallback>
+            {thread.author.displayName?.slice(0, 2)}
+          </AvatarFallback>
         </Avatar>
         <div className="flex flex-col gap-1 text-sm">
           <p className="text-blue-500">{thread.author.displayName}</p>
@@ -27,7 +27,7 @@ export default function ThreadItem({ thread }: { thread: Thread }) {
       <div className="space-y-3">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold capitalize transition-all duration-150 ease-in cursor-pointer hover:text-blue-500">
-            <Link to={`/threads/${thread.id}`}>{thread.title}</Link>
+            <Link to={`/threads/${thread.uid}`}>{thread.title}</Link>
           </h3>
           <p>{thread.body}</p>
         </div>

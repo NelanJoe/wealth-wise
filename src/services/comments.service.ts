@@ -13,7 +13,7 @@ import type { User } from "@/schemas/user.schema";
 
 export const getComments = async (threadId: string) => {
   try {
-    const threadCommentsRef = collection(db, "posts", threadId, "comments");
+    const threadCommentsRef = collection(db, "threads", threadId, "comments");
 
     const q = query(threadCommentsRef, orderBy("createdAt", "desc"));
 
@@ -43,7 +43,7 @@ export const createComment = async ({
   text: string;
 }) => {
   try {
-    const commentRef = collection(db, "posts", threadId, "comments");
+    const commentRef = collection(db, "threads", threadId, "comments");
     const createdAt = new Date().toISOString();
 
     const { uid, displayName, email, photoURL } = auth.currentUser as User;
@@ -52,7 +52,7 @@ export const createComment = async ({
       text,
       createdAt,
       author: {
-        id: uid,
+        uid,
         displayName,
         email,
         photoURL,

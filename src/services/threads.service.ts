@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -15,7 +16,7 @@ import type { User } from "@/schemas/user.schema";
 
 export const getThreads = async () => {
   try {
-    const threadsRef = collection(db, "posts");
+    const threadsRef = collection(db, "threads");
 
     const q = query(threadsRef, orderBy("createdAt", "desc"));
 
@@ -23,7 +24,7 @@ export const getThreads = async () => {
     const threads = threadsSnapshot.docs.map(
       (doc) =>
         ({
-          id: doc.id,
+          uid: doc.id,
           ...doc.data(),
         } as Thread)
     ) as Thread[];
@@ -40,7 +41,7 @@ export const getThreads = async () => {
 
 export const getThread = async (threadId: string) => {
   try {
-    const threadRef = doc(db, "posts", threadId);
+    const threadRef = doc(db, "threads", threadId);
 
     const threadSnapshot = await getDoc(threadRef);
 
@@ -65,7 +66,7 @@ export const createThread = async ({
   category,
 }: Pick<Thread, "title" | "body" | "category">) => {
   try {
-    const threadRef = collection(db, "posts");
+    const threadRef = collection(db, "threads");
     const createdAt = new Date().toISOString();
 
     const { uid, displayName, email, photoURL } = auth.currentUser as User;
@@ -76,7 +77,7 @@ export const createThread = async ({
       category,
       createdAt,
       author: {
-        id: uid,
+        uid,
         displayName,
         email,
         photoURL,
@@ -89,5 +90,18 @@ export const createThread = async ({
     }
 
     throw new Error("An error occurred while creating a thread.");
+  }
+};
+
+export const deleteThread = async (threadId: string) => {
+  try {
+    const threadRef = doc(db, "threads", threadId);
+    await deleteDoc(threadRef);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("An error occurred while deleteing a thread");
   }
 };

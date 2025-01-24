@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EmergencyFund from "@/components/shared/emergency-fund";
+
 export default function CalculatorPage() {
   return (
     <div>
@@ -43,25 +46,24 @@ export default function CalculatorPage() {
         </div>
       </div>
       <div className="max-w-4xl px-4 py-20 mx-auto">
-        <div className="grid grid-cols-3 gap-3">
-          <div className="flex items-center justify-center p-4 border rounded-md shadow">
-            <p>Lorem, ipsum.</p>
-          </div>
-          <div className="flex items-center justify-center p-4 border rounded-md shadow">
-            <p>Lorem, ipsum.</p>
-          </div>
-          <div className="flex items-center justify-center p-4 border rounded-md shadow">
-            <p>Lorem, ipsum.</p>
-          </div>
-        </div>
-
-        <div className="py-8">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-            voluptas voluptatum iste quam. Quae voluptatem exercitationem ut
-            rem, velit quisquam!
-          </p>
-        </div>
+        <Tabs defaultValue="dana-darurat">
+          <TabsList className="grid w-full grid-cols-3 ">
+            <TabsTrigger value="investasi">Investasi</TabsTrigger>
+            <TabsTrigger value="dana-darurat">Dana Darurat</TabsTrigger>
+            <TabsTrigger value="dana-pensiun">Dana Pensiun</TabsTrigger>
+          </TabsList>
+          <TabsContent value="investasi">
+            <p>Form</p>
+            <p>Table</p>
+          </TabsContent>
+          <TabsContent value="dana-darurat">
+            <EmergencyFund />
+          </TabsContent>
+          <TabsContent value="dana-pensiun">
+            <p>Form</p>
+            <p>Table</p>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
