@@ -1,23 +1,23 @@
 import { z } from "zod";
 
 export const investmentSchema = z.object({
-  amount: z.number(),
-  monthlySaving: z.number(),
-  annualReturn: z.number(),
-  years: z.number(),
+  currentlyAmount: z.coerce.string(),
+  monthlySaving: z.coerce.string(),
+  annualReturn: z.coerce.number(),
+  years: z.coerce.number(),
 });
 
 export const pensionFundSchema = z.object({
-  monthlyExpensesLater: z.number(),
-  yearsLater: z.number(),
-  inflation: z.number(),
-  annualReturn: z.number(),
+  monthlyExpensesLater: z.coerce.string(),
+  yearsLater: z.coerce.number(),
+  inflation: z.coerce.number(),
+  annualReturn: z.coerce.number(),
 });
 
 export const emergencyFundSchema = z.object({
-  status: z.string(),
-  dependents: z.string(),
-  monthlyExpenses: z.string(),
+  status: z.coerce.string(),
+  dependents: z.coerce.string(),
+  monthlyExpenses: z.coerce.string(),
 });
 
 export type Investment = z.infer<typeof investmentSchema>;

@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EmergencyFund from "@/components/shared/emergency-fund";
+import Invesment from "@/components/shared/invesment";
+import PensionFund from "@/components/shared/pension-fund";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function CalculatorPage() {
   return (
@@ -46,22 +49,20 @@ export default function CalculatorPage() {
         </div>
       </div>
       <div className="max-w-4xl px-4 py-20 mx-auto">
-        <Tabs defaultValue="dana-darurat">
+        <Tabs defaultValue="dana-pensiun">
           <TabsList className="grid w-full grid-cols-3 ">
             <TabsTrigger value="investasi">Investasi</TabsTrigger>
             <TabsTrigger value="dana-darurat">Dana Darurat</TabsTrigger>
             <TabsTrigger value="dana-pensiun">Dana Pensiun</TabsTrigger>
           </TabsList>
           <TabsContent value="investasi">
-            <p>Form</p>
-            <p>Table</p>
+            <Invesment />
           </TabsContent>
           <TabsContent value="dana-darurat">
             <EmergencyFund />
           </TabsContent>
           <TabsContent value="dana-pensiun">
-            <p>Form</p>
-            <p>Table</p>
+            <PensionFund />
           </TabsContent>
         </Tabs>
       </div>

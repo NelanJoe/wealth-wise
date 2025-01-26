@@ -15,16 +15,7 @@ import {
   CardContent,
   CardFooter,
 } from "../ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import {
@@ -36,15 +27,11 @@ import {
   SelectTrigger,
   SelectContent,
 } from "../ui/select";
+import EmergencyFundInformation from "./emergency-fund-information";
 
 export default function EmergencyFundForm() {
-  const form = useForm({
+  const form = useForm<z.infer<typeof emergencyFundSchema>>({
     resolver: zodResolver(emergencyFundSchema),
-    defaultValues: {
-      status: "",
-      dependents: "",
-      monthlyExpenses: "",
-    },
   });
 
   const [emergencyFundAmount, setEmergencyFundAmount] = useState<number>(0);
@@ -90,48 +77,7 @@ export default function EmergencyFundForm() {
               Perhitungan dana darurat untuk kebutuhan jangka panjang
             </CardDescription>
           </div>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button type="button" size="sm" variant="outline">
-                Cara Hitung
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>Formula Hitung Dana Darurat</DialogTitle>
-                <DialogDescription>
-                  Berikut ini adalah semua kemungkinan yang dapat terjadi:
-                </DialogDescription>
-              </DialogHeader>
-              <div>
-                <ul className="list-inside list-decimal space-y-2">
-                  <li>
-                    Anda hanya menanggung diri sendiri. Dana Darurat Anda adalah
-                    6 kali pengeluaran bulanan.
-                  </li>
-                  <li>
-                    Anda belum menikah, tetapi punya tanggungan lain. Dana
-                    Darurat Anda adalah 9 kali pengeluaran bulanan.
-                  </li>
-                  <li>
-                    Anda sudah menikah, tetapi tidak punya tanggungan lain. Dana
-                    Darurat Anda adalah 9 kali pengeluaran bulanan.
-                  </li>
-                  <li>
-                    Anda sudah menikah dan punya tanggungan lain. Dana Darurat
-                    Anda adalah 12 kali pengeluaran bulanan.
-                  </li>
-                </ul>
-              </div>
-              <DialogFooter className="sm:justify-start">
-                <DialogClose asChild>
-                  <Button type="button" variant="secondary">
-                    Close
-                  </Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <EmergencyFundInformation />
         </div>
       </CardHeader>
       <Form {...form}>
@@ -206,15 +152,17 @@ export default function EmergencyFundForm() {
                 </FormItem>
               )}
             />
-            <div>
-              <p>
-                Jumlah dana darurat minimal yang Anda butuhkan adalah:{" "}
-                {formatCurrency(emergencyFundAmount)}
-              </p>
-            </div>
+            {emergencyFundAmount ? (
+              <div>
+                <p>
+                  Jumlah dana darurat minimal yang Anda butuhkan adalah:{" "}
+                  {formatCurrency(emergencyFundAmount)}
+                </p>
+              </div>
+            ) : null}
           </CardContent>
           <CardFooter>
-            <div className="flex flex-col md:flex-row gap-4 w-full md:w-fit">
+            <div className="flex flex-col w-full gap-4 md:flex-row md:w-fit">
               <Button type="submit" className="w-full">
                 Hitung
               </Button>

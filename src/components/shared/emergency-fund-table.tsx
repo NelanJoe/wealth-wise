@@ -23,6 +23,7 @@ export default function EmergencyFundTable() {
               <TableHead>Tanggungan</TableHead>
               <TableHead>Pengeluaran Bulanan</TableHead>
               <TableHead>Jumlah Dana Darurat</TableHead>
+              <TableHead>Tanggal</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -32,7 +33,8 @@ export default function EmergencyFundTable() {
                 <TableCell>Belum Menikah</TableCell>
                 <TableCell>Tidak Punya</TableCell>
                 <TableCell>Rp. 1.500.000</TableCell>
-                <TableCell>Rp. 9.000.000</TableCell>
+                <TableCell>Rp. 1.500.000</TableCell>
+                <TableCell>{new Date().toISOString().split("T")[0]}</TableCell>
               </TableRow>
             ))}
           </TableBody>

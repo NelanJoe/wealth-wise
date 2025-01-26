@@ -1,3 +1,205 @@
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { pensionFundSchema } from "@/schemas/calculator.schema";
+import { formatCurrency } from "@/lib/format-currency";
+
+import { Button } from "../ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import {
+  Form,
+  FormField,
+  FormControl,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+
+import PensionFundInformation from "./pension-fund-information";
+
 export default function PensionFundForm() {
-  return <div>PensionFundForm</div>;
+  const form = useForm<z.infer<typeof pensionFundSchema>>({
+    resolver: zodResolver(pensionFundSchema),
+  });
+
+  const [pensionFundValue, setPensionFundValue] = useState<number>(0);
+
+  const onSubmit: SubmitHandler<z.infer<typeof pensionFundSchema>> = ({
+    monthlyExpensesLater,
+    yearsLater,
+    inflation,
+    annualReturn,
+  }) => {
+    const MELValue = Number(monthlyExpensesLater.replace(/[^0-9]/g, ""));
+    const tValue = yearsLater;
+    const iValue = inflation / 100;
+    const rValue = annualReturn / 100;
+
+    // Calculate future value of monthly expenses
+    const MValue = MELValue * Math.pow(1 + iValue, tValue);
+    const YValue = MValue * 12;
+
+    // Calculate result based on return and inflation rates
+    let totalPensionFundValue;
+    if (rValue > iValue) {
+      totalPensionFundValue = (100 / (rValue * 100 - iValue * 100)) * YValue;
+    } else {
+      totalPensionFundValue = 25 * YValue;
+    }
+
+    setPensionFundValue(totalPensionFundValue);
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>Dana Pensiun</CardTitle>
+            <CardDescription>
+              Rencanakan Dana Pensiun untuk Masa Tua Anda
+            </CardDescription>
+          </div>
+          <div>
+            <PensionFundInformation />
+          </div>
+        </div>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardContent className="space-y-4">
+            <FormField
+              name="monthlyExpensesLater"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="monthlyExpensesLater">
+                    <div className="flex items-center gap-">
+                      Rencana pengeluaran bulanan saat Anda pensiun nanti?{" "}
+                      <span className="text-primary">(MEL)</span>
+                    </div>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      id="monthlyExpensesLater"
+                      type="currency"
+                      placeholder="Contoh: Rp. 10.000.000"
+                      {...field}
+                      className="w-[75%] md:w-[70%]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="yearsLater"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="yearsLater">
+                    Berapa tahun lagi Anda akan pensiun?{" "}
+                    <span className="text-primary">(t)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="yearsLater"
+                        type="number"
+                        placeholder="20"
+                        {...field}
+                        className="w-[75%] md:w-[70%]"
+                      />
+                      <span className="text-sm md:text-base">tahun</span>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="inflation"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="inflation">
+                    Asumsi Inflasi di Indonesia (Rerata inflasi 10 tahun
+                    terakhir yaitu 3,58%/tahun){" "}
+                    <span className="text-primary">(i)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="inflation"
+                        type="number"
+                        placeholder="3,58"
+                        {...field}
+                        className="w-[75%] md:w-[70%]"
+                      />
+                      <span className="text-sm md:text-base">% / tahun</span>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="annualReturn"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="annualReturn">
+                    Persen-an return investasi Anda per tahun?{" "}
+                    <span className="text-primary">(r)</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="annualReturn"
+                        type="number"
+                        placeholder="5"
+                        {...field}
+                        className="w-[75%] md:w-[70%]"
+                      />
+                      <span className="text-sm md:text-base">% / tahun</span>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {pensionFundValue ? (
+              <div>
+                <p>
+                  Berdasarkan 4% rule, Anda harus memiliki setidaknya{" "}
+                  {formatCurrency(pensionFundValue)} sebagai Dana Pensiun
+                </p>
+              </div>
+            ) : null}
+          </CardContent>
+
+          <CardFooter>
+            <div className="flex flex-col w-full gap-4 md:flex-row md:w-fit">
+              <Button type="submit" className="w-full">
+                Hitung
+              </Button>
+              <Button type="button" className="w-full">
+                Simpan hasil perhitungan
+              </Button>
+            </div>
+          </CardFooter>
+        </form>
+      </Form>
+    </Card>
+  );
 }
