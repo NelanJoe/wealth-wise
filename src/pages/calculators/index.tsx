@@ -22,7 +22,7 @@ export default function CalculatorPage() {
             }}
             className="space-y-2 text-white"
           >
-            <h2 className="text-2xl md:text-4xl font-semibold">Kalkulator</h2>
+            <h2 className="text-2xl font-semibold md:text-4xl">Kalkulator</h2>
             <div className="space-y-1">
               <p className="text-sm md:text-lg">Untuk Hitung Investasi</p>
               <p className="text-sm md:text-lg">Untuk Hitung Dana Darurat</p>
@@ -49,7 +49,7 @@ export default function CalculatorPage() {
         </div>
       </div>
       <div className="max-w-4xl px-4 py-20 mx-auto">
-        <Tabs defaultValue="dana-pensiun">
+        <Tabs defaultValue="investasi">
           <TabsList className="grid w-full grid-cols-3 ">
             <TabsTrigger value="investasi">Investasi</TabsTrigger>
             <TabsTrigger value="dana-darurat">Dana Darurat</TabsTrigger>

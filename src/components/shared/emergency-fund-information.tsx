@@ -26,7 +26,7 @@ export default function EmergencyFundInformation() {
           </DialogDescription>
         </DialogHeader>
         <div>
-          <ul className="list-inside list-decimal space-y-2">
+          <ul className="list-inside list-decimal space-y-2 text-wrap ">
             <li>
               Anda hanya menanggung diri sendiri. Dana Darurat Anda adalah 6
               kali pengeluaran bulanan.

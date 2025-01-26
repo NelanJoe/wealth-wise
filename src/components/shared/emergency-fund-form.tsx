@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon, SaveIcon } from "lucide-react";
 
 import { formatCurrency } from "@/lib/format-currency";
 import { emergencyFundSchema } from "@/schemas/calculator.schema";
@@ -28,13 +29,22 @@ import {
   SelectContent,
 } from "../ui/select";
 import EmergencyFundInformation from "./emergency-fund-information";
+import { useSaveEmergencyFund, useCurrentUser } from "@/hooks";
 
 export default function EmergencyFundForm() {
   const form = useForm<z.infer<typeof emergencyFundSchema>>({
     resolver: zodResolver(emergencyFundSchema),
+    defaultValues: {
+      status: "",
+      dependents: "",
+      monthlyExpenses: "",
+    },
   });
 
   const [emergencyFundAmount, setEmergencyFundAmount] = useState<number>(0);
+
+  const { data: currentUser } = useCurrentUser();
+  const { saveEmergencyFund, isPending } = useSaveEmergencyFund();
 
   const onSubmit: SubmitHandler<z.infer<typeof emergencyFundSchema>> = ({
     status,
@@ -65,6 +75,23 @@ export default function EmergencyFundForm() {
 
     const resultEmergencyFund = fundMultiplier * monthlyExpensesNum;
     setEmergencyFundAmount(resultEmergencyFund);
+  };
+
+  const onSaveEmergencyFund = () => {
+    saveEmergencyFund(
+      {
+        status: form.getValues("status"),
+        dependents: form.getValues("dependents"),
+        monthlyExpenses: form.getValues("monthlyExpenses"),
+        resultEmergencyFund: emergencyFundAmount,
+      },
+      {
+        onSettled: () => {
+          setEmergencyFundAmount(0);
+          form.reset();
+        },
+      }
+    );
   };
 
   return (
@@ -156,10 +183,12 @@ export default function EmergencyFundForm() {
               )}
             />
             {emergencyFundAmount ? (
-              <div>
+              <div className="border p-3 rounded-xl">
                 <p>
                   Jumlah dana darurat minimal yang Anda butuhkan adalah:{" "}
-                  {formatCurrency(emergencyFundAmount)}
+                  <span className="underline decoration-blue-500 underline-offset-4">
+                    {formatCurrency(emergencyFundAmount)}
+                  </span>
                 </p>
               </div>
             ) : null}
@@ -169,9 +198,23 @@ export default function EmergencyFundForm() {
               <Button type="submit" className="w-full">
                 Hitung
               </Button>
-              <Button type="button" className="w-full">
-                Simpan hasil perhitungan
-              </Button>
+              {currentUser && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onSaveEmergencyFund}
+                  disabled={!emergencyFundAmount || isPending}
+                >
+                  <div className="flex items-center gap-2">
+                    {isPending ? (
+                      <Loader2Icon className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <SaveIcon className="w-4 h-4" />
+                    )}{" "}
+                    Simpan hasil perhitungan
+                  </div>
+                </Button>
+              )}
             </div>
           </CardFooter>
         </form>

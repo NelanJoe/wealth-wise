@@ -1,4 +1,5 @@
 import PensionFundForm from "./pension-fund-form";
+import PensionFundTable from "./pension-fund-table";
 
 export default function PensionFund() {
   return (
@@ -7,7 +8,7 @@ export default function PensionFund() {
         <PensionFundForm />
       </div>
       <div>
-        <p>Pension Fund Table</p>
+        <PensionFundTable />
       </div>
     </div>
   );

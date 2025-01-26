@@ -2,6 +2,12 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon, SaveIcon } from "lucide-react";
+
+import { useSaveInvestment } from "@/hooks";
+import { formatCurrency } from "@/lib/format-currency";
+
+import { investmentSchema } from "@/schemas/calculator.schema";
 
 import { Button } from "../ui/button";
 import {
@@ -21,18 +27,16 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-
-import { investmentSchema } from "@/schemas/calculator.schema";
-import { formatCurrency } from "@/lib/format-currency";
-
-import InvesmentInformation from "./invesment-information";
+import InvestmentInformation from "./investment-information";
 
 export default function InvesmentForm() {
   const form = useForm<z.infer<typeof investmentSchema>>({
     resolver: zodResolver(investmentSchema),
   });
 
-  const [invesmentValue, setInvesmentValue] = useState<number>(0);
+  const [investmentValue, setInvestmentValue] = useState<number>(0);
+
+  const { saveInvestment, isPending } = useSaveInvestment();
 
   const onSubmit: SubmitHandler<z.infer<typeof investmentSchema>> = ({
     currentlyAmount,
@@ -47,26 +51,44 @@ export default function InvesmentForm() {
      * Total = A + B // Aset Masa Depan
      *
      * Ket:
-     * PV: Present Value (Aset Awal)
+     * PV: Future Value (Aset Awal)
      * PMT: Jumlah Pengeluaran Bulanan
      * r: Annual Return / Tingkat bunga per-tahun
      * t: Jangka waktu investasi per-tahun
      * */
-    const presentValue = Number(currentlyAmount.replace(/\D/g, ""));
+    const PValue = Number(currentlyAmount.replace(/\D/g, ""));
     const PMTValue = Number(monthlySaving.replace(/\D/g, ""));
-    const rValue = annualReturn / 12 / 100; // 1 tahun = 12 / 100% = 12%
+    const rValue = annualReturn / 12 / 100; // 1 tahun = 12 / 100 = 0.012
     const nValue = years * 12; // input years * 12
 
-    const A = presentValue * Math.pow(1 + rValue, nValue);
+    const A = PValue * Math.pow(1 + rValue, nValue);
     const B = (PMTValue * (Math.pow(1 + rValue, nValue) - 1)) / rValue;
     const totalInvestmentValue = A + B;
 
     if (isNaN(totalInvestmentValue)) {
-      setInvesmentValue(0);
+      setInvestmentValue(0);
       return;
     }
 
-    setInvesmentValue(Number(totalInvestmentValue.toFixed(2)));
+    setInvestmentValue(Number(totalInvestmentValue.toFixed(2)));
+  };
+
+  const onSaveInvestment = () => {
+    saveInvestment(
+      {
+        currentlyAmount: form.getValues("currentlyAmount"),
+        monthlySaving: form.getValues("monthlySaving"),
+        annualReturn: form.getValues("annualReturn"),
+        years: form.getValues("years"),
+        resultInvestment: investmentValue,
+      },
+      {
+        onSettled: () => {
+          setInvestmentValue(0);
+          form.reset();
+        },
+      }
+    );
   };
 
   return (
@@ -80,7 +102,7 @@ export default function InvesmentForm() {
               Terapkan
             </CardDescription>
           </div>
-          <InvesmentInformation />
+          <InvestmentInformation />
         </div>
       </CardHeader>
       <Form {...form}>
@@ -93,14 +115,14 @@ export default function InvesmentForm() {
                 <FormItem>
                   <FormLabel htmlFor="currentlyAmount">
                     Uang yang anda miliki saat ini sebesar?{" "}
-                    <span className="text-primary">(PV)</span>
+                    <span className="text-primary">(P)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
                       id="currentlyAmount"
                       type="currency"
                       placeholder="Contoh: Rp. 5.000.000"
-                      className="w-[70%] md:w-[60%]"
+                      className="w-[75%] md:w-[70%]"
                       {...field}
                     />
                   </FormControl>
@@ -122,7 +144,7 @@ export default function InvesmentForm() {
                       id="monthlySaving"
                       type="currency"
                       placeholder="Contoh: Rp. 1.000.000"
-                      className="w-[70%] md:w-[60%]"
+                      className="w-[75%] md:w-[70%]"
                       {...field}
                     />
                   </FormControl>
@@ -146,7 +168,7 @@ export default function InvesmentForm() {
                         type="number"
                         placeholder="5,9"
                         {...field}
-                        className="w-[70%] md:w-[60%]"
+                        className="w-[75%] md:w-[70%]"
                       />
                       <span className="text-sm">% / tahun</span>
                     </div>
@@ -171,7 +193,7 @@ export default function InvesmentForm() {
                         type="number"
                         placeholder="2"
                         {...field}
-                        className="w-[70%] md:w-[60%]"
+                        className="w-[75%] md:w-[70%]"
                       />
                       <span className="text-sm">tahun</span>
                     </div>
@@ -180,12 +202,18 @@ export default function InvesmentForm() {
                 </FormItem>
               )}
             />
-            {invesmentValue ? (
-              <div>
+            {investmentValue ? (
+              <div className="border p-3 rounded-xl">
                 <p>
                   Uang yang akan Anda miliki pada{" "}
-                  {form.getValues("years") ? form.getValues("years") : 0} tahun
-                  lagi sebesar {formatCurrency(invesmentValue)}
+                  <span className="text-primary">
+                    {form.getValues("years") ? form.getValues("years") : 0}{" "}
+                    tahun
+                  </span>{" "}
+                  lagi sebesar{" "}
+                  <span className="underline underline-offset-4 decoration-primary">
+                    {formatCurrency(investmentValue)}
+                  </span>
                 </p>
               </div>
             ) : null}
@@ -195,8 +223,21 @@ export default function InvesmentForm() {
               <Button type="submit" className="w-full">
                 Hitung
               </Button>
-              <Button type="button" className="w-full">
-                Simpan hasil perhitungan
+              <Button
+                type="button"
+                className="w-full"
+                variant="outline"
+                disabled={!investmentValue || isPending}
+                onClick={onSaveInvestment}
+              >
+                <div className="flex items-center gap-2">
+                  {isPending ? (
+                    <Loader2Icon className="animate-spin" />
+                  ) : (
+                    <SaveIcon className="w-4 h-4" />
+                  )}{" "}
+                  Simpan hasil perhitungan
+                </div>
               </Button>
             </div>
           </CardFooter>

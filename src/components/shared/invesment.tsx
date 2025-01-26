@@ -1,4 +1,5 @@
 import InvesmentForm from "./investment-form";
+import InvestmentTable from "./investment-table";
 
 export default function Invesment() {
   return (
@@ -7,7 +8,7 @@ export default function Invesment() {
         <InvesmentForm />
       </div>
       <div>
-        <p>Investment Table</p>
+        <InvestmentTable />
       </div>
     </div>
   );

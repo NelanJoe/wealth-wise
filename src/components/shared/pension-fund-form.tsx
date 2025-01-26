@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon, SaveIcon } from "lucide-react";
+
+import { useSavePensionFund } from "@/hooks";
 
 import { pensionFundSchema } from "@/schemas/calculator.schema";
 import { formatCurrency } from "@/lib/format-currency";
@@ -34,6 +37,8 @@ export default function PensionFundForm() {
 
   const [pensionFundValue, setPensionFundValue] = useState<number>(0);
 
+  const { savePensionFund, isPending } = useSavePensionFund();
+
   const onSubmit: SubmitHandler<z.infer<typeof pensionFundSchema>> = ({
     monthlyExpensesLater,
     yearsLater,
@@ -58,6 +63,25 @@ export default function PensionFundForm() {
     }
 
     setPensionFundValue(totalPensionFundValue);
+  };
+
+  const onSavePensionFund = () => {
+    // TODO: save to DB
+    savePensionFund(
+      {
+        monthlyExpensesLater: form.getValues("monthlyExpensesLater"),
+        yearsLater: Number(form.getValues("yearsLater")),
+        inflation: (form.getValues("inflation") / 100) * 100,
+        annualReturn: (form.getValues("annualReturn") / 100) * 100,
+        resultPensionFund: pensionFundValue,
+      },
+      {
+        onSettled: () => {
+          setPensionFundValue(0);
+          form.reset();
+        },
+      }
+    );
   };
 
   return (
@@ -193,8 +217,21 @@ export default function PensionFundForm() {
               <Button type="submit" className="w-full">
                 Hitung
               </Button>
-              <Button type="button" className="w-full">
-                Simpan hasil perhitungan
+              <Button
+                type="button"
+                className="w-full"
+                variant="outline"
+                disabled={!pensionFundValue || isPending}
+                onClick={onSavePensionFund}
+              >
+                <div className="flex items-center gap-2">
+                  {isPending ? (
+                    <Loader2Icon className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <SaveIcon className="w-4 h-4" />
+                  )}{" "}
+                  Simpan hasil perhitungan
+                </div>
               </Button>
             </div>
           </CardFooter>

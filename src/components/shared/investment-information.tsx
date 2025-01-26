@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 
-export default function InvesmentInformation() {
+export default function InvestmentInformation() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -39,7 +39,7 @@ export default function InvesmentInformation() {
               <b>A: Future Value dari Aset Awal</b>
             </p>
             <p>
-              A = PV (1 + <sup>r</sup>&frasl;<sub>12</sub>)<sup>12t</sup>
+              A = P (1 + <sup>r</sup>&frasl;<sub>12</sub>)<sup>12t</sup>
             </p>
           </div>
           <div>
