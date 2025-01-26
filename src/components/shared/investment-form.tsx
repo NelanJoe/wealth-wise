@@ -91,12 +91,13 @@ export default function InvesmentForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
+                  <FormLabel htmlFor="currentlyAmount">
                     Uang yang anda miliki saat ini sebesar?{" "}
                     <span className="text-primary">(PV)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
+                      id="currentlyAmount"
                       type="currency"
                       placeholder="Contoh: Rp. 5.000.000"
                       className="w-[70%] md:w-[60%]"
@@ -112,12 +113,13 @@ export default function InvesmentForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
+                  <FormLabel htmlFor="monthlySaving">
                     Uang yang dapat Anda tabung per bulan?{" "}
                     <span className="text-primary">(PMT)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
+                      id="monthlySaving"
                       type="currency"
                       placeholder="Contoh: Rp. 1.000.000"
                       className="w-[70%] md:w-[60%]"
@@ -133,13 +135,14 @@ export default function InvesmentForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
+                  <FormLabel htmlFor="annualReturn">
                     Anda akan investasi di produk yang returnnya?{" "}
                     <span className="text-primary">(r)</span>
                   </FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-3">
                       <Input
+                        id="annualReturn"
                         type="number"
                         placeholder="5,9"
                         {...field}
@@ -157,13 +160,14 @@ export default function InvesmentForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
+                  <FormLabel htmlFor="years">
                     Berapa lama Anda konsisten menabung dan berinvestasi?{" "}
                     <span className="text-primary">(t)</span>
                   </FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-3">
                       <Input
+                        id="years"
                         type="number"
                         placeholder="2"
                         {...field}

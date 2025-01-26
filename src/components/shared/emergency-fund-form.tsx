@@ -88,13 +88,13 @@ export default function EmergencyFundForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Apa status Anda?</FormLabel>
+                  <FormLabel htmlFor="status">Apa status Anda?</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih Status" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent id="status">
                         <SelectGroup>
                           <SelectLabel>Status</SelectLabel>
                           <SelectItem value="lajang">
@@ -113,7 +113,7 @@ export default function EmergencyFundForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
+                  <FormLabel htmlFor="dependents">
                     Apakah mungkin Anda punya tanggungan lain, seperti anak,
                     orangtua, ataupun kerabat?
                   </FormLabel>
@@ -122,7 +122,7 @@ export default function EmergencyFundForm() {
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent id="dependents">
                         <SelectGroup>
                           <SelectLabel>Tunjangan</SelectLabel>
                           <SelectItem value="ya">Ya Punya</SelectItem>
@@ -141,9 +141,12 @@ export default function EmergencyFundForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Berapa pengeluaran Anda setiap bulan?</FormLabel>
+                  <FormLabel htmlFor="monthlyExpenses">
+                    Berapa pengeluaran Anda setiap bulan?
+                  </FormLabel>
                   <FormControl>
                     <Input
+                      id="monthlyExpenses"
                       type="currency"
                       placeholder="Contoh Rp. 1.000.000"
                       {...field}
