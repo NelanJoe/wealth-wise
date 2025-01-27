@@ -53,7 +53,7 @@ export default function EmergencyFundInformation() {
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
-              Close
+              Tutup
             </Button>
           </DialogClose>
         </DialogFooter>
