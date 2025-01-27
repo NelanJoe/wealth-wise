@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, SaveIcon } from "lucide-react";
 
-import { useSaveInvestment } from "@/hooks";
+import { useCurrentUser, useSaveInvestment } from "@/hooks";
 import { formatCurrency } from "@/lib/format-currency";
 
 import { investmentSchema } from "@/schemas/calculator.schema";
@@ -36,6 +36,7 @@ export default function InvesmentForm() {
 
   const [investmentValue, setInvestmentValue] = useState<number>(0);
 
+  const { data: currentUser } = useCurrentUser();
   const { saveInvestment, isPending } = useSaveInvestment();
 
   const onSubmit: SubmitHandler<z.infer<typeof investmentSchema>> = ({
@@ -58,7 +59,7 @@ export default function InvesmentForm() {
      * */
     const PValue = Number(currentlyAmount.replace(/\D/g, ""));
     const PMTValue = Number(monthlySaving.replace(/\D/g, ""));
-    const rValue = annualReturn / 12 / 100; // 1 tahun = 12 / 100 = 0.012
+    const rValue = Number(annualReturn.replace(/\D/g, "")) / 12 / 100;
     const nValue = years * 12; // input years * 12
 
     const A = PValue * Math.pow(1 + rValue, nValue);
@@ -78,7 +79,7 @@ export default function InvesmentForm() {
       {
         currentlyAmount: form.getValues("currentlyAmount"),
         monthlySaving: form.getValues("monthlySaving"),
-        annualReturn: form.getValues("annualReturn"),
+        annualReturn: Number(form.getValues("annualReturn").replace(/\D/g, "")),
         years: form.getValues("years"),
         resultInvestment: investmentValue,
       },
@@ -165,7 +166,7 @@ export default function InvesmentForm() {
                     <div className="flex items-center gap-3">
                       <Input
                         id="annualReturn"
-                        type="number"
+                        type="string"
                         placeholder="5,9"
                         {...field}
                         className="w-[75%] md:w-[70%]"
@@ -203,7 +204,7 @@ export default function InvesmentForm() {
               )}
             />
             {investmentValue ? (
-              <div className="border p-3 rounded-xl">
+              <div className="border p-3 rounded-xl w-[75%] md:w-[70%]">
                 <p>
                   Uang yang akan Anda miliki pada{" "}
                   <span className="text-primary">
@@ -223,22 +224,24 @@ export default function InvesmentForm() {
               <Button type="submit" className="w-full">
                 Hitung
               </Button>
-              <Button
-                type="button"
-                className="w-full"
-                variant="outline"
-                disabled={!investmentValue || isPending}
-                onClick={onSaveInvestment}
-              >
-                <div className="flex items-center gap-2">
-                  {isPending ? (
-                    <Loader2Icon className="animate-spin" />
-                  ) : (
-                    <SaveIcon className="w-4 h-4" />
-                  )}{" "}
-                  Simpan hasil perhitungan
-                </div>
-              </Button>
+              {currentUser && (
+                <Button
+                  type="button"
+                  className="w-full"
+                  variant="outline"
+                  disabled={!investmentValue || isPending}
+                  onClick={onSaveInvestment}
+                >
+                  <div className="flex items-center gap-2">
+                    {isPending ? (
+                      <Loader2Icon className="animate-spin" />
+                    ) : (
+                      <SaveIcon className="w-4 h-4" />
+                    )}{" "}
+                    Simpan hasil perhitungan
+                  </div>
+                </Button>
+              )}
             </div>
           </CardFooter>
         </form>

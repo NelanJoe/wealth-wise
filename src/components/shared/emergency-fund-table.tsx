@@ -42,20 +42,36 @@ export default function EmergencyFundTable() {
       (data) => data.author.uid === currentUser?.uid
     );
 
-    emergencyFundContent = emergencyFundFilter.map((data) => (
-      <TableRow key={data.uid}>
-        <TableCell>{data.uid.slice(0, 3)}</TableCell>
-        <TableCell>
-          {data.status === "lajang" ? "Tidak / Belum Menikah" : "Sudah Menikah"}
-        </TableCell>
-        <TableCell>
-          {data.dependents === "ya" ? "Ada Tunjangan" : "Tidak Ada Tunjangan"}
-        </TableCell>
-        <TableCell>{data.monthlyExpenses}</TableCell>
-        <TableCell>{formatCurrency(data.resultEmergencyFund)}</TableCell>
-        <TableCell>{formatDate(data.createdAt)}</TableCell>
-      </TableRow>
-    ));
+    emergencyFundContent = (
+      <>
+        {emergencyFundFilter.length > 0 ? (
+          emergencyFundFilter.map((data) => (
+            <TableRow key={data.uid}>
+              <TableCell>{data.uid.slice(0, 3)}</TableCell>
+              <TableCell>
+                {data.status === "lajang"
+                  ? "Tidak / Belum Menikah"
+                  : "Sudah Menikah"}
+              </TableCell>
+              <TableCell>
+                {data.dependents === "ya"
+                  ? "Ada Tunjangan"
+                  : "Tidak Ada Tunjangan"}
+              </TableCell>
+              <TableCell>{data.monthlyExpenses}</TableCell>
+              <TableCell>{formatCurrency(data.resultEmergencyFund)}</TableCell>
+              <TableCell>{formatDate(data.createdAt)}</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={6} className="h-12 text-center">
+              Tidak ada riwayat perhitungan dana darurat
+            </TableCell>
+          </TableRow>
+        )}
+      </>
+    );
   }
 
   if (isError) {

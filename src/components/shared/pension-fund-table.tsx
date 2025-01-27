@@ -42,17 +42,29 @@ export default function PensionFundTable() {
       (data) => data.author.uid === currentUser?.uid
     );
 
-    pensionFundContent = pensionFundFilter.map((data) => (
-      <TableRow key={data.uid}>
-        <TableCell>{data.uid.slice(0, 3)}</TableCell>
-        <TableCell>{data.monthlyExpensesLater}</TableCell>
-        <TableCell>{`${data.yearsLater} / tahun`}</TableCell>
-        <TableCell>{`${data.inflation} / tahun`}</TableCell>
-        <TableCell>{`${data.annualReturn}% / tahun`}</TableCell>
-        <TableCell>{formatCurrency(data.resultPensionFund)}</TableCell>
-        <TableCell>{formatDate(data.createdAt)}</TableCell>
-      </TableRow>
-    ));
+    pensionFundContent = (
+      <>
+        {pensionFundFilter.length > 0 ? (
+          pensionFundFilter.map((data) => (
+            <TableRow key={data.uid}>
+              <TableCell>{data.uid.slice(0, 3)}</TableCell>
+              <TableCell>{data.monthlyExpensesLater}</TableCell>
+              <TableCell>{`${data.yearsLater} / tahun`}</TableCell>
+              <TableCell>{`${data.inflation} / tahun`}</TableCell>
+              <TableCell>{`${data.annualReturn}% / tahun`}</TableCell>
+              <TableCell>{formatCurrency(data.resultPensionFund)}</TableCell>
+              <TableCell>{formatDate(data.createdAt)}</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={6} className="h-12 text-center">
+              Tidak ada riwayat perhitungan dana investasi
+            </TableCell>
+          </TableRow>
+        )}
+      </>
+    );
   }
 
   if (isError) {

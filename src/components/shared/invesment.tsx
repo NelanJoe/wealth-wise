@@ -1,15 +1,21 @@
+import { useCurrentUser } from "@/hooks";
+
 import InvesmentForm from "./investment-form";
 import InvestmentTable from "./investment-table";
 
 export default function Invesment() {
+  const { data: currentUser } = useCurrentUser();
+
   return (
     <div className="flex flex-col gap-7">
       <div>
         <InvesmentForm />
       </div>
-      <div>
-        <InvestmentTable />
-      </div>
+      {currentUser ? (
+        <div>
+          <InvestmentTable />
+        </div>
+      ) : null}
     </div>
   );
 }

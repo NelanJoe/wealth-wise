@@ -4,8 +4,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, SaveIcon } from "lucide-react";
 
+import { useSaveEmergencyFund, useCurrentUser } from "@/hooks";
+
 import { formatCurrency } from "@/lib/format-currency";
 import { emergencyFundSchema } from "@/schemas/calculator.schema";
+
+import EmergencyFundInformation from "./emergency-fund-information";
 
 import { Button } from "../ui/button";
 import {
@@ -28,8 +32,6 @@ import {
   SelectTrigger,
   SelectContent,
 } from "../ui/select";
-import EmergencyFundInformation from "./emergency-fund-information";
-import { useSaveEmergencyFund, useCurrentUser } from "@/hooks";
 
 export default function EmergencyFundForm() {
   const form = useForm<z.infer<typeof emergencyFundSchema>>({
@@ -183,7 +185,7 @@ export default function EmergencyFundForm() {
               )}
             />
             {emergencyFundAmount ? (
-              <div className="border p-3 rounded-xl">
+              <div className="p-3 border rounded-xl">
                 <p>
                   Jumlah dana darurat minimal yang Anda butuhkan adalah:{" "}
                   <span className="underline decoration-blue-500 underline-offset-4">

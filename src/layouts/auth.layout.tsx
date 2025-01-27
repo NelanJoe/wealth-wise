@@ -1,23 +1,12 @@
-import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-
-import auth from "@/lib/firebase/auth";
+import { useCurrentUser } from "@/hooks";
+import { Navigate, Outlet } from "react-router-dom";
 
 export default function AuthLayout() {
-  const navigate = useNavigate();
+  const { data: currentUser } = useCurrentUser();
 
-  useEffect(() => {
-    const unsubcribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/", { replace: true });
-      }
-
-      return;
-    });
-
-    return () => unsubcribe();
-  }, [navigate]);
+  if (currentUser) {
+    return <Navigate to="/" replace={true} />;
+  }
 
   return (
     <main className="grid min-h-screen bg-white place-content-center">

@@ -1,5 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "lucide-react";
+
+import { useCurrentUser } from "@/hooks";
 
 import ThreadForm from "@/components/shared/thread-form";
 import { Button } from "@/components/ui/button";
@@ -7,8 +9,14 @@ import { Button } from "@/components/ui/button";
 export default function ThreadsCreate() {
   const navigate = useNavigate();
 
+  const { data: currentUser } = useCurrentUser();
+
+  if (!currentUser) {
+    return <Navigate to="/" replace={true} />;
+  }
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-16 md:py-24">
+    <div className="max-w-4xl px-4 py-16 mx-auto md:py-24">
       <div>
         <Button
           onClick={() => navigate(-1)}

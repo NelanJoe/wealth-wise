@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, SaveIcon } from "lucide-react";
 
-import { useSavePensionFund } from "@/hooks";
+import { useCurrentUser, useSavePensionFund } from "@/hooks";
 
 import { pensionFundSchema } from "@/schemas/calculator.schema";
 import { formatCurrency } from "@/lib/format-currency";
@@ -37,6 +37,7 @@ export default function PensionFundForm() {
 
   const [pensionFundValue, setPensionFundValue] = useState<number>(0);
 
+  const { data: currentUser } = useCurrentUser();
   const { savePensionFund, isPending } = useSavePensionFund();
 
   const onSubmit: SubmitHandler<z.infer<typeof pensionFundSchema>> = ({
@@ -47,8 +48,8 @@ export default function PensionFundForm() {
   }) => {
     const MELValue = Number(monthlyExpensesLater.replace(/[^0-9]/g, ""));
     const tValue = yearsLater;
-    const iValue = inflation / 100;
-    const rValue = annualReturn / 100;
+    const iValue = Number(inflation.replace(/[^0-9]/g, "")) / 100;
+    const rValue = Number(annualReturn.replace(/[^0-9]/g, "")) / 100;
 
     // Calculate future value of monthly expenses
     const MValue = MELValue * Math.pow(1 + iValue, tValue);
@@ -67,12 +68,20 @@ export default function PensionFundForm() {
 
   const onSavePensionFund = () => {
     // TODO: save to DB
+
+    const monthlyExpensesLater = form.getValues("monthlyExpensesLater");
+    const yearsLater = Number(form.getValues("yearsLater"));
+    const inflation =
+      (Number(form.getValues("inflation").replace(/\D/g, "")) / 100) * 100;
+    const annualReturn =
+      (Number(form.getValues("annualReturn").replace(/\D/g, "")) / 100) * 100;
+
     savePensionFund(
       {
-        monthlyExpensesLater: form.getValues("monthlyExpensesLater"),
-        yearsLater: Number(form.getValues("yearsLater")),
-        inflation: (form.getValues("inflation") / 100) * 100,
-        annualReturn: (form.getValues("annualReturn") / 100) * 100,
+        monthlyExpensesLater,
+        yearsLater,
+        inflation,
+        annualReturn,
         resultPensionFund: pensionFundValue,
       },
       {
@@ -165,7 +174,7 @@ export default function PensionFundForm() {
                     <div className="flex items-center gap-2">
                       <Input
                         id="inflation"
-                        type="number"
+                        type="string"
                         placeholder="3,58"
                         {...field}
                         className="w-[75%] md:w-[70%]"
@@ -190,7 +199,7 @@ export default function PensionFundForm() {
                     <div className="flex items-center gap-2">
                       <Input
                         id="annualReturn"
-                        type="number"
+                        type="string"
                         placeholder="5"
                         {...field}
                         className="w-[75%] md:w-[70%]"
@@ -203,10 +212,14 @@ export default function PensionFundForm() {
               )}
             />
             {pensionFundValue ? (
-              <div>
+              <div className="p-3 border rounded-xl">
                 <p>
-                  Berdasarkan 4% rule, Anda harus memiliki setidaknya{" "}
-                  {formatCurrency(pensionFundValue)} sebagai Dana Pensiun
+                  Berdasarkan <span className="text-primary">4% rule</span>,
+                  Anda harus memiliki setidaknya{" "}
+                  <span className="underline decoration-primary underline-offset-4">
+                    {formatCurrency(pensionFundValue)}
+                  </span>{" "}
+                  sebagai Dana Pensiun
                 </p>
               </div>
             ) : null}
@@ -217,22 +230,24 @@ export default function PensionFundForm() {
               <Button type="submit" className="w-full">
                 Hitung
               </Button>
-              <Button
-                type="button"
-                className="w-full"
-                variant="outline"
-                disabled={!pensionFundValue || isPending}
-                onClick={onSavePensionFund}
-              >
-                <div className="flex items-center gap-2">
-                  {isPending ? (
-                    <Loader2Icon className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <SaveIcon className="w-4 h-4" />
-                  )}{" "}
-                  Simpan hasil perhitungan
-                </div>
-              </Button>
+              {currentUser && (
+                <Button
+                  type="button"
+                  className="w-full"
+                  variant="outline"
+                  disabled={!pensionFundValue || isPending}
+                  onClick={onSavePensionFund}
+                >
+                  <div className="flex items-center gap-2">
+                    {isPending ? (
+                      <Loader2Icon className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <SaveIcon className="w-4 h-4" />
+                    )}{" "}
+                    Simpan hasil perhitungan
+                  </div>
+                </Button>
+              )}
             </div>
           </CardFooter>
         </form>

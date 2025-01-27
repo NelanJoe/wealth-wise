@@ -4,7 +4,7 @@ import type { User } from "./user.schema";
 export const investmentSchema = z.object({
   currentlyAmount: z.coerce.string(),
   monthlySaving: z.coerce.string(),
-  annualReturn: z.coerce.number(),
+  annualReturn: z.coerce.string(),
   years: z.coerce.number(),
 });
 
@@ -17,8 +17,8 @@ export const emergencyFundSchema = z.object({
 export const pensionFundSchema = z.object({
   monthlyExpensesLater: z.coerce.string(),
   yearsLater: z.coerce.number(),
-  inflation: z.coerce.number(),
-  annualReturn: z.coerce.number(),
+  inflation: z.coerce.string(),
+  annualReturn: z.coerce.string(),
 });
 
 export type EmergencyFundType = z.infer<typeof emergencyFundSchema> & {
