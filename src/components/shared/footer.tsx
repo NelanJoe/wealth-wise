@@ -4,7 +4,7 @@ import { footerLinks } from "@/lib/consts";
 
 export default function Footer() {
   return (
-    <div className="py-20 bg-blue-500">
+    <footer className="py-20 bg-blue-500">
       <div className="max-w-4xl mx-auto px-4 text-white">
         <div className="flex items-center justify-between">
           <div className="space-y-3">
@@ -29,6 +29,6 @@ export default function Footer() {
         <div className="border-b my-8"></div>
         <div className="text-sm">© 2022 Wealth Wise. All rights reserved.</div>
       </div>
-    </div>
+    </footer>
   );
 }
