@@ -30,7 +30,7 @@ export default function InvestmentTable() {
     invesmentsContent = (
       <TableRow>
         <TableCell colSpan={7} className="h-16 text-center">
-          <Loader2Icon className="animate-spin ease-in-out " />
+          <Loader2Icon className="ease-in-out animate-spin " />
         </TableCell>
       </TableRow>
     );
@@ -49,7 +49,7 @@ export default function InvestmentTable() {
             <TableCell>{data.currentlyAmount}</TableCell>
             <TableCell>{data.monthlySaving}</TableCell>
             <TableCell>{`${data.annualReturn}% / tahun`}</TableCell>
-            <TableCell>{`${data.years} / tahun`}</TableCell>
+            <TableCell>{`${data.years} tahun`}</TableCell>
             <TableCell>{formatCurrency(data.resultInvestment)}</TableCell>
             <TableCell>{formatDate(data.createdAt)}</TableCell>
           </TableRow>
