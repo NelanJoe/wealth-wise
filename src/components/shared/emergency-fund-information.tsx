@@ -14,7 +14,12 @@ export default function EmergencyFundInformation() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" size="sm" variant="outline">
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          className="w-full md:w-fit"
+        >
           Cara Hitung
         </Button>
       </DialogTrigger>
