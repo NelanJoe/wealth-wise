@@ -103,9 +103,7 @@ export default function PensionFundForm() {
               Rencanakan Dana Pensiun untuk Masa Tua Anda
             </CardDescription>
           </div>
-          <div>
-            <PensionFundInformation />
-          </div>
+          <PensionFundInformation />
         </div>
       </CardHeader>
       <Form {...form}>
