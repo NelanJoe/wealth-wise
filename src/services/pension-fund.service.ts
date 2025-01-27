@@ -18,7 +18,13 @@ export const savePensionFund = async ({
   inflation,
   annualReturn,
   resultPensionFund,
-}: Omit<PensionFundType, "uid" | "createdAt" | "author">) => {
+}: {
+  monthlyExpensesLater: string;
+  yearsLater: number;
+  inflation: number;
+  annualReturn: number;
+  resultPensionFund: number;
+}) => {
   try {
     const pensionFundRef = collection(db, "pension-fund");
 
