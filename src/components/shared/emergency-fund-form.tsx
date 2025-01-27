@@ -99,7 +99,7 @@ export default function EmergencyFundForm() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
           <div>
             <CardTitle>Dana Darurat</CardTitle>
             <CardDescription>
