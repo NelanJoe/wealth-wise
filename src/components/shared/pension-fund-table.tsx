@@ -1,6 +1,10 @@
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, Trash2Icon } from "lucide-react";
 
-import { useCurrentUser, useGetPensionFund } from "@/hooks";
+import {
+  useCurrentUser,
+  useDeltePensionFund,
+  useGetPensionFund,
+} from "@/hooks";
 import { formatDate } from "@/lib/format-date";
 import { formatCurrency } from "@/lib/format-currency";
 
@@ -24,6 +28,8 @@ export default function PensionFundTable() {
     isError,
     error,
   } = useGetPensionFund();
+
+  const { deletePensionFund, isPending } = useDeltePensionFund();
 
   let pensionFundContent;
 
@@ -49,11 +55,25 @@ export default function PensionFundTable() {
             <TableRow key={data.uid}>
               <TableCell>{data.uid.slice(0, 3)}</TableCell>
               <TableCell>{data.monthlyExpensesLater}</TableCell>
-              <TableCell>{`${data.yearsLater} / tahun`}</TableCell>
-              <TableCell>{`${data.inflation} / tahun`}</TableCell>
+              <TableCell>{`${data.yearsLater} tahun`}</TableCell>
+              <TableCell>{`${data.inflation}% / tahun`}</TableCell>
               <TableCell>{`${data.annualReturn}% / tahun`}</TableCell>
               <TableCell>{formatCurrency(data.resultPensionFund)}</TableCell>
               <TableCell>{formatDate(data.createdAt)}</TableCell>
+              <TableCell>
+                <button
+                  type="button"
+                  className="p-1.5 rounded-lg bg-red-500 text-white hover:bg-red-500/80 transition-all duration-150 ease-in"
+                  onClick={() => deletePensionFund(data.uid)}
+                  disabled={isPending}
+                >
+                  {isPending ? (
+                    <Loader2Icon className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Trash2Icon className="w-4 h-4 " />
+                  )}
+                </button>
+              </TableCell>
             </TableRow>
           ))
         ) : (
@@ -102,6 +122,7 @@ export default function PensionFundTable() {
               </TableHead>
               <TableHead>Jumlah Dana Pensiun</TableHead>
               <TableHead>Tanggal</TableHead>
+              <TableHead>Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>{pensionFundContent}</TableBody>

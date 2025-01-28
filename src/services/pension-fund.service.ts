@@ -4,6 +4,8 @@ import {
   getDocs,
   query,
   orderBy,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
@@ -59,7 +61,7 @@ export const getPensionFund = async () => {
   try {
     const pensionFundRef = collection(db, "pension-fund");
 
-    const q = await query(pensionFundRef, orderBy("createdAt", "desc"));
+    const q = query(pensionFundRef, orderBy("createdAt", "desc"));
 
     const pensionFundSnapshot = await getDocs(q);
     const pensionFund = pensionFundSnapshot.docs.map((doc) => {
@@ -76,5 +78,20 @@ export const getPensionFund = async () => {
     }
 
     throw new Error("An error occurred while fetching pension fund.");
+  }
+};
+
+export const deletePensionFund = async (pensionFundId: string) => {
+  try {
+    const pensionFundRef = doc(db, "pension-fund", pensionFundId);
+    await deleteDoc(pensionFundRef);
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      throw new Error(error.message);
+    }
+
+    throw new Error(
+      `An error occurred while deleting pension fund with id ${pensionFundId}`
+    );
   }
 };

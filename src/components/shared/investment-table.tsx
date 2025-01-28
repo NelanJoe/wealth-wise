@@ -1,9 +1,10 @@
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, Trash2Icon } from "lucide-react";
 
-import { useCurrentUser, useGetInvesments } from "@/hooks";
+import { useCurrentUser, useDeleteInvestment, useGetInvesments } from "@/hooks";
 import { formatCurrency } from "@/lib/format-currency";
 import { formatDate } from "@/lib/format-date";
 
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
   Table,
   TableBody,
@@ -12,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 export default function InvestmentTable() {
   const { data: currentUser } = useCurrentUser();
@@ -23,6 +23,8 @@ export default function InvestmentTable() {
     isError,
     error,
   } = useGetInvesments();
+
+  const { deleteInvestment, isPending } = useDeleteInvestment();
 
   let invesmentsContent;
 
@@ -52,6 +54,20 @@ export default function InvestmentTable() {
             <TableCell>{`${data.years} tahun`}</TableCell>
             <TableCell>{formatCurrency(data.resultInvestment)}</TableCell>
             <TableCell>{formatDate(data.createdAt)}</TableCell>
+            <TableCell>
+              <button
+                type="button"
+                className="p-1.5 rounded-lg bg-red-500 text-white hover:bg-red-500/80 transition-all duration-150 ease-in"
+                onClick={() => deleteInvestment(data.uid)}
+                disabled={isPending}
+              >
+                {isPending ? (
+                  <Loader2Icon className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Trash2Icon className="w-4 h-4 " />
+                )}
+              </button>
+            </TableCell>
           </TableRow>
         ))
       ) : (
@@ -97,6 +113,7 @@ export default function InvestmentTable() {
               </TableHead>
               <TableHead>Jumalah Dana Investasi</TableHead>
               <TableHead>Tanggal</TableHead>
+              <TableHead>Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>{invesmentsContent}</TableBody>

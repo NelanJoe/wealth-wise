@@ -32,6 +32,12 @@ import InvestmentInformation from "./investment-information";
 export default function InvesmentForm() {
   const form = useForm<z.infer<typeof investmentSchema>>({
     resolver: zodResolver(investmentSchema),
+    defaultValues: {
+      currentlyAmount: "",
+      monthlySaving: "",
+      annualReturn: "",
+      years: "",
+    },
   });
 
   const [investmentValue, setInvestmentValue] = useState<number>(0);
@@ -60,7 +66,7 @@ export default function InvesmentForm() {
     const PValue = Number(currentlyAmount.replace(/\D/g, ""));
     const PMTValue = Number(monthlySaving.replace(/\D/g, ""));
     const rValue = Number(annualReturn.replace(/\D/g, "")) / 12 / 100;
-    const nValue = years * 12; // input years * 12
+    const nValue = Number(years.replace(/\D/g, "")) * 12; // input years * 12
 
     const A = PValue * Math.pow(1 + rValue, nValue);
     const B = (PMTValue * (Math.pow(1 + rValue, nValue) - 1)) / rValue;
@@ -191,7 +197,7 @@ export default function InvesmentForm() {
                     <div className="flex items-center gap-3">
                       <Input
                         id="years"
-                        type="number"
+                        type="string"
                         placeholder="2"
                         {...field}
                         className="w-[75%] md:w-[70%]"

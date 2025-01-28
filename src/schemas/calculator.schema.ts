@@ -5,7 +5,7 @@ export const investmentSchema = z.object({
   currentlyAmount: z.coerce.string(),
   monthlySaving: z.coerce.string(),
   annualReturn: z.coerce.string(),
-  years: z.coerce.number(),
+  years: z.coerce.string(),
 });
 
 export const emergencyFundSchema = z.object({
@@ -16,7 +16,7 @@ export const emergencyFundSchema = z.object({
 
 export const pensionFundSchema = z.object({
   monthlyExpensesLater: z.coerce.string(),
-  yearsLater: z.coerce.number(),
+  yearsLater: z.coerce.string(),
   inflation: z.coerce.string(),
   annualReturn: z.coerce.string(),
 });

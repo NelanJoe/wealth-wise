@@ -33,6 +33,12 @@ import PensionFundInformation from "./pension-fund-information";
 export default function PensionFundForm() {
   const form = useForm<z.infer<typeof pensionFundSchema>>({
     resolver: zodResolver(pensionFundSchema),
+    defaultValues: {
+      monthlyExpensesLater: "",
+      yearsLater: "",
+      inflation: "",
+      annualReturn: "",
+    },
   });
 
   const [pensionFundValue, setPensionFundValue] = useState<number>(0);
@@ -47,7 +53,7 @@ export default function PensionFundForm() {
     annualReturn,
   }) => {
     const MELValue = Number(monthlyExpensesLater.replace(/[^0-9]/g, ""));
-    const tValue = yearsLater;
+    const tValue = Number(yearsLater.replace(/[^0-9]/g, ""));
     const iValue = Number(inflation.replace(/[^0-9]/g, "")) / 100;
     const rValue = Number(annualReturn.replace(/[^0-9]/g, "")) / 100;
 
@@ -67,10 +73,8 @@ export default function PensionFundForm() {
   };
 
   const onSavePensionFund = () => {
-    // TODO: save to DB
-
     const monthlyExpensesLater = form.getValues("monthlyExpensesLater");
-    const yearsLater = Number(form.getValues("yearsLater"));
+    const yearsLater = Number(form.getValues("yearsLater").replace(/\D/g, ""));
     const inflation =
       (Number(form.getValues("inflation").replace(/\D/g, "")) / 100) * 100;
     const annualReturn =
@@ -146,7 +150,7 @@ export default function PensionFundForm() {
                     <div className="flex items-center gap-2">
                       <Input
                         id="yearsLater"
-                        type="number"
+                        type="string"
                         placeholder="20"
                         {...field}
                         className="w-[75%] md:w-[70%]"

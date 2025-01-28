@@ -18,7 +18,7 @@ export const useSaveInvestment = () => {
       currentlyAmount: string;
       monthlySaving: string;
       annualReturn: number;
-      years: number;
+      years: string;
       resultInvestment: number;
     }) => {
       return await saveInvestmentApi({

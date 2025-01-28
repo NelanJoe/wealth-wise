@@ -4,6 +4,8 @@ import {
   getDocs,
   query,
   orderBy,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
@@ -72,5 +74,21 @@ export const getEmergencyFund = async () => {
     }
 
     throw new Error(`An error occurred while fetching emergency fund.`);
+  }
+};
+
+export const deleteEmergencyFund = async (emergencyFundId: string) => {
+  try {
+    const emergencyFundRef = doc(db, "emergency-fund", emergencyFundId);
+
+    await deleteDoc(emergencyFundRef);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error(
+      `An error occurred while deleting emergency fund with id ${emergencyFundId}`
+    );
   }
 };

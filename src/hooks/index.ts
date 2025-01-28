@@ -4,6 +4,6 @@ export * from "./shared";
 export * from "./thread";
 export * from "./comment";
 export * from "./category";
-export * from "./invesment";
+export * from "./investment";
 export * from "./emergency-fund";
 export * from "./pension-fund";

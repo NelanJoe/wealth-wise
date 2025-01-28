@@ -1,5 +1,9 @@
-import { Loader2Icon } from "lucide-react";
-import { useCurrentUser, useGetEmergencyFund } from "@/hooks";
+import { Loader2Icon, Trash2Icon } from "lucide-react";
+import {
+  useCurrentUser,
+  useDeleteEmergencyFund,
+  useGetEmergencyFund,
+} from "@/hooks";
 
 import { formatDate } from "@/lib/format-date";
 import { formatCurrency } from "@/lib/format-currency";
@@ -24,6 +28,8 @@ export default function EmergencyFundTable() {
     isError,
     error,
   } = useGetEmergencyFund();
+
+  const { deleteEmergencyFund, isPending } = useDeleteEmergencyFund();
 
   let emergencyFundContent;
 
@@ -61,6 +67,20 @@ export default function EmergencyFundTable() {
               <TableCell>{data.monthlyExpenses}</TableCell>
               <TableCell>{formatCurrency(data.resultEmergencyFund)}</TableCell>
               <TableCell>{formatDate(data.createdAt)}</TableCell>
+              <TableCell>
+                <button
+                  type="button"
+                  className="p-1.5 rounded-lg bg-red-500 text-white hover:bg-red-500/80 transition-all duration-150 ease-in"
+                  onClick={() => deleteEmergencyFund(data.uid)}
+                  disabled={isPending}
+                >
+                  {isPending ? (
+                    <Loader2Icon className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Trash2Icon className="w-4 h-4 " />
+                  )}
+                </button>
+              </TableCell>
             </TableRow>
           ))
         ) : (
@@ -99,6 +119,7 @@ export default function EmergencyFundTable() {
               <TableHead>Pengeluaran Bulanan</TableHead>
               <TableHead>Jumlah Dana Darurat</TableHead>
               <TableHead>Tanggal</TableHead>
+              <TableHead>Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>{emergencyFundContent}</TableBody>
