@@ -13,12 +13,16 @@ export const useLogin = () => {
     mutationFn: async ({ email, password }: Login) =>
       await loginApi({ email, password }),
     onSuccess: (data) => {
-      const user = {
-        uid: data.uid,
-        displayName: data.displayName,
-        email: data.email,
-        photoURL: data.photoURL,
-      };
+      let user;
+
+      if (data) {
+        user = {
+          uid: data.uid,
+          displayName: data.displayName,
+          email: data.email,
+          photoURL: data.photoURL,
+        };
+      }
 
       queryClient.setQueryData(["user"], user);
       toast.success("Login sukses");
