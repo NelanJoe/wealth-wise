@@ -5,6 +5,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
 
 import auth from "@/lib/firebase/auth";
 import db from "@/lib/firebase/db";
@@ -46,7 +47,7 @@ export const savePensionFund = async ({
       },
     });
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -70,7 +71,7 @@ export const getPensionFund = async () => {
 
     return pensionFund;
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 

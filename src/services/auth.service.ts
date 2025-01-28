@@ -9,6 +9,7 @@ import {
   type User as UserFirebaseType,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
 
 import db from "@/lib/firebase/db";
 import auth from "@/lib/firebase/auth";
@@ -63,7 +64,7 @@ export const login = async ({ email, password }: Login) => {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
     return user as User;
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -83,7 +84,7 @@ export const register = async ({
     );
     return user;
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -123,7 +124,7 @@ export const loginWithGoogle = async () => {
       token,
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -140,7 +141,7 @@ export const updateProfileUser = async ({ userName }: { userName: string }) => {
       });
     }
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -152,7 +153,7 @@ export const logout = async () => {
   try {
     await signOut(auth);
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 

@@ -5,6 +5,8 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
+
 import db from "@/lib/firebase/db";
 import auth from "@/lib/firebase/auth";
 
@@ -27,7 +29,7 @@ export const getComments = async (threadId: string) => {
 
     return threadComments;
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -59,7 +61,7 @@ export const createComment = async ({
       },
     });
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 

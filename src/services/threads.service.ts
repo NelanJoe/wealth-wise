@@ -8,6 +8,8 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
+
 import db from "@/lib/firebase/db";
 import auth from "@/lib/firebase/auth";
 
@@ -31,7 +33,7 @@ export const getThreads = async () => {
 
     return threads;
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -50,11 +52,9 @@ export const getThread = async (threadId: string) => {
     const thread = threadSnapshot.data() as Thread;
     return thread;
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
-
-    console.log("THREAD SERVICE", error);
 
     throw new Error("An error occurred while fetching thread.");
   }
@@ -85,7 +85,7 @@ export const createThread = async ({
       },
     });
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -98,7 +98,7 @@ export const deleteThread = async (threadId: string) => {
     const threadRef = doc(db, "threads", threadId);
     await deleteDoc(threadRef);
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 

@@ -1,4 +1,6 @@
 import { collection, getDocs, query } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
+
 import db from "@/lib/firebase/db";
 import type { Category } from "@/schemas/category.schema";
 
@@ -17,7 +19,7 @@ export const getCategories = async () => {
         } as Category)
     ) as Category[];
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 

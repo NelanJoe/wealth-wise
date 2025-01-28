@@ -7,6 +7,7 @@ import {
   orderBy,
   getDocs,
 } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
 
 import type { User } from "@/schemas/user.schema";
 import type { InvestmentType } from "@/schemas/calculator.schema";
@@ -45,7 +46,7 @@ export const saveInvestment = async ({
       },
     });
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
@@ -69,7 +70,7 @@ export const getInvestments = async () => {
 
     return investments;
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof FirebaseError) {
       throw new Error(error.message);
     }
 
