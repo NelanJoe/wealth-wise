@@ -29,7 +29,7 @@ export default function ThreadItem({ thread }: { thread: Thread }) {
           <h3 className="text-lg font-semibold capitalize transition-all duration-150 ease-in cursor-pointer hover:text-blue-500">
             <Link to={`/threads/${thread.uid}`}>{thread.title}</Link>
           </h3>
-          <p>{thread.body}</p>
+          <p className="line-clamp-2 hover:line-clamp-none">{thread.body}</p>
         </div>
         <div>
           <Badge className="bg-blue-500 hover:bg-blue-500">
