@@ -17,6 +17,22 @@ import auth from "@/lib/firebase/auth";
 import type { Login, Register } from "@/schemas/auth.schema";
 import type { User } from "@/schemas/user.schema";
 
+const customAuthErrorMessages: Record<string, string> = {
+  "auth/invalid-email": "Format email yang Anda masukkan tidak valid.",
+  "auth/user-disabled":
+    "Akun Anda telah dinonaktifkan. Silakan hubungi dukungan.",
+  "auth/user-not-found":
+    "Tidak ada akun yang terdaftar dengan email ini. Silakan daftar jika Anda belum memiliki akun.",
+  "auth/wrong-password":
+    "Kata sandi yang Anda masukkan salah. Silakan coba lagi.",
+  "auth/too-many-requests":
+    "Terlalu banyak permintaan. Silakan coba lagi dalam beberapa menit.",
+  "auth/email-already-in-use":
+    "Email ini sudah terdaftar. Silakan gunakan email lain atau masuk ke akun Anda.",
+  "auth/invalid-credential":
+    "Kombinasi email dan kata sandi Anda tidak valid. Silakan coba lagi.",
+};
+
 const googleAuthProvider = new GoogleAuthProvider();
 googleAuthProvider.setCustomParameters({
   prompt: "select_account",
@@ -65,10 +81,11 @@ export const login = async ({ email, password }: Login) => {
     return user as User;
   } catch (error) {
     if (error instanceof FirebaseError) {
-      throw new Error(error.message);
-    }
+      const customErrorMessage =
+        customAuthErrorMessages[error.code] || error.message;
 
-    throw new Error("An error occurred while logging in.");
+      throw new Error(customErrorMessage);
+    }
   }
 };
 
@@ -85,10 +102,11 @@ export const register = async ({
     return user;
   } catch (error) {
     if (error instanceof FirebaseError) {
-      throw new Error(error.message);
-    }
+      const customErrorMessage =
+        customAuthErrorMessages[error.code] || error.message;
 
-    throw new Error("An error occurred while registering.");
+      throw new Error(customErrorMessage);
+    }
   }
 };
 
