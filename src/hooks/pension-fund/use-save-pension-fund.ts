@@ -17,8 +17,8 @@ export const useSavePensionFund = () => {
     }: {
       monthlyExpensesLater: string;
       yearsLater: number;
-      inflation: number;
-      annualReturn: number;
+      inflation: string;
+      annualReturn: string;
       resultPensionFund: number;
     }) => {
       return savePensionFundApi({

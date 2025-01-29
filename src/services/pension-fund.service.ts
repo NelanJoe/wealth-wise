@@ -24,8 +24,8 @@ export const savePensionFund = async ({
 }: {
   monthlyExpensesLater: string;
   yearsLater: number;
-  inflation: number;
-  annualReturn: number;
+  inflation: string;
+  annualReturn: string;
   resultPensionFund: number;
 }) => {
   try {

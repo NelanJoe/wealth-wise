@@ -54,8 +54,8 @@ export default function PensionFundForm() {
   }) => {
     const MELValue = Number(monthlyExpensesLater.replace(/[^0-9]/g, ""));
     const tValue = Number(yearsLater.replace(/[^0-9]/g, ""));
-    const iValue = Number(inflation.replace(/[^0-9]/g, "")) / 100;
-    const rValue = Number(annualReturn.replace(/[^0-9]/g, "")) / 100;
+    const iValue = parseFloat(inflation) / 100;
+    const rValue = parseFloat(annualReturn) / 100;
 
     // Calculate future value of monthly expenses
     const MValue = MELValue * Math.pow(1 + iValue, tValue);
@@ -75,10 +75,8 @@ export default function PensionFundForm() {
   const onSavePensionFund = () => {
     const monthlyExpensesLater = form.getValues("monthlyExpensesLater");
     const yearsLater = Number(form.getValues("yearsLater").replace(/\D/g, ""));
-    const inflation =
-      (Number(form.getValues("inflation").replace(/\D/g, "")) / 100) * 100;
-    const annualReturn =
-      (Number(form.getValues("annualReturn").replace(/\D/g, "")) / 100) * 100;
+    const inflation = form.getValues("inflation");
+    const annualReturn = form.getValues("annualReturn");
 
     savePensionFund(
       {

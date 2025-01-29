@@ -21,7 +21,14 @@ import {
   CardFooter,
 } from "../ui/card";
 
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import {
   Select,
@@ -134,6 +141,7 @@ export default function EmergencyFundForm() {
                       </SelectContent>
                     </Select>
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -162,6 +170,7 @@ export default function EmergencyFundForm() {
                       </SelectContent>
                     </Select>
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -181,6 +190,7 @@ export default function EmergencyFundForm() {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

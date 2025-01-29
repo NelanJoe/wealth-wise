@@ -17,7 +17,7 @@ export const useSaveInvestment = () => {
     }: {
       currentlyAmount: string;
       monthlySaving: string;
-      annualReturn: number;
+      annualReturn: string;
       years: string;
       resultInvestment: number;
     }) => {

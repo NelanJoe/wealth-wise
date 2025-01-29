@@ -65,19 +65,21 @@ export default function InvesmentForm() {
      * */
     const PValue = Number(currentlyAmount.replace(/\D/g, ""));
     const PMTValue = Number(monthlySaving.replace(/\D/g, ""));
-    const rValue = Number(annualReturn.replace(/\D/g, "")) / 12 / 100;
-    const nValue = Number(years.replace(/\D/g, "")) * 12; // input years * 12
+    const rValue = parseFloat(annualReturn) / 100;
+    const tValue = Number(years.replace(/\D/g, "")) * 12;
 
-    const A = PValue * Math.pow(1 + rValue, nValue);
-    const B = (PMTValue * (Math.pow(1 + rValue, nValue) - 1)) / rValue;
-    const totalInvestmentValue = A + B;
+    const A = PValue * Math.pow(1 + rValue / 12, tValue);
+    const B =
+      (PMTValue * (Math.pow(1 + rValue / 12, tValue) - 1)) / (rValue / 12);
 
-    if (isNaN(totalInvestmentValue)) {
+    const futureValue = A + B;
+
+    if (isNaN(futureValue)) {
       setInvestmentValue(0);
       return;
     }
 
-    setInvestmentValue(Number(totalInvestmentValue.toFixed(2)));
+    setInvestmentValue(Number(futureValue.toFixed(2)));
   };
 
   const onSaveInvestment = () => {
@@ -85,7 +87,7 @@ export default function InvesmentForm() {
       {
         currentlyAmount: form.getValues("currentlyAmount"),
         monthlySaving: form.getValues("monthlySaving"),
-        annualReturn: Number(form.getValues("annualReturn").replace(/\D/g, "")),
+        annualReturn: form.getValues("annualReturn"),
         years: form.getValues("years"),
         resultInvestment: investmentValue,
       },
@@ -173,7 +175,7 @@ export default function InvesmentForm() {
                       <Input
                         id="annualReturn"
                         type="string"
-                        placeholder="5,9"
+                        placeholder="Contoh: 5,9"
                         {...field}
                         className="w-[75%] md:w-[70%]"
                       />
@@ -198,7 +200,7 @@ export default function InvesmentForm() {
                       <Input
                         id="years"
                         type="string"
-                        placeholder="2"
+                        placeholder="Contoh: 2"
                         {...field}
                         className="w-[75%] md:w-[70%]"
                       />
