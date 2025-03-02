@@ -10,19 +10,21 @@ export const useRegister = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
+      username,
       email,
       password,
     }: {
+      username: string;
       email: string;
       password: string;
     }) => {
-      return await registerApi({ email, password });
+      return await registerApi({ username, email, password });
     },
     mutationKey: ["register"],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
       toast.success("Register sukses");
-      navigate("/", { replace: true });
+      navigate("/login", { replace: true });
     },
     onError: (err) => toast.error(`Error: ${err.message}`),
   });

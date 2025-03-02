@@ -73,7 +73,7 @@ const DesktopView = () => {
               </Avatar>
             </PopoverTrigger>
             <PopoverContent className="w-fit p-2">
-              <Button variant="ghost" size="sm" onClick={onLogout}>
+              <Button variant="destructive" size="sm" onClick={onLogout}>
                 <div className="flex gap-2 items-center">
                   <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
                 </div>
@@ -124,7 +124,7 @@ const MobileView = () => {
               ))}
               <div>
                 {currentUser ? (
-                  <Button variant="ghost" size="sm" onClick={onLogout}>
+                  <Button variant="destructive" size="sm" onClick={onLogout}>
                     <div className="flex gap-2 items-center">
                       <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
                     </div>

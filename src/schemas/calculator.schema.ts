@@ -13,12 +13,20 @@ export const investmentSchema = z.object({
 });
 
 export const emergencyFundSchema = z.object({
-  status: z.string().refine((value) => {
-    return ["lajang", "menikah"].includes(value);
-  }, "Pilih salah satu antara Lajang dan Menikah"),
-  dependents: z.string().refine((value) => {
-    return ["ya", "tidak"].includes(value);
-  }, "Pilih salah satu antara  Ada tunjangan atau Tidak ada tunjangan"),
+  status: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .refine((value) => {
+      return ["lajang", "menikah"].includes(value);
+    }, "Pilih salah satu antara Lajang dan Menikah"),
+  dependents: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .refine((value) => {
+      return ["ya", "tidak"].includes(value);
+    }, "Pilih salah satu antara  Ada tunjangan atau Tidak ada tunjangan"),
   monthlyExpenses: z.string().transform((x) => x.replace(/[^0-9.-]+/g, "")),
 });
 

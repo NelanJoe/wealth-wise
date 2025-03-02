@@ -3,9 +3,9 @@ import {
   addDoc,
   getDocs,
   query,
-  orderBy,
   doc,
   deleteDoc,
+  where,
 } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
@@ -57,7 +57,10 @@ export const getEmergencyFund = async () => {
   try {
     const emergencyFundRef = collection(db, "emergency-fund");
 
-    const q = query(emergencyFundRef, orderBy("createdAt", "desc"));
+    const q = query(
+      emergencyFundRef,
+      where("author.uid", "==", auth.currentUser?.uid)
+    );
 
     const emergencyFundSnapshot = await getDocs(q);
     const emergencyFund = emergencyFundSnapshot.docs.map((doc) => {
@@ -67,7 +70,9 @@ export const getEmergencyFund = async () => {
       } as EmergencyFundType;
     }) as EmergencyFundType[];
 
-    return emergencyFund;
+    return emergencyFund.sort(
+      (a, b) => Number(b.createdAt) - Number(a.createdAt)
+    );
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);

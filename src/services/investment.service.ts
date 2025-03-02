@@ -4,10 +4,10 @@ import {
   addDoc,
   collection,
   query,
-  orderBy,
   getDocs,
   doc,
   deleteDoc,
+  where,
 } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
@@ -60,7 +60,10 @@ export const getInvestments = async () => {
   try {
     const investmentsRef = collection(db, "investments");
 
-    const q = query(investmentsRef, orderBy("createdAt", "desc"));
+    const q = query(
+      investmentsRef,
+      where("author.uid", "==", auth.currentUser?.uid)
+    );
 
     const investmentsSnapshot = await getDocs(q);
     const investments = investmentsSnapshot.docs.map((doc) => {
@@ -70,7 +73,9 @@ export const getInvestments = async () => {
       } as InvestmentType;
     }) as InvestmentType[];
 
-    return investments;
+    return investments.sort(
+      (a, b) => Number(b.createdAt) - Number(a.createdAt)
+    );
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);

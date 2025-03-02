@@ -64,7 +64,10 @@ export default function RegisterPage() {
         </div>
         <div>
           Sudah punya akun?{" "}
-          <Link to="/login" className="font-semibold text-primary-blue">
+          <Link
+            to="/login"
+            className="font-semibold text-blue-500 underline hover:text-blue-600"
+          >
             Masuk sekarang
           </Link>
         </div>

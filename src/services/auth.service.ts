@@ -55,11 +55,12 @@ export const createUserFromAuth = async ({
   const userSnapshot = await getDoc(userRef);
 
   if (!userSnapshot.exists()) {
-    const { displayName, email } = userAuth;
+    const { uid, displayName, email } = userAuth;
     const createdAt = new Date();
 
     try {
       await setDoc(userRef, {
+        uid,
         displayName,
         email,
         createdAt,
@@ -90,16 +91,24 @@ export const login = async ({ email, password }: Login) => {
 };
 
 export const register = async ({
+  username,
   email,
   password,
-}: Pick<Register, "email" | "password">) => {
+}: Pick<Register, "username" | "email" | "password">) => {
   try {
     const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    return user;
+
+    if (user) {
+      const userResult = user as User;
+
+      await createUserFromAuth({
+        userAuth: { ...userResult, displayName: username },
+      });
+    }
   } catch (error) {
     if (error instanceof FirebaseError) {
       const customErrorMessage =
@@ -135,7 +144,9 @@ export const loginWithGoogle = async () => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
 
     const token = credential?.accessToken;
-    const user = result.user;
+    const user = result.user as User;
+
+    await createUserFromAuth({ userAuth: user });
 
     return {
       ...user,

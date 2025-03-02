@@ -3,9 +3,9 @@ import {
   addDoc,
   getDocs,
   query,
-  orderBy,
   doc,
   deleteDoc,
+  where,
 } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
@@ -61,7 +61,10 @@ export const getPensionFund = async () => {
   try {
     const pensionFundRef = collection(db, "pension-fund");
 
-    const q = query(pensionFundRef, orderBy("createdAt", "desc"));
+    const q = query(
+      pensionFundRef,
+      where("author.uid", "==", auth.currentUser?.uid)
+    );
 
     const pensionFundSnapshot = await getDocs(q);
     const pensionFund = pensionFundSnapshot.docs.map((doc) => {
@@ -71,7 +74,9 @@ export const getPensionFund = async () => {
       } as PensionFundType;
     }) as PensionFundType[];
 
-    return pensionFund;
+    return pensionFund.sort(
+      (a, b) => Number(b.createdAt) - Number(a.createdAt)
+    );
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);

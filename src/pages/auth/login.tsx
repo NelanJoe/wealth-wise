@@ -64,7 +64,10 @@ export default function LoginPage() {
         </div>
         <div>
           Belum punya akun?{" "}
-          <Link to="/register" className="font-semibold text-primary-blue">
+          <Link
+            to="/register"
+            className="font-semibold text-blue-500 underline hover:text-blue-600"
+          >
             Buat akun
           </Link>
         </div>
