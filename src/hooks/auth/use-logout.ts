@@ -10,7 +10,7 @@ export const useLogout = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async () => await logout(),
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ["user"] });
+      queryClient.setQueryData(["user"], null);
       navigate("/", { replace: true });
     },
   });
