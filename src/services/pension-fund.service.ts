@@ -74,9 +74,11 @@ export const getPensionFund = async () => {
       } as PensionFundType;
     }) as PensionFundType[];
 
-    return pensionFund.sort(
-      (a, b) => Number(a.createdAt) - Number(b.createdAt)
+    const pensionFundSorted = pensionFund.sort(
+      (a, b) => Number(new Date(b.createdAt)) - Number(new Date(a.createdAt))
     );
+
+    return pensionFundSorted;
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);
@@ -88,6 +90,8 @@ export const getPensionFund = async () => {
 
 export const deletePensionFund = async (pensionFundId: string) => {
   try {
+    if (!pensionFundId) throw new Error("Pension fund id is required.");
+
     const pensionFundRef = doc(db, "pension-fund", pensionFundId);
     await deleteDoc(pensionFundRef);
   } catch (error) {

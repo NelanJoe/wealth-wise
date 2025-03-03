@@ -70,9 +70,11 @@ export const getEmergencyFund = async () => {
       } as EmergencyFundType;
     }) as EmergencyFundType[];
 
-    return emergencyFund.sort(
-      (a, b) => Number(a.createdAt) - Number(b.createdAt)
+    const sortedEmergencyFund = emergencyFund.sort(
+      (a, b) => Number(new Date(b.createdAt)) - Number(new Date(a.createdAt))
     );
+
+    return sortedEmergencyFund;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
@@ -84,8 +86,9 @@ export const getEmergencyFund = async () => {
 
 export const deleteEmergencyFund = async (emergencyFundId: string) => {
   try {
-    const emergencyFundRef = doc(db, "emergency-fund", emergencyFundId);
+    if (!emergencyFundId) throw new Error("Emergency fund id is required.");
 
+    const emergencyFundRef = doc(db, "emergency-fund", emergencyFundId);
     await deleteDoc(emergencyFundRef);
   } catch (error) {
     if (error instanceof Error) {

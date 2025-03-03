@@ -73,9 +73,11 @@ export const getInvestments = async () => {
       } as InvestmentType;
     }) as InvestmentType[];
 
-    return investments.sort(
-      (a, b) => Number(a.createdAt) - Number(b.createdAt)
+    const investmentsSorted = investments.sort(
+      (a, b) => Number(new Date(b.createdAt)) - Number(new Date(a.createdAt))
     );
+
+    return investmentsSorted;
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);
@@ -87,6 +89,8 @@ export const getInvestments = async () => {
 
 export const deleteInvestment = async (investmentId: string) => {
   try {
+    if (!investmentId) throw new Error("Investment id is required.");
+
     const investmentRef = doc(db, "investments", investmentId);
     await deleteDoc(investmentRef);
   } catch (error) {

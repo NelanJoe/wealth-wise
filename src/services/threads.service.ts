@@ -95,6 +95,8 @@ export const createThread = async ({
 
 export const deleteThread = async (threadId: string) => {
   try {
+    if (!threadId) throw new Error("Thread id is required.");
+
     const threadRef = doc(db, "threads", threadId);
     await deleteDoc(threadRef);
   } catch (error) {

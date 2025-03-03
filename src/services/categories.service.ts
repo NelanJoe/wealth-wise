@@ -11,13 +11,12 @@ export const getCategories = async () => {
 
     const categoriesSnapshot = await getDocs(q);
 
-    return categoriesSnapshot.docs.map(
-      (doc) =>
-        ({
-          id: doc.id,
-          ...doc.data(),
-        } as Category)
-    ) as Category[];
+    return categoriesSnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      } as Category;
+    }) as Category[];
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);
