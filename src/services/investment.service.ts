@@ -74,7 +74,7 @@ export const getInvestments = async () => {
     }) as InvestmentType[];
 
     return investments.sort(
-      (a, b) => Number(b.createdAt) - Number(a.createdAt)
+      (a, b) => Number(a.createdAt) - Number(b.createdAt)
     );
   } catch (error) {
     if (error instanceof FirebaseError) {

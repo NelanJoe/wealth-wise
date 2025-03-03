@@ -75,7 +75,7 @@ export const getPensionFund = async () => {
     }) as PensionFundType[];
 
     return pensionFund.sort(
-      (a, b) => Number(b.createdAt) - Number(a.createdAt)
+      (a, b) => Number(a.createdAt) - Number(b.createdAt)
     );
   } catch (error) {
     if (error instanceof FirebaseError) {
