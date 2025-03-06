@@ -32,6 +32,7 @@ export const saveInvestment = async ({
 
     const { uid, displayName, email, photoURL } = auth.currentUser as User;
     const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
 
     await addDoc(investmentsRef, {
       currentlyAmount,
@@ -40,6 +41,7 @@ export const saveInvestment = async ({
       years,
       resultInvestment,
       createdAt,
+      updatedAt,
       author: {
         uid,
         displayName,

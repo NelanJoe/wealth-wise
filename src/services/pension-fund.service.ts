@@ -33,6 +33,7 @@ export const savePensionFund = async ({
 
     const { uid, displayName, email, photoURL } = auth.currentUser as User;
     const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
 
     await addDoc(pensionFundRef, {
       monthlyExpensesLater,
@@ -41,6 +42,7 @@ export const savePensionFund = async ({
       annualReturn,
       resultPensionFund,
       createdAt,
+      updatedAt,
       author: {
         uid,
         displayName,

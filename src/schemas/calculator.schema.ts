@@ -46,22 +46,25 @@ export const pensionFundSchema = z.object({
 });
 
 export type EmergencyFundType = z.infer<typeof emergencyFundSchema> & {
-  resultEmergencyFund: number;
-  createdAt: string;
   uid: string;
+  resultEmergencyFund: number;
   author: User;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type InvestmentType = z.infer<typeof investmentSchema> & {
-  resultInvestment: number;
-  createdAt: string;
   uid: string;
+  resultInvestment: number;
   author: User;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type PensionFundType = z.infer<typeof pensionFundSchema> & {
-  resultPensionFund: number;
-  createdAt: string;
   uid: string;
+  resultPensionFund: number;
   author: User;
+  createdAt: string;
+  updatedAt: string;
 };

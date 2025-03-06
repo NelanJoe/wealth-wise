@@ -27,6 +27,7 @@ export const saveEmergencyFund = async ({
   try {
     const emergencyFundRef = collection(db, "emergency-fund");
     const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
 
     const { uid, displayName, email, photoURL } = auth.currentUser as User;
 
@@ -36,12 +37,12 @@ export const saveEmergencyFund = async ({
       monthlyExpenses,
       resultEmergencyFund,
       createdAt,
+      updatedAt,
       author: {
         uid,
         displayName,
         email,
         photoURL,
-        createdAt,
       },
     });
   } catch (error) {
