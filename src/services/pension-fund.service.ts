@@ -12,8 +12,8 @@ import { FirebaseError } from "firebase/app";
 import auth from "@/lib/firebase/auth";
 import db from "@/lib/firebase/db";
 
+import type { User } from "firebase/auth";
 import type { PensionFundType } from "@/schemas/calculator.schema";
-import type { User } from "@/schemas/user.schema";
 
 export const savePensionFund = async ({
   monthlyExpensesLater,

@@ -13,8 +13,8 @@ import { FirebaseError } from "firebase/app";
 import db from "@/lib/firebase/db";
 import auth from "@/lib/firebase/auth";
 
+import type { User } from "firebase/auth";
 import type { Thread } from "@/schemas/thread.schema";
-import type { User } from "@/schemas/user.schema";
 
 export const getThreads = async () => {
   try {
