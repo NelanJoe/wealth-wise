@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { userSchema } from "./user.schema";
+import { categorySchema } from "./category.schema";
 
 export const threadSchema = z.object({
   uid: z.string(),
@@ -8,7 +9,7 @@ export const threadSchema = z.object({
     .trim()
     .min(5, { message: "Judul minimal 5 karakter" })
     .max(50, { message: "Judul maksimal 50 karakter" }),
-  category: z.string(),
+  category: categorySchema,
   body: z
     .string()
     .trim()

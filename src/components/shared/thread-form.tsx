@@ -69,7 +69,20 @@ export default function ThreadForm() {
   const { createThread, isPending } = useCreateThread();
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = (values) => {
-    createThread(values, { onSettled: () => form.reset() });
+    const category = categories?.find(
+      (category) => category.uid === values.category
+    );
+
+    if (!category) {
+      return;
+    } else {
+      const newThread = {
+        ...values,
+        category,
+      };
+
+      createThread(newThread, { onSettled: () => form.reset() });
+    }
   };
 
   return (
@@ -119,7 +132,7 @@ export default function ThreadForm() {
                       <SelectGroup>
                         {categories &&
                           categories.map((category) => (
-                            <SelectItem key={category.id} value={category.name}>
+                            <SelectItem key={category.uid} value={category.uid}>
                               {category.name}
                             </SelectItem>
                           ))}

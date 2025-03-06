@@ -101,7 +101,7 @@ export default function ThreadShow() {
               <p>{thread?.body}</p>
               <div>
                 <Badge className="bg-blue-500 hover:bg-blue-500">
-                  {thread?.category}
+                  {thread?.category.name}
                 </Badge>
               </div>
             </div>
