@@ -39,7 +39,7 @@ export default function Threads() {
 
       // If categories exist, check if the thread's category matches any
       const matchesCategory = categories.length
-        ? categories.includes(thread.category?.toLowerCase())
+        ? categories.includes(thread.category?.name.toLowerCase())
         : true;
 
       // Return the thread if it matches both search and category filters
