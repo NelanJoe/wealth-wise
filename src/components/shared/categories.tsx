@@ -42,7 +42,7 @@ export default function Categories({ categories }: CategoriesProps) {
       {categories.map((category) => (
         <Button
           size="sm"
-          key={category.id}
+          key={category.uid}
           className={`rounded-full bg-blue-500 hover:bg-blue-500/80 ${
             selectedCategories.includes(category.name) && "bg-blue-500/60"
           }`}

@@ -13,7 +13,7 @@ export const getCategories = async () => {
 
     return categoriesSnapshot.docs.map((doc) => {
       return {
-        id: doc.id,
+        uid: doc.id,
         ...doc.data(),
       } as Category;
     }) as Category[];
