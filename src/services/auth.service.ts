@@ -46,7 +46,7 @@ export const createUserFromAuth = async ({
   userAuth,
   additionalInformation,
 }: {
-  userAuth: User;
+  userAuth: UserFirebaseType;
   additionalInformation?: AdditionalInformation;
 }): Promise<void> => {
   if (!userAuth) return;
@@ -56,7 +56,8 @@ export const createUserFromAuth = async ({
 
   if (!userSnapshot.exists()) {
     const { uid, displayName, email } = userAuth;
-    const createdAt = new Date();
+    const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
 
     try {
       await setDoc(userRef, {
@@ -64,6 +65,7 @@ export const createUserFromAuth = async ({
         displayName,
         email,
         createdAt,
+        updatedAt,
         ...additionalInformation,
       });
     } catch (error) {
@@ -79,7 +81,7 @@ export const createUserFromAuth = async ({
 export const login = async ({ email, password }: Login) => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-    return user as User;
+    return user as UserFirebaseType;
   } catch (error) {
     if (error instanceof FirebaseError) {
       const customErrorMessage =
@@ -103,7 +105,7 @@ export const register = async ({
     );
 
     if (user) {
-      const userResult = user as User;
+      const userResult = user as UserFirebaseType;
 
       await createUserFromAuth({
         userAuth: { ...userResult, displayName: username },
@@ -144,7 +146,7 @@ export const loginWithGoogle = async () => {
     const credential = GoogleAuthProvider.credentialFromResult(result);
 
     const token = credential?.accessToken;
-    const user = result.user as User;
+    const user = result.user as UserFirebaseType;
 
     await createUserFromAuth({ userAuth: user });
 

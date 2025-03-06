@@ -8,6 +8,8 @@ export const userSchema = z.object({
     .string()
     .url({ message: "URL foto profil tidak valid" })
     .optional(),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime(),
 });
 
 export type User = z.infer<typeof userSchema>;
