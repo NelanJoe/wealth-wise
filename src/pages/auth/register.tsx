@@ -54,10 +54,10 @@ export default function RegisterPage() {
             )}
           </Button>
         </div>
-        <div className="flex flex-row items-center gap-3">
-          <div className="border-b-2 border-gray-200 grow"></div>
+        <div className="flex flex-row items-center space-x-3">
+          <div className="border-b border-gray-200 grow"></div>
           <h3 className="font-sm">Or</h3>
-          <div className="border-b-2 border-gray-200 grow"></div>
+          <div className="border-b border-gray-200 grow"></div>
         </div>
         <div>
           <RegisterForm />
