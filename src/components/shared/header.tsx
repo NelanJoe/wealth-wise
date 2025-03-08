@@ -21,7 +21,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-30 bg-white border-b">
-      <nav className="flex flex-row justify-between items-center max-w-4xl mx-auto px-4 h-20">
+      <nav className="flex flex-row items-center justify-between h-20 max-w-4xl px-4 mx-auto">
         <Link to="/">
           <img
             src="/assets/logo.png"
@@ -44,7 +44,7 @@ const DesktopView = () => {
   const onLogout = () => logout();
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       {links.map((link) => (
         <NavLink
           key={link.name}
@@ -72,9 +72,9 @@ const DesktopView = () => {
                 </AvatarFallback>
               </Avatar>
             </PopoverTrigger>
-            <PopoverContent className="w-fit p-2">
+            <PopoverContent className="p-2 w-fit">
               <Button variant="destructive" size="sm" onClick={onLogout}>
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
                 </div>
               </Button>
@@ -83,7 +83,7 @@ const DesktopView = () => {
         ) : (
           <Button
             asChild
-            className="bg-blue-500 hover:bg-blue-500/80 rounded-lg"
+            className="bg-blue-500 rounded-lg hover:bg-blue-500/80"
           >
             <Link to="/login">Login</Link>
           </Button>
@@ -125,14 +125,14 @@ const MobileView = () => {
               <div>
                 {currentUser ? (
                   <Button variant="destructive" size="sm" onClick={onLogout}>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex items-center gap-2">
                       <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
                     </div>
                   </Button>
                 ) : (
                   <Button
                     asChild
-                    className="bg-blue-500 hover:bg-blue-500/80 rounded-lg"
+                    className="bg-blue-500 rounded-lg hover:bg-blue-500/80"
                   >
                     <Link to="/login">Login</Link>
                   </Button>
