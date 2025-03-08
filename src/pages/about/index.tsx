@@ -1,8 +1,20 @@
+import { motion } from "framer-motion";
+
 export default function AboutPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 pt-4 pb-24 md:pt-20 md:pb-40">
+    <div className="max-w-4xl mx-auto px-4 pt-4 pb-24 md:pt-16 md:pb-40">
       <div className="flex flex-col space-y-12">
-        <div className="space-y-8">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            ease: "easeInOut",
+            duration: 0.5,
+            x: { duration: 0.5 },
+          }}
+          className="space-y-8"
+        >
           <h1 className="text-xl font-bold mt-10 underline decoration-primary underline-offset-8">
             Tentang
           </h1>
@@ -15,8 +27,18 @@ export default function AboutPage() {
             menyediakan fitur forum diskusi untuk membantu pengguna dalam
             berdiskusi dan menyelesaikan masalah finansial mereka.
           </p>
-        </div>
-        <div className="space-y-10">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            ease: "easeInOut",
+            duration: 0.5,
+            x: { duration: 0.5 },
+          }}
+          className="space-y-10"
+        >
           <h1 className="text-xl font-bold underline decoration-primary underline-offset-8">
             Tentang Pengembang
           </h1>
@@ -75,7 +97,7 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

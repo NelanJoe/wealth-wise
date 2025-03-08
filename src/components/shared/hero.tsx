@@ -1,11 +1,22 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
 export default function Hero() {
   return (
     <div className="flex items-center justify-between w-full gap-4 md:min-h-dvh">
-      <div className="space-y-4 md:w-1/2">
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{
+          ease: "easeInOut",
+          duration: 0.5,
+          x: { duration: 0.5 },
+        }}
+        className="space-y-4 md:w-1/2"
+      >
         <h2 className="text-3xl font-semibold leading-relaxed md:text-4xl md:leading-normal lg:leading-normal">
           Raih Finansial Freedom Dengan{" "}
           <span className="text-blue-500">Wealth Wise</span>.
@@ -25,15 +36,25 @@ export default function Hero() {
             </div>
           </Link>
         </Button>
-      </div>
-      <div className="hidden md:block">
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{
+          ease: "easeInOut",
+          duration: 0.5,
+          x: { duration: 0.5 },
+        }}
+        className="hidden md:block"
+      >
         <img
           src="assets/banknote.svg"
           alt="banknote"
           loading="lazy"
           className="object-cover w-full md:w-[480px] h-fit"
         />
-      </div>
+      </motion.div>
     </div>
   );
 }
