@@ -1,8 +1,8 @@
-export const formatCurrency = (value: number) => {
+export const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(value);
+  }).format(amount);
 };
