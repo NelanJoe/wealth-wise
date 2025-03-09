@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
-import type { User } from "firebase/auth";
+import type { User } from "@/schemas/user.schema";
 import type { InvestmentType } from "@/schemas/calculator.schema";
 
 export const saveInvestment = async ({

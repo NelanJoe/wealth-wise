@@ -10,7 +10,7 @@ import { FirebaseError } from "firebase/app";
 import db from "@/lib/firebase/db";
 import auth from "@/lib/firebase/auth";
 
-import type { User } from "firebase/auth";
+import type { User } from "@/schemas/user.schema";
 import type { Comment } from "@/schemas/comment.schema";
 
 export const getComments = async (threadId: string) => {

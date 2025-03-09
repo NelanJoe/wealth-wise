@@ -2,7 +2,7 @@ import { z } from "zod";
 import { userSchema } from "./user.schema";
 
 export const commentSchema = z.object({
-  uid: z.string(),
+  uid: z.string().uuid().optional(),
   text: z
     .string()
     .trim()

@@ -12,7 +12,7 @@ import { FirebaseError } from "firebase/app";
 import db from "@/lib/firebase/db";
 import auth from "@/lib/firebase/auth";
 
-import type { User } from "firebase/auth";
+import type { User } from "@/schemas/user.schema";
 import type { EmergencyFundType } from "@/schemas/calculator.schema";
 
 export const saveEmergencyFund = async ({

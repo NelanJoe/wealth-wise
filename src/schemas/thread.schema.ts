@@ -3,7 +3,7 @@ import { userSchema } from "./user.schema";
 import { categorySchema } from "./category.schema";
 
 export const threadSchema = z.object({
-  uid: z.string(),
+  uid: z.string().uuid().optional(),
   title: z
     .string()
     .trim()
