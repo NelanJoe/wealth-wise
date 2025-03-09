@@ -1,51 +1,53 @@
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
+import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
 import Header from "@/components/shared/header";
 import Footer from "@/components/shared/footer";
+import { Button } from "@/components/ui/button";
 
 export default function ErrorPage() {
   const error = useRouteError();
 
+  let content;
+
   if (isRouteErrorResponse(error)) {
-    return (
-      <>
-        <Header />
-        <main className="max-w-4xl mx-auto px-4 py-80 grid place-content-center">
-          <div className="flex items-center flex-col justify-center gap-3">
-            <h1>
-              {error.status} {error.statusText}
-            </h1>
-            <p>{error.data}</p>
-          </div>
-        </main>
-        <Footer />
-      </>
+    content = (
+      <div className="flex flex-col items-center justify-center gap-3">
+        <h1>
+          {error.status} {error.statusText}
+        </h1>
+        <p>{error.data || "Something went wrong."}</p>
+      </div>
     );
   } else if (error instanceof Error) {
-    return (
-      <>
-        <Header />
-        <main className="max-w-4xl mx-auto px-4 py-80 grid place-content-center">
-          <div className="flex items-center flex-col justify-center gap-3">
-            <h1>Error</h1>
-            <p>{error.message}</p>
-            <p>The stack trace is:</p>
-            <pre>{error.stack}</pre>
-          </div>
-        </main>
-        <Footer />
-      </>
+    content = (
+      <div className="flex flex-col items-center justify-center gap-3">
+        <h1>Error</h1>
+        <p>{error.message}</p>
+        <p>The stack trace is:</p>
+        <pre className="p-2 text-sm bg-gray-100 rounded">{error.stack}</pre>
+      </div>
     );
   } else {
-    return (
-      <>
-        <Header />
-        <main className="max-w-4xl mx-auto px-4 py-80 grid place-content-center">
-          <div>
-            <h1 className="text-center">Unknown Error</h1>
-          </div>
-        </main>
-        <Footer />
-      </>
+    content = (
+      <div>
+        <h1 className="text-center">Unknown Error</h1>
+      </div>
     );
   }
+
+  return (
+    <>
+      <Header />
+      <main className="grid max-w-4xl px-4 mx-auto py-80 place-content-center">
+        <div className="space-y-4">
+          {content}
+          <div className="flex justify-center">
+            <Button asChild size="sm">
+              <Link to="/">Kembali ke Beranda</Link>
+            </Button>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
 }

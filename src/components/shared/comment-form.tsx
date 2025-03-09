@@ -55,7 +55,7 @@ export default function CommentForm() {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <FormLabel htmlFor="komentar">Tambahkan Komentar</FormLabel>
                 <span className="text-sm">
                   {form.watch("text").length} / {MAX_LENGTH}

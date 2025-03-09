@@ -9,11 +9,13 @@ export const useSharedThreadComments = (threadId: string) => {
         queryKey: ["threads", { threadId }],
         queryFn: async () => await getThread(threadId),
         enabled: !!threadId,
+        retry: false,
       },
       {
         queryKey: ["threads", "comments", { threadId }],
         queryFn: async () => await getComments(threadId),
         enabled: !!threadId,
+        retry: false,
       },
     ],
     combine: (results) => {
