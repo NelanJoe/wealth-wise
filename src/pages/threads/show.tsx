@@ -49,8 +49,8 @@ export default function ThreadShow() {
           Thread Tidak Ditemukan
         </h2>
         <p>Thread ID tidak valid atau telah dihapus.</p>
-        <Button onClick={() => navigate("/forum")} className="mt-4">
-          Kembali ke Forum
+        <Button onClick={() => navigate("/")} className="mt-4">
+          Kembali ke Beranda
         </Button>
       </div>
     );
