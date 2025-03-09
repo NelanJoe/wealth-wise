@@ -81,7 +81,6 @@ export const createThread = async ({
         displayName,
         email,
         photoURL,
-        createdAt,
       },
     });
   } catch (error) {
