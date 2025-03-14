@@ -15,6 +15,16 @@ import type { Comment } from "@/schemas/comment.schema";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 import CommentList from "@/components/shared/comment-list";
 import CommentForm from "@/components/shared/comment-form";
 import CommentSkeleton from "@/components/shared/comment-skeleton";
@@ -102,20 +112,44 @@ const ThreadHeader = ({
         <span className="ml-2">Kembali</span>
       </Button>
       {isAuthor && (
-        <Button
-          size="sm"
-          variant="destructive"
-          className="rounded-full"
-          disabled={isPending}
-          onClick={onDelete}
-        >
-          <span>Hapus diskusi</span>
-          {isPending ? (
-            <Loader2Icon className="w-4 h-4 animate-spin" />
-          ) : (
-            <DeleteIcon className="w-4 h-4" />
-          )}
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button size="sm" variant="destructive" className="rounded-full">
+              <span>Hapus diskusi</span>
+              <DeleteIcon className="w-4 h-4 ml-2" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-left text-sm sm:text-md">
+                Apakah Kamu Yakin Menghapus Diskusi Ini?
+              </DialogTitle>
+              <DialogDescription className="text-left text-xs sm:text-md">
+                Setelah diskusi dihapus, tidak dapat dikembalikan.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="sm:justify-start gap-2 sm:gap-0 flex-row">
+              <DialogClose asChild>
+                <Button size="sm" className="rounded-full" disabled={isPending}>
+                  <span>Tidak</span>
+                </Button>
+              </DialogClose>
+              <Button
+                size="sm"
+                variant="destructive"
+                className="rounded-full"
+                disabled={isPending}
+                onClick={onDelete}
+              >
+                {isPending ? (
+                  <Loader2Icon className="w-4 h-4 animate-spin" />
+                ) : (
+                  <span>Hapus</span>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );
