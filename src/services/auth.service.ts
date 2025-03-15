@@ -157,7 +157,6 @@ export const getCurrentUser = () => {
     const token = accessToken.get();
 
     if (!token) {
-      accessToken.remove();
       return reject(new Error("No auth token found"));
     }
 
