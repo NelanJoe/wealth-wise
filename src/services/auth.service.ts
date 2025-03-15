@@ -132,22 +132,26 @@ export const getCurrentUser = () => {
   return new Promise<User>((resolve, reject) => {
     const token = accessToken.get();
 
-    if (token) {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const userResult = {
-            uid: user.uid,
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-          } as User;
-
-          resolve(userResult);
-        } else {
-          reject(new Error("User not found"));
-        }
-      });
+    if (!token) {
+      return reject(new Error("No auth token found."));
     }
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userResult = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        } as User;
+
+        resolve(userResult);
+      } else {
+        reject(new Error("User not found."));
+      }
+    });
+
+    unsubscribe();
   });
 };
 
