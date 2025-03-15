@@ -1,8 +1,8 @@
 import { Loader2Icon, Trash2Icon } from "lucide-react";
 
 import { useCurrentUser, useDeleteInvestment, useGetInvesments } from "@/hooks";
-import { formatCurrency } from "@/lib/format-currency";
-import { formatDate } from "@/lib/format-date";
+import { formatCurrency } from "@/libs/format-currency";
+import { formatDate } from "@/libs/format-date";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {

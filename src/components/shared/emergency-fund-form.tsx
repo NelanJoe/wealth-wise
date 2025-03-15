@@ -6,7 +6,7 @@ import { Loader2Icon, SaveIcon } from "lucide-react";
 
 import { useSaveEmergencyFund, useCurrentUser } from "@/hooks";
 
-import { formatCurrency } from "@/lib/format-currency";
+import { formatCurrency } from "@/libs/format-currency";
 import { emergencyFundSchema } from "@/schemas/calculator.schema";
 
 import EmergencyFundInformation from "./emergency-fund-information";

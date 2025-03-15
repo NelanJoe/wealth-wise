@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 
-import { formatTimeAgo } from "@/lib/format-time-ago";
+import { formatTimeAgo } from "@/libs/format-time-ago";
 
 import type { Thread } from "@/schemas/thread.schema";
 

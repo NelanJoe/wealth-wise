@@ -1,5 +1,5 @@
 import type { Comment } from "@/schemas/comment.schema";
-import { formatTimeAgo } from "@/lib/format-time-ago";
+import { formatTimeAgo } from "@/libs/format-time-ago";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function CommentItem({ comment }: { comment: Comment }) {

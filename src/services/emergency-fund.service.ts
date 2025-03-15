@@ -9,8 +9,8 @@ import {
 } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
-import db from "@/lib/firebase/db";
-import auth from "@/lib/firebase/auth";
+import db from "@/libs/firebase/db";
+import auth from "@/libs/firebase/auth";
 
 import type { User } from "@/schemas/user.schema";
 import type { EmergencyFundType } from "@/schemas/calculator.schema";

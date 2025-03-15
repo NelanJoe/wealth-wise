@@ -5,8 +5,8 @@ import {
   useGetEmergencyFund,
 } from "@/hooks";
 
-import { formatDate } from "@/lib/format-date";
-import { formatCurrency } from "@/lib/format-currency";
+import { formatDate } from "@/libs/format-date";
+import { formatCurrency } from "@/libs/format-currency";
 
 import {
   Table,

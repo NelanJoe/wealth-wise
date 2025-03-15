@@ -11,8 +11,9 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
-import db from "@/lib/firebase/db";
-import auth from "@/lib/firebase/auth";
+import db from "@/libs/firebase/db";
+import auth from "@/libs/firebase/auth";
+import { accessToken } from "@/libs/access-token";
 
 import type { Login, Register } from "@/schemas/auth.schema";
 import type { User } from "@/schemas/user.schema";
@@ -81,6 +82,12 @@ export const createUserFromAuth = async ({
 export const login = async ({ email, password }: Login) => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+    if (user) {
+      const token = await user.getIdToken();
+      accessToken.set(token);
+    }
+
     return user as UserFirebaseType;
   } catch (error) {
     if (error instanceof FirebaseError) {
@@ -104,13 +111,13 @@ export const register = async ({
       password
     );
 
-    if (user) {
-      const userResult = user as UserFirebaseType;
-
-      await createUserFromAuth({
-        userAuth: { ...userResult, displayName: username },
-      });
+    if (!user) {
+      return null;
     }
+
+    await createUserFromAuth({
+      userAuth: { ...user, displayName: username },
+    });
   } catch (error) {
     if (error instanceof FirebaseError) {
       const customErrorMessage =
@@ -123,20 +130,24 @@ export const register = async ({
 
 export const getCurrentUser = () => {
   return new Promise<User>((resolve, reject) => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userResult = {
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-        } as User;
+    const token = accessToken.get();
 
-        resolve(userResult);
-      } else {
-        reject(new Error("User not found"));
-      }
-    });
+    if (token) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userResult = {
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          } as User;
+
+          resolve(userResult);
+        } else {
+          reject(new Error("User not found"));
+        }
+      });
+    }
   });
 };
 
@@ -149,6 +160,10 @@ export const loginWithGoogle = async () => {
     const user = result.user as UserFirebaseType;
 
     await createUserFromAuth({ userAuth: user });
+
+    if (token) {
+      accessToken.set(token);
+    }
 
     return {
       ...user,
@@ -183,6 +198,7 @@ export const updateProfileUser = async ({ userName }: { userName: string }) => {
 export const logout = async () => {
   try {
     await signOut(auth);
+    accessToken.remove();
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);

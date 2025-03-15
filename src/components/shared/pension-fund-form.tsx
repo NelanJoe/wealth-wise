@@ -7,7 +7,7 @@ import { Loader2Icon, SaveIcon } from "lucide-react";
 import { useCurrentUser, useSavePensionFund } from "@/hooks";
 
 import { pensionFundSchema } from "@/schemas/calculator.schema";
-import { formatCurrency } from "@/lib/format-currency";
+import { formatCurrency } from "@/libs/format-currency";
 
 import { Button } from "../ui/button";
 import {

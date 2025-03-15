@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { footerLinks } from "@/lib/consts";
+import { footerLinks } from "@/libs/consts";
 
 export default function Footer() {
   return (

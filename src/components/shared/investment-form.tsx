@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, SaveIcon } from "lucide-react";
 
 import { useCurrentUser, useSaveInvestment } from "@/hooks";
-import { formatCurrency } from "@/lib/format-currency";
+import { formatCurrency } from "@/libs/format-currency";
 
 import { investmentSchema } from "@/schemas/calculator.schema";
 

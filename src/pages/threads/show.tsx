@@ -6,7 +6,7 @@ import {
   useDeleteThread,
 } from "@/hooks";
 
-import { formatTimeAgo } from "@/lib/format-time-ago";
+import { formatTimeAgo } from "@/libs/format-time-ago";
 
 import type { User } from "@/schemas/user.schema";
 import type { Thread } from "@/schemas/thread.schema";

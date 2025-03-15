@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import { articles } from "@/lib/contents";
+import { articles } from "@/libs/contents";
 
 export default function ArticlePage() {
   const tipsMenabung = articles.filter(

@@ -15,7 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FAQS } from "@/lib/contents";
+import { FAQS } from "@/libs/contents";
 import { useRef } from "react";
 
 export default function Home() {
