@@ -129,24 +129,27 @@ const ThreadHeader = ({
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="sm:justify-start gap-2 sm:gap-0 flex-row">
-              <DialogClose asChild>
-                <Button size="sm" className="rounded-full" disabled={isPending}>
-                  <span>Tidak</span>
-                </Button>
-              </DialogClose>
               <Button
                 size="sm"
                 variant="destructive"
-                className="rounded-full"
                 disabled={isPending}
                 onClick={onDelete}
               >
                 {isPending ? (
                   <Loader2Icon className="w-4 h-4 animate-spin" />
                 ) : (
-                  <span>Hapus</span>
+                  <span>Ya</span>
                 )}
               </Button>
+              <DialogClose asChild>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className={`${isPending && "pointer-events-none hidden"}`}
+                >
+                  <span>Tidak</span>
+                </Button>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
