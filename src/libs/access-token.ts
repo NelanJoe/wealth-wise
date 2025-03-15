@@ -7,7 +7,7 @@ const accessTokenCookie = new Cookies(null, {
   path: "/",
   sameSite: "none",
   secure: true,
-  expires: addDays(new Date(), 1), // 1 days
+  expires: addDays(new Date(), 30), // 1 days
 });
 
 export const accessToken = {
