@@ -58,7 +58,7 @@ export default function App() {
     <CookiesProvider>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </CookiesProvider>

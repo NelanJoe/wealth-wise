@@ -128,39 +128,12 @@ export const register = async ({
   }
 };
 
-export const getCurrentUser = () => {
-  return new Promise<User>((resolve, reject) => {
-    const token = accessToken.get();
-
-    if (!token) {
-      return reject(new Error("No auth token found."));
-    }
-
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userResult = {
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-        } as User;
-
-        resolve(userResult);
-      } else {
-        reject(new Error("User not found."));
-      }
-    });
-
-    unsubscribe();
-  });
-};
-
 export const loginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleAuthProvider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
 
-    const token = credential?.accessToken;
+    const token = credential?.idToken;
     const user = result.user as UserFirebaseType;
 
     await createUserFromAuth({ userAuth: user });
@@ -169,10 +142,7 @@ export const loginWithGoogle = async () => {
       accessToken.set(token);
     }
 
-    return {
-      ...user,
-      token,
-    };
+    return { ...user };
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);
@@ -180,6 +150,32 @@ export const loginWithGoogle = async () => {
 
     throw new Error("An error occurred while logging in with Google.");
   }
+};
+
+export const getCurrentUser = () => {
+  return new Promise<User>((resolve, reject) => {
+    const token = accessToken.get();
+
+    if (!token) {
+      accessToken.remove();
+      return reject(new Error("No auth token found"));
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        resolve({
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        } as User);
+      } else {
+        reject(new Error("User not found."));
+      }
+    });
+
+    unsubscribe();
+  });
 };
 
 export const updateProfileUser = async ({ userName }: { userName: string }) => {
