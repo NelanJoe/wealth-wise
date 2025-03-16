@@ -8,7 +8,6 @@ export const useSharedThreadComments = (threadId: string) => {
       {
         queryKey: ["threads", { threadId }],
         queryFn: async () => await getThread(threadId),
-        enabled: !!threadId,
         retry: false,
       },
       {
