@@ -13,7 +13,6 @@ import { FirebaseError } from "firebase/app";
 
 import db from "@/libs/firebase/db";
 import auth from "@/libs/firebase/auth";
-import { accessToken } from "@/libs/access-token";
 
 import type { Login, Register } from "@/schemas/auth.schema";
 import type { User } from "@/schemas/user.schema";
@@ -82,12 +81,6 @@ export const createUserFromAuth = async ({
 export const login = async ({ email, password }: Login) => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-
-    if (user) {
-      const token = await user.getIdToken();
-      accessToken.set(token);
-    }
-
     return user as UserFirebaseType;
   } catch (error) {
     if (error instanceof FirebaseError) {
@@ -138,11 +131,7 @@ export const loginWithGoogle = async () => {
 
     await createUserFromAuth({ userAuth: user });
 
-    if (token) {
-      accessToken.set(token);
-    }
-
-    return { ...user };
+    return { ...user, token };
   } catch (error) {
     if (error instanceof FirebaseError) {
       if (error.code === "auth/popup-closed-by-user") {
@@ -160,12 +149,6 @@ export const loginWithGoogle = async () => {
 
 export const getCurrentUser = () => {
   return new Promise<User>((resolve, reject) => {
-    const token = accessToken.get();
-
-    if (!token) {
-      return reject(new Error("No auth token found"));
-    }
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         resolve({
@@ -203,7 +186,6 @@ export const updateProfileUser = async ({ userName }: { userName: string }) => {
 export const logout = async () => {
   try {
     await signOut(auth);
-    accessToken.remove();
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);
