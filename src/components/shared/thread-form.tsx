@@ -27,7 +27,7 @@ import { Textarea } from "../ui/textarea";
 
 const DEFAULT_LENGTH_TITLE: { MIN: number; MAX: number } = {
   MIN: 3,
-  MAX: 50,
+  MAX: 150,
 };
 
 const DEFAULT_LENGTH_BODY: { MIN: number; MAX: number } = {
