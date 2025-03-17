@@ -164,7 +164,7 @@ export const loginWithGoogle = async () => {
 
 export const getCurrentUser = () => {
   return new Promise<User>((resolve, reject) => {
-    const unsubcribe = onAuthStateChanged(auth, (user) => {
+    return onAuthStateChanged(auth, (user) => {
       if (!user) {
         reject(new Error("User not found."));
       } else {
@@ -176,8 +176,6 @@ export const getCurrentUser = () => {
         } as User);
       }
     });
-
-    return unsubcribe();
   });
 };
 
