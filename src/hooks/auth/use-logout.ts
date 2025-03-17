@@ -12,6 +12,7 @@ export const useLogout = () => {
     mutationFn: async () => await logoutApi(),
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ["user"] });
+
       if (location.pathname !== "/") {
         navigate("/", { replace: true });
       }

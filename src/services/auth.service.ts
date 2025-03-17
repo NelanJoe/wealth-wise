@@ -13,6 +13,7 @@ import { FirebaseError } from "firebase/app";
 
 import db from "@/libs/firebase/db";
 import auth from "@/libs/firebase/auth";
+import { acessToken } from "@/libs/access-token";
 
 import type { Login, Register } from "@/schemas/auth.schema";
 import type { User } from "@/schemas/user.schema";
@@ -81,14 +82,21 @@ export const createUserFromAuth = async ({
 export const login = async ({ email, password }: Login) => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+    if (!user) {
+      throw new Error("An error occurred while logging in.");
+    }
+
+    const token = await user.getIdToken();
+    acessToken.set(token);
+
     return user as UserFirebaseType;
   } catch (error) {
     if (error instanceof FirebaseError) {
-      const customErrorMessage =
-        customAuthErrorMessages[error.code] || error.message;
-
-      throw new Error(customErrorMessage);
+      throw new Error(customAuthErrorMessages[error.code] || error.message);
     }
+
+    throw error;
   }
 };
 
@@ -105,7 +113,7 @@ export const register = async ({
     );
 
     if (!user) {
-      return null;
+      throw new Error("An error occurred while registering.");
     }
 
     await createUserFromAuth({
@@ -115,9 +123,10 @@ export const register = async ({
     if (error instanceof FirebaseError) {
       const customErrorMessage =
         customAuthErrorMessages[error.code] || error.message;
-
       throw new Error(customErrorMessage);
     }
+
+    throw error;
   }
 };
 
@@ -129,49 +138,59 @@ export const loginWithGoogle = async () => {
     const token = credential?.idToken;
     const user = result.user as UserFirebaseType;
 
-    await createUserFromAuth({ userAuth: user });
-
-    return { ...user, token };
-  } catch (error) {
-    if (error instanceof FirebaseError) {
-      if (error.code === "auth/popup-closed-by-user") {
-        throw new Error("Login dibatalkan oleh pengguna.");
-      } else if (error.code === "auth/network-request-failed") {
-        throw new Error("Koneksi internet bermasalah. Coba lagi.");
-      } else {
-        throw new Error(error.message);
-      }
+    if (!user || !token) {
+      throw new Error(`An error occurred while logging in with Google.`);
     }
 
-    throw new Error("An error occurred while logging in with Google.");
+    await createUserFromAuth({ userAuth: user });
+    acessToken.set(token);
+
+    return { ...user };
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      const errorMessages: Record<string, string> = {
+        "auth/popup-closed-by-user": "Login dibatalkan oleh pengguna.",
+        "auth/network-request-failed": "Koneksi internet bermasalah.",
+      };
+
+      throw new Error(
+        errorMessages[error.code] || "Gagal login dengan Google."
+      );
+    }
+
+    throw error;
   }
 };
 
 export const getCurrentUser = () => {
   return new Promise<User>((resolve, reject) => {
-    return onAuthStateChanged(auth, (user) => {
-      if (user) {
+    const unsubcribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        reject(new Error("User not found."));
+      } else {
         resolve({
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
         } as User);
-      } else {
-        reject(new Error("User not found."));
       }
     });
+
+    return unsubcribe();
   });
 };
 
 export const updateProfileUser = async ({ userName }: { userName: string }) => {
   try {
     const currentUser = auth.currentUser as UserFirebaseType;
-    if (currentUser) {
-      await updateProfile(currentUser, {
-        displayName: userName,
-      });
+    if (!currentUser) {
+      throw new Error("User tidak ditemukan.");
     }
+
+    await updateProfile(currentUser, {
+      displayName: userName,
+    });
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);
@@ -184,6 +203,7 @@ export const updateProfileUser = async ({ userName }: { userName: string }) => {
 export const logout = async () => {
   try {
     await signOut(auth);
+    await acessToken.remove();
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);

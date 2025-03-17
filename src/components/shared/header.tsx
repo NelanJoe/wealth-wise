@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { AlignJustifyIcon, LogOutIcon } from "lucide-react";
 
 import { useCurrentUser, useLogout, useMediaQuery } from "@/hooks";
-import { links } from "@/libs/consts";
+import { links } from "@/libs/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {

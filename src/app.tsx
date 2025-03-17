@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
@@ -42,22 +43,22 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default function App() {
+const Providers = () => {
   const [queryClient] = useState(() => {
-    return new QueryClient({
-      defaultOptions: {
-        queries: {
-          // staleTime: Infinity,
-        },
-      },
-    });
+    return new QueryClient({});
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Toaster position="top-right" />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <CookiesProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <Toaster position="top-right" />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </CookiesProvider>
   );
+};
+
+export default function App() {
+  return <Providers />;
 }
