@@ -40,9 +40,8 @@ export default function RegisterPage() {
             onClick={() => loginWithGoogle()}
             disabled={isPending}
           >
-            {isPending ? (
-              <Loader2Icon className="animate-spin" />
-            ) : (
+            {isPending && <Loader2Icon className="animate-spin" />}
+            {!isPending && (
               <div className="flex flex-row items-center justify-center gap-1">
                 <img
                   src="/assets/google.svg"

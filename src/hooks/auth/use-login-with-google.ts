@@ -11,22 +11,17 @@ export const useLoginWithGoogle = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async () => loginWithGoogleApi(),
-    onSuccess: (data) => {
-      let user;
-
-      if (data) {
-        user = {
-          uid: data.uid,
-          displayName: data.displayName,
-          email: data.email,
-          photoURL: data.photoURL,
-        };
-      }
-
-      queryClient.setQueryData(["user"], user);
-
+    onSuccess: ({ uid, displayName, email, photoURL }) => {
+      queryClient.setQueryData(["user"], { uid, displayName, email, photoURL });
       toast.success("Berhasil login dengan akun google");
       navigate("/", { replace: true });
+    },
+    onError: (err) => {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("Terjadi kesalahan saat login.");
+      }
     },
   });
 

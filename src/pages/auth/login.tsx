@@ -33,16 +33,15 @@ export default function LoginPage() {
             anda:
           </p>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2 items-center">
           <Button
             variant="outline"
             className="w-full"
             onClick={() => loginWithGoogle()}
             disabled={isPending}
           >
-            {isPending ? (
-              <Loader2Icon className="animate-spin" />
-            ) : (
+            {isPending && <Loader2Icon className="animate-spin" />}
+            {!isPending && (
               <div className="flex flex-row items-center justify-center gap-1">
                 <img
                   src="/assets/google.svg"

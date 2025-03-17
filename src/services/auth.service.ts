@@ -145,7 +145,13 @@ export const loginWithGoogle = async () => {
     return { ...user };
   } catch (error) {
     if (error instanceof FirebaseError) {
-      throw new Error(error.message);
+      if (error.code === "auth/popup-closed-by-user") {
+        throw new Error("Login dibatalkan oleh pengguna.");
+      } else if (error.code === "auth/network-request-failed") {
+        throw new Error("Koneksi internet bermasalah. Coba lagi.");
+      } else {
+        throw new Error(error.message);
+      }
     }
 
     throw new Error("An error occurred while logging in with Google.");
