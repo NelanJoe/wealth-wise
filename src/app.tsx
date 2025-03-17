@@ -17,7 +17,6 @@ import ThreadShow from "@/pages/threads/show";
 import ThreadsCreate from "@/pages/threads/create";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
-import { CookiesProvider } from "react-cookie";
 
 const router = createBrowserRouter([
   {
@@ -55,12 +54,10 @@ export default function App() {
   });
 
   return (
-    <CookiesProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <Toaster position="top-right" />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </CookiesProvider>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <Toaster position="top-right" />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
