@@ -83,7 +83,7 @@ function DeveloperSection() {
               />
             </a>
             <a
-              href="https://www.linkedin.com/in/nelan/"
+              href="https://www.linkedin.com/in/nelan17/"
               target="_blank"
               rel="noreferrer"
               className="border border-gray-300 rounded-xl p-2 hover:bg-gray-100/60"
