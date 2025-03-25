@@ -128,7 +128,7 @@ export default function PensionFundForm() {
                       type="currency"
                       placeholder="Contoh: Rp. 10.000.000"
                       {...field}
-                      className="w-[75%] md:w-[70%]"
+                      className="w-[80%] md:w-[86%]"
                     />
                   </FormControl>
                   <FormMessage />
@@ -141,7 +141,7 @@ export default function PensionFundForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="yearsLater">
-                    Berapa tahun lagi Anda akan pensiun?{" "}
+                    Berapa biaya hidup bulanan yang Anda butuhkan saat pensiun?{" "}
                     <span className="text-primary">(t)</span>
                   </FormLabel>
                   <FormControl>
@@ -151,7 +151,7 @@ export default function PensionFundForm() {
                         type="string"
                         placeholder="20"
                         {...field}
-                        className="w-[75%] md:w-[70%]"
+                        className="w-[80%] md:w-[86%]"
                       />
                       <span className="text-sm md:text-base">tahun</span>
                     </div>
@@ -177,7 +177,7 @@ export default function PensionFundForm() {
                         type="string"
                         placeholder="3,58"
                         {...field}
-                        className="w-[75%] md:w-[70%]"
+                        className="w-[80%] md:w-[86%]"
                       />
                       <span className="text-sm md:text-base">% / tahun</span>
                     </div>
@@ -192,7 +192,8 @@ export default function PensionFundForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="annualReturn">
-                    Persen-an return investasi Anda per tahun?{" "}
+                    Estimasi return tahunan dari investasi Anda (misal: 6% untuk
+                    reksa dana saham / 4% untuk deposito){" "}
                     <span className="text-primary">(r)</span>
                   </FormLabel>
                   <FormControl>
@@ -202,7 +203,7 @@ export default function PensionFundForm() {
                         type="string"
                         placeholder="5"
                         {...field}
-                        className="w-[75%] md:w-[70%]"
+                        className="w-[80%] md:w-[86%]"
                       />
                       <span className="text-sm md:text-base">% / tahun</span>
                     </div>
@@ -212,11 +213,11 @@ export default function PensionFundForm() {
               )}
             />
             {pensionFundValue ? (
-              <div className="p-3 border rounded-xl">
+              <div className="p-3 border rounded-xl text-sm w-full md:w-[86%]">
                 <p>
                   Berdasarkan <span className="text-primary">4% rule</span>,
                   Anda harus memiliki setidaknya{" "}
-                  <span className="underline decoration-primary underline-offset-4">
+                  <span className="underline text-primary underline-offset-8 decoration-primary">
                     {formatCurrency(pensionFundValue)}
                   </span>{" "}
                   sebagai Dana Pensiun

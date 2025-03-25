@@ -1,3 +1,4 @@
+import { InfoIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -20,6 +21,7 @@ export default function InvestmentInformation() {
           variant="outline"
           className="w-full md:w-fit"
         >
+          <InfoIcon className="w-4 h-4 mr-2 text-blue-500" />
           Cara Hitung
         </Button>
       </DialogTrigger>
@@ -63,11 +65,12 @@ export default function InvestmentInformation() {
           <p className="font-bold">Contoh Perhitungan:</p>
           <p className="text-sm text-gray-700">
             Jika Anda memiliki investasi awal sebesar{" "}
-            <span className="font-bold">Rp10.000.000</span>, menabung{" "}
-            <span className="font-bold">Rp1.000.000</span> per bulan dengan suku
-            bunga tahunan <span className="font-bold">6%</span>
+            <span className="font-bold">Rp 10.000.000</span>, menabung{" "}
+            <span className="font-bold">Rp 1.000.000</span> per bulan dengan
+            suku bunga tahunan <span className="font-bold">6%</span>
             selama <span className="font-bold">5 tahun</span>, maka total
-            investasi dapat dihitung dengan rumus di atas.
+            investasi dapat dihitung dengan rumus di atas sebagai berikut:{" "}
+            <span className="font-bold text-primary">Rp 83.258.532</span>
           </p>
         </div>
 

@@ -198,7 +198,7 @@ export default function EmergencyFundForm() {
               <div className="p-3 border rounded-xl">
                 <p>
                   Jumlah dana darurat minimal yang Anda butuhkan adalah:{" "}
-                  <span className="underline decoration-blue-500 underline-offset-4">
+                  <span className="underline text-primary underline-offset-8 decoration-primary">
                     {formatCurrency(emergencyFundAmount)}
                   </span>
                 </p>

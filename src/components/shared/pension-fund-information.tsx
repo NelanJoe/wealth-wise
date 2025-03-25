@@ -1,3 +1,4 @@
+import { InfoIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -20,6 +21,7 @@ export default function PensionFundInformation() {
           variant="outline"
           className="w-full md:w-fit"
         >
+          <InfoIcon className="w-4 h-4 mr-2 text-blue-500" />
           Cara Hitung
         </Button>
       </DialogTrigger>

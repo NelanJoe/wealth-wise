@@ -123,8 +123,8 @@ export default function InvesmentForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="currentlyAmount">
-                    Uang yang anda miliki saat ini sebesar?{" "}
-                    <span className="text-primary">(P)</span>
+                    Uang yang Anda miliki saat ini?{" "}
+                    <span className="text-primary">(Investasi Awal - P)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -145,7 +145,7 @@ export default function InvesmentForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="monthlySaving">
-                    Uang yang dapat Anda tabung per bulan?{" "}
+                    Jumlah yang dapat Anda tabung setiap bulan?{" "}
                     <span className="text-primary">(PMT)</span>
                   </FormLabel>
                   <FormControl>
@@ -167,7 +167,7 @@ export default function InvesmentForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="annualReturn">
-                    Anda akan investasi di produk yang returnnya?{" "}
+                    Suku bunga tahunan dari investasi Anda?{" "}
                     <span className="text-primary">(r)</span>
                   </FormLabel>
                   <FormControl>
@@ -192,7 +192,7 @@ export default function InvesmentForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="years">
-                    Berapa lama Anda konsisten menabung dan berinvestasi?{" "}
+                    Durasi investasi Anda?{" "}
                     <span className="text-primary">(t)</span>
                   </FormLabel>
                   <FormControl>
@@ -212,15 +212,15 @@ export default function InvesmentForm() {
               )}
             />
             {investmentValue ? (
-              <div className="border p-3 rounded-xl w-[75%] md:w-[70%]">
+              <div className="border p-3 rounded-xl w-[75%] md:w-[70%] text-sm">
                 <p>
-                  Uang yang akan Anda miliki pada{" "}
+                  Perkiraan jumlah investasi Anda pada setelah{" "}
                   <span className="text-primary">
                     {form.getValues("years") ? form.getValues("years") : 0}{" "}
                     tahun
                   </span>{" "}
                   lagi sebesar{" "}
-                  <span className="underline underline-offset-4 decoration-primary">
+                  <span className="underline text-primary underline-offset-8 decoration-primary">
                     {formatCurrency(investmentValue)}
                   </span>
                 </p>
