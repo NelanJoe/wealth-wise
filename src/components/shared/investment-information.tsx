@@ -56,7 +56,12 @@ export default function InvestmentInformation() {
             <sup>r</sup>/<sub>12</sub>)
           </p>
           <p className="text-sm text-gray-500">
+            <span className="font-bold">B</span> = Future Value (nilai masa
+            depan dari tabungan bulanan)
             <span className="font-bold">PMT</span> = Jumlah tabungan bulanan
+            <span className="font-bold">r</span> = Suku bunga tahunan (dalam
+            desimal)
+            <span className="font-bold">t</span> = Lama investasi (dalam tahun)
           </p>
         </div>
 
