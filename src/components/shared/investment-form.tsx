@@ -62,7 +62,7 @@ export default function InvesmentForm() {
     // Rumus lump sum: FV = PV * (1 + i)^n
     const FV_awal = PValue * Math.pow(1 + monthlyRate, periods);
 
-    // Rumus anuitas jatuh tempo: FV = PMT * ((1 + i)^n - 1) / i * (1 + i)
+    // Rumus anuitas jatuh tempo: FV = PMT * ((1 + r)^n - 1) / r * (1 + r)
     const FV_anuitas =
       PMTValue *
       ((Math.pow(1 + monthlyRate, periods) - 1) / monthlyRate) *

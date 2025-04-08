@@ -66,12 +66,12 @@ export default function InvestmentInformation() {
               FV = PMT x (
               <span className="inline-block text-center align-middle">
                 <span className="border-b-2 border-blue-600">
-                  (1 + i)<sup>n</sup> − 1
+                  (1 + r)<sup>n</sup> − 1
                 </span>
                 <br />
-                <span className="bottom">i</span>
+                <span className="bottom">r</span>
               </span>
-              ) × (1 + i)
+              ) × (1 + r)
             </b>
           </div>
           <p className="text-sm text-gray-500">
@@ -81,7 +81,7 @@ export default function InvestmentInformation() {
             <span className="font-bold italic">PMT</span> = Kontribusi berkala,
             jumlah yang disetor secara teratur pada setiap periode (bulanan).
             <br />
-            <span className="font-bold italic">i</span> = Tingkat bunga per
+            <span className="font-bold italic">r</span> = Tingkat bunga per
             periode (dalam desimal, misalnya 5% = 0.05).
             <br />
             <span className="font-bold italic">t</span> = Lama investasi (dalam
