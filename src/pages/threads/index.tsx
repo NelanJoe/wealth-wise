@@ -50,7 +50,7 @@ export default function Threads() {
   return (
     <div>
       <div className="py-20 bg-blue-500">
-        <div className="flex flex-row items-center justify-between max-w-4xl px-4 mx-auto">
+        <div className="flex flex-row items-center justify-between max-w-5xl px-4 mx-auto">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -88,7 +88,7 @@ export default function Threads() {
           </motion.div>
         </div>
       </div>
-      <div className="max-w-4xl px-4 pt-20 mx-auto">
+      <div className="max-w-5xl px-4 pt-20 mx-auto">
         <div className="flex flex-row justify-between mb-2">
           <div className="flex flex-col gap-2 mb-4">
             <h2 className="text-xl font-semibold md:text-2xl">
@@ -116,7 +116,7 @@ export default function Threads() {
           <SearchThread />
         </div>
       </div>
-      <div className="max-w-4xl px-4 mx-auto py-10">
+      <div className="max-w-5xl px-4 mx-auto py-10">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
           <div className="order-1 md:order-0 md:col-span-2">
             {pending ? (

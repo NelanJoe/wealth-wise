@@ -36,35 +36,68 @@ export default function InvestmentInformation() {
 
         {/* Future Value dari Aset Awal */}
         <div className="border-b pb-3">
-          <p className="font-bold">A: Future Value dari Aset Awal</p>
-          <p className="text-lg font-mono text-blue-600">
-            A = P (1 + <sup>r</sup>/<sub>12</sub>)<sup>12t</sup>
-          </p>
+          <p className="font-bold">Future Value dari Aset Awal (Lump Sum)</p>
+          <div className="my-8">
+            <b className="text-lg font-mono italic text-blue-600">
+              FV = PV x (1 + <sup>i</sup>)<sup>n</sup>
+            </b>
+          </div>
           <p className="text-sm text-gray-500">
-            <span className="font-bold">P</span> = Nilai awal investasi <br />
-            <span className="font-bold">r</span> = Suku bunga tahunan (desimal){" "}
+            <span className="font-bold italic">FV (Future Value)</span> = Nilai
+            masa depan
             <br />
-            <span className="font-bold">t</span> = Lama investasi (tahun)
+            <span className="font-bold italic">PV (Present Value)</span> = Nilai
+            awal atau pokok
+            <br />
+            <span className="font-bold italic">i</span> = Tingkat suku bunga
+            tahunan (desimal)
+            <br />
+            <span className="font-bold italic">n</span> = Lama investasi (tahun)
           </p>
         </div>
 
-        {/* Future Value dari Tabungan Bulanan */}
+        {/* Future Value Suku Bunga Majemuk */}
         <div className="border-b pb-3 mt-4">
-          <p className="font-bold">B: Future Value dari Tabungan Bulanan</p>
-          <p className="text-lg font-mono text-blue-600">
-            B = PMT × ((1 + <sup>r</sup>/<sub>12</sub>)<sup>12t</sup> - 1) / (
-            <sup>r</sup>/<sub>12</sub>)
+          <p className="font-bold">
+            Future Value dari Anuitas Jatuh Tempo (Annuity Due)
           </p>
+          <div className="my-6">
+            <b className="text-lg font-mono italic text-blue-600">
+              FV = PMT x (
+              <span className="inline-block text-center align-middle">
+                <span className="border-b-2 border-blue-600">
+                  (1 + i)<sup>n</sup> − 1
+                </span>
+                <br />
+                <span className="bottom">i</span>
+              </span>
+              ) × (1 + i)
+            </b>
+          </div>
           <p className="text-sm text-gray-500">
-            <span className="font-bold">B</span> = Future Value (nilai masa
-            depan dari tabungan bulanan)
-            <span className="font-bold">PMT</span> = Jumlah tabungan bulanan
-            <span className="font-bold">r</span> = Suku bunga tahunan (dalam
-            desimal)
-            <span className="font-bold">t</span> = Lama investasi (dalam tahun)
+            <span className="font-bold italic">FV (Future Value)</span> = Nilai
+            masa depan
+            <br />
+            <span className="font-bold italic">PMT</span> = Kontribusi berkala,
+            jumlah yang disetor secara teratur pada setiap periode (bulanan).
+            <br />
+            <span className="font-bold italic">i</span> = Tingkat bunga per
+            periode (dalam desimal, misalnya 5% = 0.05).
+            <br />
+            <span className="font-bold italic">t</span> = Lama investasi (dalam
+            tahun)
+          </p>
+          <p className="text-sm text-gray-500 my-2">
+            Rumus diatas didapatkan melalui referensi dari:{" "}
+            <a
+              href="https://www.investopedia.com/retirement/calculating-present-and-future-value-of-annuities/"
+              target="_blank"
+              className="italic text-blue-500"
+            >
+              Investopedia
+            </a>
           </p>
         </div>
-
         {/* Contoh Perhitungan */}
         <div className="mt-4 p-3 bg-gray-100 rounded-md">
           <p className="font-bold">Contoh Perhitungan:</p>
@@ -75,10 +108,9 @@ export default function InvestmentInformation() {
             suku bunga tahunan <span className="font-bold">6%</span>
             selama <span className="font-bold">5 tahun</span>, maka total
             investasi dapat dihitung dengan rumus di atas sebagai berikut:{" "}
-            <span className="font-bold text-primary">Rp 83.258.532</span>
+            <span className="font-bold text-primary">Rp 83.607.382</span>
           </p>
         </div>
-
         <DialogFooter className="sm:justify-start mt-4">
           <DialogClose asChild>
             <Button type="button" variant="secondary">

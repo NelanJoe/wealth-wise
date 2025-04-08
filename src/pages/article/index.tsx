@@ -24,7 +24,7 @@ export default function ArticlePage() {
   return (
     <div>
       <div className="py-20 bg-blue-500">
-        <div className="flex flex-row-reverse items-center justify-between max-w-4xl px-4 mx-auto">
+        <div className="flex flex-row-reverse items-center justify-between max-w-5xl px-4 mx-auto">
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -62,7 +62,7 @@ export default function ArticlePage() {
           </motion.div>
         </div>
       </div>
-      <div className="max-w-4xl px-4 py-20 mx-auto">
+      <div className="max-w-5xl px-4 py-20 mx-auto">
         <div className="flex flex-col space-y-12">
           {/* Tips Menabung */}
           <article>

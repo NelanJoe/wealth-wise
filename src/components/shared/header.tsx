@@ -21,7 +21,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-30 bg-white border-b">
-      <nav className="flex flex-row items-center justify-between h-20 max-w-4xl px-4 mx-auto">
+      <nav className="flex flex-row items-center justify-between h-20 max-w-5xl px-4 mx-auto">
         <Link to="/">
           <img
             src="/assets/logo.png"

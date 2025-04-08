@@ -20,13 +20,7 @@ export const saveInvestment = async ({
   annualReturn,
   years,
   resultInvestment,
-}: {
-  currentlyAmount: string;
-  monthlySaving: string;
-  annualReturn: string;
-  years: string;
-  resultInvestment: number;
-}) => {
+}: Omit<InvestmentType, "uid" | "author" | "createdAt" | "updatedAt">) => {
   try {
     const investmentsRef = collection(db, "investments");
 

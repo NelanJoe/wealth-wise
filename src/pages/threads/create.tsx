@@ -16,7 +16,7 @@ export default function ThreadsCreate() {
   }
 
   return (
-    <div className="max-w-4xl px-4 py-16 mx-auto md:py-24">
+    <div className="max-w-5xl px-4 py-16 mx-auto md:py-24">
       <div>
         <Button
           onClick={() => navigate(-1)}

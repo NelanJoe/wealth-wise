@@ -5,7 +5,7 @@ import { footerLinks } from "@/libs/navigation";
 export default function Footer() {
   return (
     <footer className="py-20 bg-blue-500">
-      <div className="max-w-4xl mx-auto px-4 text-white">
+      <div className="max-w-5xl mx-auto px-4 text-white">
         <div className="flex items-center justify-between">
           <div className="space-y-3">
             <h2 className="font-semibold text-2xl">Wealth Wise</h2>

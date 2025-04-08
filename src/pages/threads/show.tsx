@@ -68,14 +68,14 @@ export default function ThreadShow() {
 
   return (
     <section className="pt-10 pb-24">
-      <div className="max-w-4xl px-4 mx-auto mb-6">
+      <div className="max-w-5xl px-4 mx-auto mb-6">
         <ThreadHeader
           isAuthor={isAuthor}
           isPending={isPending}
           onDelete={() => deleteThread(threadId ?? "")}
         />
       </div>
-      <div className="max-w-4xl px-4 mx-auto space-y-4 min-h-max">
+      <div className="max-w-5xl px-4 mx-auto space-y-4 min-h-max">
         <ThreadContent thread={thread} />
         {comments && (
           <CommentSection

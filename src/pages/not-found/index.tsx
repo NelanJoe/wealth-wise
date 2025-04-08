@@ -37,7 +37,7 @@ export default function ErrorPage() {
   return (
     <>
       <Header />
-      <main className="grid max-w-4xl px-4 mx-auto py-80 place-content-center">
+      <main className="grid max-w-5xl px-4 mx-auto py-80 place-content-center">
         <div className="space-y-4">
           {content}
           <div className="flex justify-center">

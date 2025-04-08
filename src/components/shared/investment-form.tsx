@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, SaveIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { useCurrentUser, useSaveInvestment } from "@/hooks";
 import { formatCurrency } from "@/libs/format-currency";
@@ -51,29 +52,25 @@ export default function InvesmentForm() {
     annualReturn,
     years,
   }) => {
-    /**
-     * Rumus Future Value dari Aset Awal
-     * A = PV * (1 + r/12)^12t //
-     * B = PMT * ((1 + r/12)^12t - 1) / r/12
-     * Total = A + B // Aset Masa Depan
-     *
-     * Ket:
-     * PV: Future Value (Aset Awal)
-     * PMT: Jumlah Pengeluaran Bulanan
-     * r: Annual Return / Tingkat bunga per-tahun
-     * t: Jangka waktu investasi per-tahun
-     * */
+    // Ambil dan konversi nilai input
     const PValue = Number(currentlyAmount.replace(/\D/g, ""));
     const PMTValue = Number(monthlySaving.replace(/\D/g, ""));
-    const rValue = parseFloat(annualReturn) / 100;
-    const tValue = Number(years.replace(/\D/g, "")) * 12;
+    const annualRate = parseFloat(annualReturn) / 100; // cth: 2 / 100 = 0.02
+    const periods = Number(years.replace(/\D/g, "")) * 12; // ubah tahun ke bulan
+    const monthlyRate = annualRate / 12;
 
-    const A = PValue * Math.pow(1 + rValue / 12, tValue);
-    const B =
-      (PMTValue * (Math.pow(1 + rValue / 12, tValue) - 1)) / (rValue / 12);
+    // Rumus lump sum: FV = PV * (1 + i)^n
+    const FV_awal = PValue * Math.pow(1 + monthlyRate, periods);
 
-    const futureValue = A + B;
+    // Rumus anuitas jatuh tempo: FV = PMT * ((1 + i)^n - 1) / i * (1 + i)
+    const FV_anuitas =
+      PMTValue *
+      ((Math.pow(1 + monthlyRate, periods) - 1) / monthlyRate) *
+      (1 + monthlyRate);
 
+    const futureValue = FV_awal + FV_anuitas;
+
+    // Validasi dan set hasil
     if (isNaN(futureValue)) {
       setInvestmentValue(0);
       return;
@@ -124,7 +121,7 @@ export default function InvesmentForm() {
                 <FormItem>
                   <FormLabel htmlFor="currentlyAmount">
                     Uang yang Anda miliki saat ini?{" "}
-                    <span className="text-primary">(Investasi Awal - P)</span>
+                    <span className="text-primary">(Investasi Awal - PV)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -211,8 +208,16 @@ export default function InvesmentForm() {
                 </FormItem>
               )}
             />
+            {/* InvestmentValue */}
             {investmentValue ? (
-              <div className="border p-3 rounded-xl w-[75%] md:w-[70%] text-sm">
+              <motion.div
+                key="investmentValue"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="border p-3 rounded-xl w-[75%] md:w-[70%] text-sm"
+              >
                 <p>
                   Perkiraan jumlah investasi Anda pada setelah{" "}
                   <span className="text-primary">
@@ -224,7 +229,7 @@ export default function InvesmentForm() {
                     {formatCurrency(investmentValue)}
                   </span>
                 </p>
-              </div>
+              </motion.div>
             ) : null}
           </CardContent>
           <CardFooter>

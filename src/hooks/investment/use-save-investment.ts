@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import { saveInvestment as saveInvestmentApi } from "@/services/investment.service";
+import { InvestmentType } from "@/schemas/calculator.schema";
 
 export const useSaveInvestment = () => {
   const queryClient = useQueryClient();
@@ -14,13 +15,7 @@ export const useSaveInvestment = () => {
       annualReturn,
       years,
       resultInvestment,
-    }: {
-      currentlyAmount: string;
-      monthlySaving: string;
-      annualReturn: string;
-      years: string;
-      resultInvestment: number;
-    }) => {
+    }: Omit<InvestmentType, "uid" | "author" | "createdAt" | "updatedAt">) => {
       return await saveInvestmentApi({
         currentlyAmount,
         monthlySaving,

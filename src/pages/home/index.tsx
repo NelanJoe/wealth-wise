@@ -24,12 +24,12 @@ export default function Home() {
 
   return (
     <section>
-      <div className="max-w-4xl px-4 py-20 mx-auto md:py-0">
+      <div className="max-w-5xl px-4 py-20 mx-auto md:py-0">
         <Hero />
       </div>
       {/* Features */}
       <div className="py-20 bg-blue-500 ">
-        <div className="flex flex-col-reverse justify-between h-full max-w-4xl gap-16 px-4 mx-auto md:gap-20 item-center md:flex-row">
+        <div className="flex flex-col-reverse justify-between h-full max-w-5xl gap-16 px-4 mx-auto md:gap-20 item-center md:flex-row">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -115,7 +115,7 @@ export default function Home() {
       {/* End Features */}
       {/* Benefits */}
       <div className="py-20 border-b bg-gray-200/30">
-        <div className="max-w-6xl px-4 mx-auto ">
+        <div className="max-w-5xl px-4 mx-auto ">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -132,7 +132,7 @@ export default function Home() {
             <div className="bg-blue-500 w-32 h-[2px]"></div>
           </motion.div>
         </div>
-        <div className="max-w-4xl px-4 mx-auto">
+        <div className="max-w-5xl px-4 mx-auto">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -227,7 +227,7 @@ export default function Home() {
       {/* End Benefits */}
       {/* FAQ */}
       <div className="py-20 bg-white">
-        <div className="max-w-4xl px-4 mx-auto">
+        <div className="max-w-5xl px-4 mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
