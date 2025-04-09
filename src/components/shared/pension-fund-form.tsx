@@ -57,19 +57,21 @@ export default function PensionFundForm() {
     const iValue = parseFloat(inflation) / 100;
     const rValue = parseFloat(annualReturn) / 100;
 
-    // Calculate future value of monthly expenses
+    // 1. Future value dari pengeluaran bulanan (M)
     const MValue = MELValue * Math.pow(1 + iValue, tValue);
+
+    // 2. Pengeluaran tahunan (Y)
     const YValue = MValue * 12;
 
-    // Calculate result based on return and inflation rates
+    // 3. Dana pensiun berdasarkan aturan 4%
     let totalPensionFundValue;
     if (rValue > iValue) {
-      totalPensionFundValue = (100 / (rValue * 100 - iValue * 100)) * YValue;
+      totalPensionFundValue = (100 / (rValue - iValue)) * YValue;
     } else {
       totalPensionFundValue = 25 * YValue;
     }
 
-    setPensionFundValue(totalPensionFundValue);
+    setPensionFundValue(Number(totalPensionFundValue.toFixed(2)));
   };
 
   const onSavePensionFund = () => {

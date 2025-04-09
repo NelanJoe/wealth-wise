@@ -44,8 +44,8 @@ export default function EmergencyFundForm() {
   const form = useForm<z.infer<typeof emergencyFundSchema>>({
     resolver: zodResolver(emergencyFundSchema),
     defaultValues: {
-      status: "",
-      dependents: "",
+      status: undefined,
+      dependents: undefined,
       monthlyExpenses: "",
     },
   });
@@ -79,10 +79,10 @@ export default function EmergencyFundForm() {
       },
     };
 
-    const fundMultiplier = fundMultiplierMap[status][dependents];
+    const multiplier = fundMultiplierMap[status][dependents];
     const monthlyExpensesNum = Number(monthlyExpenses.replace(/[^0-9]/g, ""));
 
-    const resultEmergencyFund = fundMultiplier * monthlyExpensesNum;
+    const resultEmergencyFund = multiplier * monthlyExpensesNum;
     setEmergencyFundAmount(resultEmergencyFund);
   };
 
