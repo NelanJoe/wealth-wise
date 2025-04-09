@@ -13,21 +13,20 @@ export const investmentSchema = z.object({
 });
 
 export const emergencyFundSchema = z.object({
-  status: z
+  status: z.enum(["lajang", "menikah"], {
+    errorMap: () => ({
+      message: "Pilih salah satu antara Lajang atau Menikah",
+    }),
+  }),
+  dependents: z.enum(["ya", "tidak"], {
+    errorMap: () => ({
+      message: "Pilih antara Ada tanggungan atau Tidak ada tanggungan",
+    }),
+  }),
+  monthlyExpenses: z
     .string()
-    .trim()
-    .toLowerCase()
-    .refine((value) => {
-      return ["lajang", "menikah"].includes(value);
-    }, "Pilih salah satu antara Lajang dan Menikah"),
-  dependents: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .refine((value) => {
-      return ["ya", "tidak"].includes(value);
-    }, "Pilih salah satu antara  Ada tunjangan atau Tidak ada tunjangan"),
-  monthlyExpenses: z.string().transform((x) => x.replace(/[^0-9.-]+/g, "")),
+    .min(1, "Kolom harus diisi")
+    .transform((x) => x.replace(/[^0-9.-]+/g, "")),
 });
 
 export const pensionFundSchema = z.object({
