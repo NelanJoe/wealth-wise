@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import { saveEmergencyFund as saveEmergencyFundApi } from "@/services/emergency-fund.service";
+import { EmergencyFundType } from "@/schemas/calculator.schema";
 
 export const useSaveEmergencyFund = () => {
   const queryClient = useQueryClient();
@@ -13,12 +14,10 @@ export const useSaveEmergencyFund = () => {
       dependents,
       monthlyExpenses,
       resultEmergencyFund,
-    }: {
-      status: string;
-      dependents: string;
-      monthlyExpenses: string;
-      resultEmergencyFund: number;
-    }) => {
+    }: Pick<
+      EmergencyFundType,
+      "status" | "dependents" | "monthlyExpenses" | "resultEmergencyFund"
+    >) => {
       return await saveEmergencyFundApi({
         status,
         dependents,
