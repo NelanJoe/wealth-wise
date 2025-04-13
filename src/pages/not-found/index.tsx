@@ -2,6 +2,7 @@ import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import { Button } from "@/components/ui/button";
+import MetaHead from "@/components/common/meta-head";
 
 export default function ErrorPage() {
   const error = useRouteError();
@@ -36,6 +37,7 @@ export default function ErrorPage() {
 
   return (
     <>
+      <MetaHead title="Not Found" />
       <Header />
       <main className="grid max-w-5xl px-4 mx-auto py-80 place-content-center">
         <div className="space-y-4">

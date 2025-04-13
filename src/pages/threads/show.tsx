@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftIcon, DeleteIcon, Loader2Icon } from "lucide-react";
 import {
@@ -30,6 +31,7 @@ import {
   CommentList,
   CommentSkeleton,
 } from "@/components/comments";
+import MetaHead from "@/components/common/meta-head";
 
 export default function ThreadShow() {
   const { threadId } = useParams<{ threadId: string }>();
@@ -69,26 +71,29 @@ export default function ThreadShow() {
   }
 
   return (
-    <section className="pt-10 pb-24">
-      <div className="max-w-5xl px-4 mx-auto mb-6">
-        <ThreadHeader
-          isAuthor={isAuthor}
-          isPending={isPending}
-          onDelete={() => deleteThread(threadId ?? "")}
-        />
-      </div>
-      <div className="max-w-5xl px-4 mx-auto space-y-4 min-h-max">
-        <ThreadContent thread={thread} />
-        {comments && (
-          <CommentSection
-            comments={comments}
-            isLoading={pending}
-            isError={isError}
-            currentUser={currentUser}
+    <Fragment>
+      <MetaHead title={thread.title} />
+      <section className="pt-10 pb-24">
+        <div className="max-w-5xl px-4 mx-auto mb-6">
+          <ThreadHeader
+            isAuthor={isAuthor}
+            isPending={isPending}
+            onDelete={() => deleteThread(threadId ?? "")}
           />
-        )}
-      </div>
-    </section>
+        </div>
+        <div className="max-w-5xl px-4 mx-auto space-y-4 min-h-max">
+          <ThreadContent thread={thread} />
+          {comments && (
+            <CommentSection
+              comments={comments}
+              isLoading={pending}
+              isError={isError}
+              currentUser={currentUser}
+            />
+          )}
+        </div>
+      </section>
+    </Fragment>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon, Loader2Icon } from "lucide-react";
 
@@ -5,13 +6,15 @@ import { useLoginWithGoogle } from "@/hooks";
 
 import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/components/auth";
+import MetaHead from "@/components/common/meta-head";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { loginWithGoogle, isPending } = useLoginWithGoogle();
 
   return (
-    <>
+    <Fragment>
+      <MetaHead title="Masuk" />
       <div className="mb-4">
         <Button
           asChild
@@ -71,6 +74,6 @@ export default function LoginPage() {
           </Link>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 }

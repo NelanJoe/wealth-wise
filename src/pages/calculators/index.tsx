@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 
 import EmergencyFund from "@/components/emergency-fund";
@@ -5,10 +6,12 @@ import Invesment from "@/components/investment";
 import PensionFund from "@/components/pension-fund";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import MetaHead from "@/components/common/meta-head";
 
 export default function CalculatorPage() {
   return (
-    <div>
+    <Fragment>
+      <MetaHead title="Kalkulator" />
       <div className="py-20 bg-blue-500">
         <div className="flex flex-row items-center justify-between max-w-5xl px-4 mx-auto">
           <motion.div
@@ -66,6 +69,6 @@ export default function CalculatorPage() {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+    </Fragment>
   );
 }

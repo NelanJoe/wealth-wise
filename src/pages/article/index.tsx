@@ -1,8 +1,10 @@
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { articles } from "@/libs/contents";
+import MetaHead from "@/components/common/meta-head";
 
 export default function ArticlePage() {
   const tipsMenabung = articles.filter(
@@ -22,7 +24,8 @@ export default function ArticlePage() {
   );
 
   return (
-    <div>
+    <Fragment>
+      <MetaHead title="Artikel" />
       <div className="py-20 bg-blue-500">
         <div className="flex flex-row-reverse items-center justify-between max-w-5xl px-4 mx-auto">
           <motion.div
@@ -282,6 +285,6 @@ export default function ArticlePage() {
           {/* End Rumah Tangga */}
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }

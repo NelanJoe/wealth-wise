@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { SquarePlusIcon } from "lucide-react";
 import { motion } from "framer-motion";
@@ -8,6 +8,7 @@ import { useCurrentUser, useSharedThreadsCategories } from "@/hooks";
 import { Button } from "@/components/ui/button";
 import { ThreadList, ThreadSkeleton, SearchThread } from "@/components/thread";
 import { Categories, CategorySkeleton } from "@/components/categories";
+import MetaHead from "@/components/common/meta-head";
 
 export default function Threads() {
   const [searchParams] = useSearchParams();
@@ -45,7 +46,8 @@ export default function Threads() {
   }, [threads, searchParams]);
 
   return (
-    <div>
+    <Fragment>
+      <MetaHead title="Forum Diskusi" />
       <div className="py-20 bg-blue-500">
         <div className="flex flex-row items-center justify-between max-w-5xl px-4 mx-auto">
           <motion.div
@@ -141,6 +143,6 @@ export default function Threads() {
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }
