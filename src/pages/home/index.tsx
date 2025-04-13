@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   AlertCircleIcon,
@@ -8,7 +9,7 @@ import {
   PersonStandingIcon,
 } from "lucide-react";
 
-import Hero from "@/components/shared/hero";
+import Hero from "@/components/common/hero";
 import {
   Accordion,
   AccordionContent,
@@ -16,7 +17,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FAQS } from "@/libs/contents";
-import { useRef } from "react";
 
 export default function Home() {
   const ref = useRef(null);

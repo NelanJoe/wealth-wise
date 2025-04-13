@@ -3,7 +3,7 @@ import { useCurrentUser } from "@/hooks";
 import InvesmentForm from "./investment-form";
 import InvestmentTable from "./investment-table";
 
-export default function Invesment() {
+export default function Investment() {
   const { data: currentUser } = useCurrentUser();
 
   return (

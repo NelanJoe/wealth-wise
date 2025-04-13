@@ -4,7 +4,7 @@ import { ArrowLeftIcon, Loader2Icon } from "lucide-react";
 import { useLoginWithGoogle } from "@/hooks";
 
 import { Button } from "@/components/ui/button";
-import LoginForm from "@/components/shared/login-form";
+import { LoginForm } from "@/components/auth";
 
 export default function LoginPage() {
   const navigate = useNavigate();

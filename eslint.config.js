@@ -26,6 +26,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@tanstack/query/exhaustive-deps": "error",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   }
 );

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 
-import EmergencyFund from "@/components/shared/emergency-fund";
-import Invesment from "@/components/shared/invesment";
-import PensionFund from "@/components/shared/pension-fund";
+import EmergencyFund from "@/components/emergency-fund";
+import Invesment from "@/components/investment";
+import PensionFund from "@/components/pension-fund";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

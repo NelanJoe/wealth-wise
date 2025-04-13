@@ -1,6 +1,6 @@
 import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
-import Header from "@/components/shared/header";
-import Footer from "@/components/shared/footer";
+import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
 import { Button } from "@/components/ui/button";
 
 export default function ErrorPage() {

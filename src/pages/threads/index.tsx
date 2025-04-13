@@ -6,11 +6,8 @@ import { motion } from "framer-motion";
 import { useCurrentUser, useSharedThreadsCategories } from "@/hooks";
 
 import { Button } from "@/components/ui/button";
-import ThreadList from "@/components/shared/thread-list";
-import SearchThread from "@/components/shared/search-thread";
-import Categories from "@/components/shared/categories";
-import ThreadSkeleton from "@/components/shared/thread-skeleton";
-import CategorySkeleton from "@/components/shared/category-skeleton";
+import { ThreadList, ThreadSkeleton, SearchThread } from "@/components/thread";
+import { Categories, CategorySkeleton } from "@/components/categories";
 
 export default function Threads() {
   const [searchParams] = useSearchParams();

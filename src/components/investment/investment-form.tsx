@@ -3,10 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, SaveIcon } from "lucide-react";
-import { motion } from "framer-motion";
 
 import { useCurrentUser, useSaveInvestment } from "@/hooks";
-import { formatCurrency } from "@/libs/format-currency";
 
 import { investmentSchema } from "@/schemas/calculator.schema";
 
@@ -19,16 +17,10 @@ import {
   CardContent,
   CardFooter,
 } from "../ui/card";
-import {
-  Form,
-  FormField,
-  FormLabel,
-  FormControl,
-  FormItem,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+import { Form } from "../ui/form";
 import InvestmentInformation from "./investment-information";
+import InvestmentInputField from "./investment-input-field";
+import InvestmentResult from "./investment-result";
 
 export default function InvesmentForm() {
   const form = useForm<z.infer<typeof investmentSchema>>({
@@ -114,123 +106,41 @@ export default function InvesmentForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
-            <FormField
+            <InvestmentInputField
               name="currentlyAmount"
+              label="Uang yang Anda miliki saat ini?"
+              hint="Investasi Awal - PV"
+              placeholder="Contoh: Rp. 5.000.000"
               control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="currentlyAmount">
-                    Uang yang Anda miliki saat ini?{" "}
-                    <span className="text-primary">(Investasi Awal - PV)</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      id="currentlyAmount"
-                      type="currency"
-                      placeholder="Contoh: Rp. 5.000.000"
-                      className="w-[75%] md:w-[70%]"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
-            <FormField
+            <InvestmentInputField
               name="monthlySaving"
+              label="Jumlah yang dapat Anda tabung setiap bulan?"
+              hint="PMT"
+              placeholder="Contoh: Rp. 1.000.000"
               control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="monthlySaving">
-                    Jumlah yang dapat Anda tabung setiap bulan?{" "}
-                    <span className="text-primary">(PMT)</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      id="monthlySaving"
-                      type="currency"
-                      placeholder="Contoh: Rp. 1.000.000"
-                      className="w-[75%] md:w-[70%]"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
-            <FormField
+            <InvestmentInputField
               name="annualReturn"
+              label="Suku bunga tahunan dari investasi Anda?"
+              hint="r"
+              placeholder="Contoh: 5,9"
               control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="annualReturn">
-                    Suku bunga tahunan dari investasi Anda?{" "}
-                    <span className="text-primary">(r)</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="flex items-center gap-3">
-                      <Input
-                        id="annualReturn"
-                        type="string"
-                        placeholder="Contoh: 5,9"
-                        {...field}
-                        className="w-[75%] md:w-[70%]"
-                      />
-                      <span className="text-sm">% / tahun</span>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              suffix={<span className="text-sm">% / tahun</span>}
             />
-            <FormField
+            <InvestmentInputField
               name="years"
+              label="Durasi investasi Anda?"
+              hint="t"
+              placeholder="Contoh: 2"
               control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="years">
-                    Durasi investasi Anda?{" "}
-                    <span className="text-primary">(t)</span>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="flex items-center gap-3">
-                      <Input
-                        id="years"
-                        type="string"
-                        placeholder="Contoh: 2"
-                        {...field}
-                        className="w-[75%] md:w-[70%]"
-                      />
-                      <span className="text-sm">tahun</span>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              suffix={<span className="text-sm">tahun</span>}
             />
             {/* InvestmentValue */}
-            {investmentValue ? (
-              <motion.div
-                key="investmentValue"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="border p-3 rounded-xl w-[75%] md:w-[70%] text-sm"
-              >
-                <p>
-                  Perkiraan jumlah investasi Anda pada setelah{" "}
-                  <span className="text-primary">
-                    {form.getValues("years") ? form.getValues("years") : 0}{" "}
-                    tahun
-                  </span>{" "}
-                  lagi sebesar{" "}
-                  <span className="underline text-primary underline-offset-8 decoration-primary">
-                    {formatCurrency(investmentValue)}
-                  </span>
-                </p>
-              </motion.div>
-            ) : null}
+            <InvestmentResult
+              value={investmentValue}
+              years={form.getValues("years")}
+            />
           </CardContent>
           <CardFooter>
             <div className="flex flex-col w-full gap-4 md:flex-row md:w-fit">

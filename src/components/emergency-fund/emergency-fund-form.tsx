@@ -11,7 +11,7 @@ import { emergencyFundSchema } from "@/schemas/calculator.schema";
 
 import EmergencyFundInformation from "./emergency-fund-information";
 
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -19,7 +19,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "../ui/card";
+} from "@/components/ui/card";
 
 import {
   Form,
@@ -28,8 +28,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectValue,
@@ -38,7 +38,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectContent,
-} from "../ui/select";
+} from "@/components/ui/select";
 
 export default function EmergencyFundForm() {
   const form = useForm<z.infer<typeof emergencyFundSchema>>({

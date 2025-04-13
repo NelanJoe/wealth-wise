@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "lucide-react";
 
 import { useCurrentUser } from "@/hooks";
 
-import ThreadForm from "@/components/shared/thread-form";
+import { ThreadForm } from "@/components/thread";
 import { Button } from "@/components/ui/button";
 
 export default function ThreadsCreate() {

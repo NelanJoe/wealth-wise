@@ -25,9 +25,11 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import CommentList from "@/components/shared/comment-list";
-import CommentForm from "@/components/shared/comment-form";
-import CommentSkeleton from "@/components/shared/comment-skeleton";
+import {
+  CommentForm,
+  CommentList,
+  CommentSkeleton,
+} from "@/components/comments";
 
 export default function ThreadShow() {
   const { threadId } = useParams<{ threadId: string }>();

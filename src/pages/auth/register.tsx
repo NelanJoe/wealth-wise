@@ -4,7 +4,7 @@ import { ArrowLeftIcon, Loader2Icon } from "lucide-react";
 import { useLoginWithGoogle } from "@/hooks";
 
 import { Button } from "@/components/ui/button";
-import RegisterForm from "@/components/shared/register-form";
+import { RegisterForm } from "@/components/auth";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
