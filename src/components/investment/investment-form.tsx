@@ -129,7 +129,6 @@ export default function InvesmentForm() {
               placeholder="Contoh: 5,9"
               control={form.control}
               suffix={<span className="text-sm">% / tahun</span>}
-              type="currency"
             />
             <InvestmentInputField
               name="years"
@@ -138,7 +137,6 @@ export default function InvesmentForm() {
               placeholder="Contoh: 2"
               control={form.control}
               suffix={<span className="text-sm">tahun</span>}
-              type="currency"
             />
             {/* InvestmentValue */}
             <InvestmentResult

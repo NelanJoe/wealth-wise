@@ -25,7 +25,7 @@ export default function InvestmentInformation() {
           Cara Hitung
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:max-w-3xl max-h-screen overflow-y-auto p-6">
         <DialogHeader>
           <DialogTitle>Formula Hitung Investasi</DialogTitle>
           <DialogDescription className="text-gray-500">

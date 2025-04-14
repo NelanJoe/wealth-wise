@@ -25,7 +25,7 @@ export default function PensionFundInformation() {
           Cara Hitung
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-5xl max-h-screen overflow-y-auto p-6">
+      <DialogContent className="sm:max-w-4xl max-h-screen overflow-y-auto p-6">
         <DialogHeader>
           <DialogTitle className="text-lg md:text-xl">
             Formula Hitung Dana Pensiun

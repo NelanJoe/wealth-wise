@@ -121,7 +121,6 @@ export default function PensionFundForm() {
               placeholder="20"
               suffix="tahun"
               control={form.control}
-              type="currency"
             />
             <PensionFundInputField
               name="inflation"
@@ -130,7 +129,6 @@ export default function PensionFundForm() {
               placeholder="3,58"
               suffix="% / tahun"
               control={form.control}
-              type="currency"
             />
             <PensionFundInputField
               name="annualReturn"
@@ -139,7 +137,6 @@ export default function PensionFundForm() {
               placeholder="5"
               suffix="% / tahun"
               control={form.control}
-              type="currency"
             />
             <PensionFundResult value={pensionFundValue} />
           </CardContent>
