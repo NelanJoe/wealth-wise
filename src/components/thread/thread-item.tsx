@@ -33,7 +33,7 @@ export default function ThreadItem({ thread }: { thread: Thread }) {
             <p className="line-clamp-2 hover:line-clamp-none">{thread.body}</p>
           </div>
           <div>
-            <Badge className="bg-blue-500 hover:bg-blue-500">
+            <Badge className="bg-blue-500 hover:bg-blue-500 capitalize">
               {thread.category.name}
             </Badge>
           </div>

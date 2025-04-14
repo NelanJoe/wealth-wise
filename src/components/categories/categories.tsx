@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import type { Category } from "@/schemas/category.schema";
+import { cn } from "@/libs/utils";
 
 type CategoriesProps = {
   categories: Category[];
@@ -43,9 +44,10 @@ export default function Categories({ categories }: CategoriesProps) {
         <Button
           size="sm"
           key={category.uid}
-          className={`rounded-full bg-blue-500 hover:bg-blue-500/80 ${
+          className={cn(
+            `rounded-full bg-blue-500 hover:bg-blue-500/80 capitalize`,
             selectedCategories.includes(category.name) && "bg-blue-500/60"
-          }`}
+          )}
           onClick={() => toggleCategory(category.name)}
         >
           {category.name}
