@@ -112,6 +112,7 @@ export default function PensionFundForm() {
               hint="MEL"
               placeholder="Contoh: Rp. 10.000.000"
               control={form.control}
+              type="currency"
             />
             <PensionFundInputField
               name="yearsLater"
@@ -120,6 +121,7 @@ export default function PensionFundForm() {
               placeholder="20"
               suffix="tahun"
               control={form.control}
+              type="currency"
             />
             <PensionFundInputField
               name="inflation"
@@ -128,6 +130,7 @@ export default function PensionFundForm() {
               placeholder="3,58"
               suffix="% / tahun"
               control={form.control}
+              type="currency"
             />
             <PensionFundInputField
               name="annualReturn"
@@ -136,6 +139,7 @@ export default function PensionFundForm() {
               placeholder="5"
               suffix="% / tahun"
               control={form.control}
+              type="currency"
             />
             <PensionFundResult value={pensionFundValue} />
           </CardContent>

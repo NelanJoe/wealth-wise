@@ -112,6 +112,7 @@ export default function InvesmentForm() {
               hint="Investasi Awal - PV"
               placeholder="Contoh: Rp. 5.000.000"
               control={form.control}
+              type="currency"
             />
             <InvestmentInputField
               name="monthlySaving"
@@ -119,6 +120,7 @@ export default function InvesmentForm() {
               hint="PMT"
               placeholder="Contoh: Rp. 1.000.000"
               control={form.control}
+              type="currency"
             />
             <InvestmentInputField
               name="annualReturn"
@@ -127,6 +129,7 @@ export default function InvesmentForm() {
               placeholder="Contoh: 5,9"
               control={form.control}
               suffix={<span className="text-sm">% / tahun</span>}
+              type="currency"
             />
             <InvestmentInputField
               name="years"
@@ -135,6 +138,7 @@ export default function InvesmentForm() {
               placeholder="Contoh: 2"
               control={form.control}
               suffix={<span className="text-sm">tahun</span>}
+              type="currency"
             />
             {/* InvestmentValue */}
             <InvestmentResult

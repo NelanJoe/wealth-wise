@@ -44,7 +44,7 @@ const DesktopView = () => {
   const onLogout = () => logout();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-4">
       {links.map((link) => (
         <NavLink
           key={link.name}
@@ -108,7 +108,7 @@ const MobileView = () => {
         <SheetHeader>
           <SheetTitle className="text-left">Wealth Wise</SheetTitle>
           <SheetDescription className="text-left">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               {links.map((link) => (
                 <NavLink
                   key={link.name}
