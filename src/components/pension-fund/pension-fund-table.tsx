@@ -2,7 +2,7 @@ import { Loader2Icon, Trash2Icon } from "lucide-react";
 
 import {
   useCurrentUser,
-  useDeltePensionFund,
+  useDeletePensionFund,
   useGetPensionFund,
 } from "@/hooks";
 import { formatDate } from "@/libs/format-date";
@@ -29,7 +29,7 @@ export default function PensionFundTable() {
     error,
   } = useGetPensionFund();
 
-  const { deletePensionFund, isPending } = useDeltePensionFund();
+  const { deletePensionFund, isPending } = useDeletePensionFund();
 
   let pensionFundContent;
 

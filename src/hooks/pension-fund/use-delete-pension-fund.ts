@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 import { deletePensionFund as deletePensionFundApi } from "@/services/pension-fund.service";
 
-export const useDeltePensionFund = () => {
+export const useDeletePensionFund = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
