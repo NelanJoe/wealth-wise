@@ -20,10 +20,7 @@ export const saveEmergencyFund = async ({
   dependents,
   monthlyExpenses,
   resultEmergencyFund,
-}: Pick<
-  EmergencyFundType,
-  "status" | "dependents" | "monthlyExpenses" | "resultEmergencyFund"
->) => {
+}: Omit<EmergencyFundType, "uid" | "author" | "createdAt" | "updatedAt">) => {
   try {
     const emergencyFundRef = collection(db, "emergency-fund");
     const createdAt = new Date().toISOString();

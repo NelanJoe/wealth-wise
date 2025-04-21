@@ -69,7 +69,7 @@ export default function PensionFundForm() {
 
   const onSavePensionFund = () => {
     const monthlyExpensesLater = form.getValues("monthlyExpensesLater");
-    const yearsLater = Number(form.getValues("yearsLater").replace(/\D/g, ""));
+    const yearsLater = form.getValues("yearsLater").replace(/\D/g, "");
     const inflation = form.getValues("inflation");
     const annualReturn = form.getValues("annualReturn");
 

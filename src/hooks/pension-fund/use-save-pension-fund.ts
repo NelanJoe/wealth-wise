@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import { savePensionFund as savePensionFundApi } from "@/services/pension-fund.service";
+import { PensionFundType } from "@/schemas/calculator.schema";
 
 export const useSavePensionFund = () => {
   const queryClient = useQueryClient();
@@ -14,13 +15,7 @@ export const useSavePensionFund = () => {
       inflation,
       annualReturn,
       resultPensionFund,
-    }: {
-      monthlyExpensesLater: string;
-      yearsLater: number;
-      inflation: string;
-      annualReturn: string;
-      resultPensionFund: number;
-    }) => {
+    }: Omit<PensionFundType, "uid" | "author" | "createdAt" | "updatedAt">) => {
       return savePensionFundApi({
         monthlyExpensesLater,
         yearsLater,
