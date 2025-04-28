@@ -5,7 +5,7 @@ import MetaHead from "@/components/common/meta-head";
 export default function AboutPage() {
   return (
     <Fragment>
-      <MetaHead title="About" />
+      <MetaHead title="Tentang" />
       <div className="max-w-5xl mx-auto px-4 pt-4 pb-24 md:pt-16 md:pb-40">
         <div className="flex flex-col space-y-12">
           <AboutSection />
