@@ -17,11 +17,7 @@ export const useLoginWithGoogle = () => {
       navigate("/", { replace: true });
     },
     onError: (err) => {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else {
-        toast.error("Terjadi kesalahan saat login.");
-      }
+      toast.error(err.message);
     },
   });
 
