@@ -5,6 +5,13 @@ import { useCurrentUser, useLogout, useMediaQuery } from "@/hooks";
 import { links } from "@/libs/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import {
   Sheet,
   SheetContent,
@@ -13,8 +20,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
-import { Button } from "../ui/button";
 
 export default function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -60,26 +65,34 @@ const DesktopView = () => {
       ))}
       <div>
         {currentUser ? (
-          <Popover>
-            <PopoverTrigger asChild>
-              <Avatar>
-                <AvatarImage
-                  src={currentUser.photoURL}
-                  alt={currentUser.displayName}
-                />
-                <AvatarFallback>
-                  {currentUser.displayName?.slice(0, 2)}
-                </AvatarFallback>
-              </Avatar>
-            </PopoverTrigger>
-            <PopoverContent className="p-2 w-fit">
-              <Button variant="destructive" size="sm" onClick={onLogout}>
-                <div className="flex items-center gap-2">
-                  <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
-                </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <Avatar>
+                  <AvatarImage
+                    src={currentUser.photoURL}
+                    alt={currentUser.displayName}
+                  />
+                  <AvatarFallback>
+                    {currentUser.displayName?.slice(0, 2)}
+                  </AvatarFallback>
+                </Avatar>
               </Button>
-            </PopoverContent>
-          </Popover>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={onLogout}
+                  variant="destructive"
+                  className="w-full hover:border-red-500 transition-colors duration-150 ease-in-out"
+                >
+                  <LogOutIcon className="w-4 h-4" /> <span>Logout</span>
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <Button
             asChild
