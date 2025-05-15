@@ -17,6 +17,7 @@ import { acessToken } from "@/libs/access-token";
 
 import type { Login, Register } from "@/schemas/auth.schema";
 import type { User } from "@/schemas/user.schema";
+import { generateAvatar } from "@/libs/generate-avatar";
 
 const customAuthErrorMessages: Record<string, string> = {
   "auth/invalid-email": "Format email yang Anda masukkan tidak valid.",
@@ -56,7 +57,7 @@ export const createUserFromAuth = async ({
   const userSnapshot = await getDoc(userRef);
 
   if (!userSnapshot.exists()) {
-    const { uid, displayName, email } = userAuth;
+    const { uid, displayName, email, photoURL } = userAuth;
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
 
@@ -65,6 +66,7 @@ export const createUserFromAuth = async ({
         uid,
         displayName,
         email,
+        photoURL,
         createdAt,
         updatedAt,
         ...additionalInformation,
@@ -117,7 +119,11 @@ export const register = async ({
     }
 
     await createUserFromAuth({
-      userAuth: { ...user, displayName: username },
+      userAuth: {
+        ...user,
+        displayName: username,
+        photoURL: generateAvatar(username),
+      },
     });
   } catch (error) {
     if (error instanceof FirebaseError) {
@@ -184,6 +190,12 @@ export const updateProfileUser = async ({ userName }: { userName: string }) => {
     const currentUser = auth.currentUser as UserFirebaseType;
     if (!currentUser) {
       throw new Error("User tidak ditemukan.");
+    }
+
+    if (currentUser.photoURL === "" || currentUser.photoURL === null) {
+      await updateProfile(currentUser, {
+        photoURL: generateAvatar(userName),
+      });
     }
 
     await updateProfile(currentUser, {
