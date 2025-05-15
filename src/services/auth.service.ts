@@ -196,11 +196,11 @@ export const updateProfileUser = async ({ userName }: { userName: string }) => {
       await updateProfile(currentUser, {
         photoURL: generateAvatar(userName),
       });
+    } else {
+      await updateProfile(currentUser, {
+        displayName: userName,
+      });
     }
-
-    await updateProfile(currentUser, {
-      displayName: userName,
-    });
   } catch (error) {
     if (error instanceof FirebaseError) {
       throw new Error(error.message);
