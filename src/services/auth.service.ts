@@ -118,13 +118,20 @@ export const register = async ({
       throw new Error("An error occurred while registering.");
     }
 
-    await createUserFromAuth({
-      userAuth: {
+    if (user.photoURL === "" || user.photoURL === null) {
+      await updateProfile(user, {
         ...user,
         displayName: username,
         photoURL: generateAvatar(username),
-      },
-    });
+      });
+    } else {
+      await createUserFromAuth({
+        userAuth: {
+          ...user,
+          displayName: username,
+        },
+      });
+    }
   } catch (error) {
     if (error instanceof FirebaseError) {
       const customErrorMessage =
@@ -194,6 +201,7 @@ export const updateProfileUser = async ({ userName }: { userName: string }) => {
 
     if (currentUser.photoURL === "" || currentUser.photoURL === null) {
       await updateProfile(currentUser, {
+        displayName: userName,
         photoURL: generateAvatar(userName),
       });
     } else {
